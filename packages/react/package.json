@@ -1,0 +1,48 @@
+{
+  "name": "peacepiece",
+  "version": "0.0.10",
+  "description": "리액트와 관련된 기능이 들어있는 패키지 저장소 입니다.",
+  "sideEffects": false,
+  "typings": "dist/types/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "publishConfig": {
+    "access": "public",
+    "main": "dist/index.js",
+    "module": "dist/index.esm.js",
+    "typings": "dist/types/index.d.ts"
+  },
+  "author": "scv7282@gmail.com",
+  "scripts": {
+    "build": "tsc --module commonjs && rollup -c rollup.config.js"
+  },
+  "keywords": [
+    "react",
+    "react hooks",
+    "react component"
+  ],
+  "peerDependencies": {
+    "react": "*",
+    "react-dom": "*"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.1.0",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.4",
+    "rimraf": "^5.0.5",
+    "rollup": "^4.9.1",
+    "rollup-plugin-pnp-resolve": "^2.0.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  },
+  "type": "module"
+}

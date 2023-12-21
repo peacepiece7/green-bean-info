@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "lib": ["es2015", "es2016", "es2017", "es2020", "dom"],
+    "moduleResolution": "Node",
+    // "allowImportingTsExtensions": true, ??
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "typeRoots": ["node_modules/@types"],
+    // sourceMap => .js.map 생성, inlineSourceMap => .js에 sourceMap 내용을 포함 cypress는 inlineSourceMap을 사용해야함
+    "inlineSourceMap": true
+  },
+  "exclude": ["**/dist/*", "**/esm/*"]
+}

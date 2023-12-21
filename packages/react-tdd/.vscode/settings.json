@@ -1,0 +1,4 @@
+{
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "css.lint.unknownAtRules": "ignore" // @tailwind
+}

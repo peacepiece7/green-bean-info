@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "lib": ["es2015", "es2016", "es2017", "es2020", "DOM"],
+    "moduleResolution": "Node",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "typeRoots": ["node_modules/@types"],
+    "strict": true,
+    // https://stackoverflow.com/questions/51634361/how-to-force-tsc-to-ignore-node-modules-folder
+    // node_modules가 exclude 되어 있어도, @types/node_modules가 포함되어 있으면 검사에 포함되는 문제
+    "skipLibCheck": true,
+    "sourceMap": true
+  },
+  "exclude": ["**/dist/*", "**/esm/*"]
+}
