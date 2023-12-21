@@ -1,3 +1,3 @@
 export function useTest() {
-  return 'foo'
+  return "foo";
 }

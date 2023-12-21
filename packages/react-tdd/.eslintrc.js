@@ -41,7 +41,7 @@ module.exports = {
       },
     },
   },
-  ignorePatterns: ['*.html', '*.cy.js', '*.cy.ts', '*.css'],
+  ignorePatterns: ['*.html', '*.cy.js', '*.cy.ts', '*.css', 'dist', 'cypress', 'coverage'],
 }
 
 /**

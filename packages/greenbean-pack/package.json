@@ -1,6 +1,6 @@
 {
-  "name": "peacepiece",
-  "version": "0.0.10",
+  "name": "greenbean-pack",
+  "version": "0.0.1",
   "description": "리액트와 관련된 기능이 들어있는 패키지 저장소 입니다.",
   "sideEffects": false,
   "typings": "dist/types/index.d.ts",
@@ -10,11 +10,14 @@
     "access": "public",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
-    "typings": "dist/types/index.d.ts"
+    "typings": "dist/types/index.d.ts",
+    "test": "echo \"greenbean-pack : No tests yet\""
   },
   "author": "scv7282@gmail.com",
   "scripts": {
-    "build": "tsc --module commonjs && rollup -c rollup.config.js"
+    "build": "tsc --module commonjs && rollup -c rollup.config.js",
+    "lint": "eslint ./ --ext ts,tsx,js,jsx",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "keywords": [
     "react",
@@ -41,7 +44,6 @@
     "rollup": "^4.9.1",
     "rollup-plugin-pnp-resolve": "^2.0.0",
     "rollup-plugin-typescript2": "^0.36.0",
-    "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
   "type": "module"

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from "react";
 
 /**
  * useWillUnmount hook
@@ -7,6 +7,6 @@ import { useEffect } from 'react'
  */
 export function useWillUnmount(callback: () => void) {
   useEffect(() => {
-    return callback
-  }, [])
+    return callback;
+  }, []);
 }

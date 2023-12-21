@@ -13,5 +13,6 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src", "./vitest.setup.ts"],
+  "exclude": ["__tests__"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -14,7 +14,13 @@
     // https://stackoverflow.com/questions/51634361/how-to-force-tsc-to-ignore-node-modules-folder
     // node_modules가 exclude 되어 있어도, @types/node_modules가 포함되어 있으면 검사에 포함되는 문제
     "skipLibCheck": true,
-    "sourceMap": true
+    "sourceMap": true,
+
+    // 에러를 잡기 위한 설정
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   },
   "exclude": ["**/dist/*", "**/esm/*"]
 }

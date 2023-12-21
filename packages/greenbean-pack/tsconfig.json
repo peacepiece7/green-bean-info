@@ -3,11 +3,10 @@
   "compilerOptions": {
     "jsx": "react",
     "outDir": "./dist",
-    // "composite": true,
     "declaration": true,
     "declarationDir": "./dist",
     "allowImportingTsExtensions": false,
-    "moduleResolution": "node"
+    "moduleResolution": "Node"
   },
-  "include": ["./src/**/*"]
+  "include": ["src"]
 }

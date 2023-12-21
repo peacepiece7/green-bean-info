@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from "react";
 
 // prettier-ignore
 export const useClick = (onClick: (ev : HTMLElementEventMap['click'])  => void) => {  
