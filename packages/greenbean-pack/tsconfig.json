@@ -2,10 +2,10 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "jsx": "react",
-    "outDir": "./dist",
     "declaration": true,
     "composite": true,
-    "declarationDir": "./dist",
+    "outDir": "./",
+    "declarationDir": "types",
     "allowImportingTsExtensions": false,
     "moduleResolution": "Node"
   },

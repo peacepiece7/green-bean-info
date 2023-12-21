@@ -48,4 +48,4 @@ function buildESM(input) {
   return buildJS(input, packageJSON.module, "es");
 }
 
-export default [buildCJS("src/index.ts"), buildESM("src/index.ts")];
+export default [buildCJS("./src/index.ts"), buildESM("./src/index.ts")];

@@ -1,23 +1,23 @@
 {
   "name": "greenbean-pack",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "리액트와 관련된 기능이 들어있는 패키지 저장소 입니다.",
   "sideEffects": false,
-  "typings": "dist/src/index.d.ts",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
+  "author": "scv7282@gmail.com",
+  "main": "./index.js",
+  "module": "./index.esm.js",
+  "typings": "./types/src/index.d.ts",
   "publishConfig": {
     "access": "public",
-    "main": "dist/index.js",
-    "module": "dist/index.esm.js",
-    "typings": "dist/src/index.d.ts",
-    "test": "echo \"greenbean-pack : No tests yet\""
+    "main": "./index.js",
+    "module": "./index.esm.js",
+    "typings": "./types/src/index.d.ts"
   },
-  "author": "scv7282@gmail.com",
   "scripts": {
     "build": "tsc --module commonjs && rollup -c rollup.config.js",
     "lint": "eslint ./ --ext ts,tsx,js,jsx",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+    "typecheck": "tsc -p ./tsconfig.json --noEmit",
+    "test": "echo \"greenbean-pack : No tests yet\""
   },
   "keywords": [
     "react",
@@ -46,5 +46,8 @@
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "^5.3.3"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "tslib": "^2.6.2"
+  }
 }
