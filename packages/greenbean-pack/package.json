@@ -3,14 +3,14 @@
   "version": "0.0.1",
   "description": "리액트와 관련된 기능이 들어있는 패키지 저장소 입니다.",
   "sideEffects": false,
-  "typings": "dist/types/index.d.ts",
+  "typings": "dist/src/index.d.ts",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "publishConfig": {
     "access": "public",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
-    "typings": "dist/types/index.d.ts",
+    "typings": "dist/src/index.d.ts",
     "test": "echo \"greenbean-pack : No tests yet\""
   },
   "author": "scv7282@gmail.com",

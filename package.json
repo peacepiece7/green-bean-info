@@ -9,7 +9,7 @@
     "front": "pnpm -F @monorepo/front",
     "back": "pnpm -F @monorepo/back",
     "rt": "pnpm -F @monorepo/react-tdd",
-    "pp": "pnpm -F peacepiece",
+    "gp": "pnpm -F greenbean-pack",
     "typecheck:all": "pnpm --if-present --recursive typecheck",
     "lint:all": "pnpm --if-present --recursive lint",
     "test:all": "pnpm -r test",
