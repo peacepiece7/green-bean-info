@@ -1,9 +1,7 @@
 import { useEffect, useRef } from "react";
 
 /**
- * @description 특정 요소를 서서히 나타나게 하는 훅
- * @param {number} duration
- * @param {number} delay
+ * @description 특정 요소를 서서히 나타나게 합니다.
  * @default
  * duration: 1000
  * delay: 100

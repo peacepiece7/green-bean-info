@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+/**
+ * @description 네트워크 상태를 감자합니다.
+ */
 export function useNetwork(onChange?: (nav: Navigator["onLine"]) => void) {
   const [status, setStatus] = useState(navigator.onLine);
   const handleChange = () => {
@@ -17,5 +20,6 @@ export function useNetwork(onChange?: (nav: Navigator["onLine"]) => void) {
       window.removeEventListener("offline", handleChange);
     };
   }, []);
+
   return status;
 }

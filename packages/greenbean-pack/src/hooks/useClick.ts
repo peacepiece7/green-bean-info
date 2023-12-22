@@ -1,8 +1,11 @@
 import { useEffect, useRef } from "react";
 
+/**
+ * @description 클릭 이벤트를 감지 후 콜백을 실행합니다.
+ */
 // prettier-ignore
-export const useClick = (onClick: (ev : HTMLElementEventMap['click'])  => void) => {  
-  const element = useRef<HTMLElement>(null)
+export const useClick = <T extends HTMLElement>(onClick: (ev : HTMLElementEventMap['click'])  => void) => {  
+  const element = useRef<T>(null)
   useEffect(() => {
     if(element.current) element.current.addEventListener('click', onClick)
     return () => {
