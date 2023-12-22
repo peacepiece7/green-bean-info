@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { __awaiter } from "tslib";
 
+/**
+ * @description 뒤로기가나 새로고침 등을 통해 페이지를 떠날 때, 사용자에게 확인을 받습니다.
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+ */
 function useLeaveBeforeSave(cb) {
   const handler = useCallback(
     (ev) => {
@@ -13,6 +16,10 @@ function useLeaveBeforeSave(cb) {
     return () => window.removeEventListener("beforeunload", handler);
   }, []);
 }
+/**
+ * @description 마우스가 브라우저를 벗어날 때, 콜백을 실행합니다.
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseout_event
+ */
 function useBeforeLeaveMouse(cb) {
   // 전역으로 선언하기엔 이름이 너무 흔합니다.
   const html = useMemo(() => {
@@ -44,6 +51,9 @@ function useBeforeLeaveMouse(cb) {
   }, []);
 }
 
+/**
+ * @description 클릭 이벤트를 감지 후 콜백을 실행합니다.
+ */
 // prettier-ignore
 const useClick = (onClick) => {
     const element = useRef(null);
@@ -59,9 +69,7 @@ const useClick = (onClick) => {
 };
 
 /**
- * @description 특정 요소를 서서히 나타나게 하는 훅
- * @param {number} duration
- * @param {number} delay
+ * @description 특정 요소를 서서히 나타나게 합니다.
  * @default
  * duration: 1000
  * delay: 100
@@ -83,6 +91,11 @@ function useFadeIn(duration = 1000, delay = 100) {
     };
 }
 
+/**
+ * @description 브라우저 전체화면을 사용할 수 있게 합니다.
+ * 아직 브라우저 호환성을 고려하지 않았습니다.
+ * 테스트 코드가 없습니다.
+ */
 function useFullscreen() {
   const ref = useRef(null);
   const [isFull, setIsFull] = useState(false);
@@ -107,19 +120,9 @@ function useFullscreen() {
   return { ref, triggerFull, exitFull, isFull };
 }
 
-function useInput(init, validator) {
-  const [state, setState] = useState(init);
-  const onChange = useCallback(
-    (value) => {
-      if (typeof validator !== "function") return;
-      const willUpdate = validator(value);
-      if (willUpdate) setState(value);
-    },
-    [validator],
-  );
-  return [state, setState, onChange];
-}
-
+/**
+ * @description 네트워크 상태를 감자합니다.
+ */
 function useNetwork(onChange) {
   const [status, setStatus] = useState(navigator.onLine);
   const handleChange = () => {
@@ -139,21 +142,9 @@ function useNetwork(onChange) {
   return status;
 }
 
-function useNotification(title, options) {
-  const fireNotif = useCallback(
-    () =>
-      __awaiter(this, void 0, void 0, function* () {
-        yield Notification.requestPermission();
-        if (Notification.permission !== "granted") {
-          return;
-        }
-        new Notification(title, options);
-      }),
-    [title, options],
-  );
-  return { fireNotif };
-}
-
+/**
+ * @description 스크롤 위치를 감지합니다.
+ */
 function useScroll() {
   const [state, setState] = useState({ x: 0, y: 0 });
   const onScroll = useCallback(() => {
@@ -167,30 +158,8 @@ function useScroll() {
   return state;
 }
 
-function useTabs(initTab, allTabs) {
-  const [currentIndex, setCurrentIndex] = useState(initTab);
-  return {
-    currentItem: allTabs[currentIndex],
-    setCurrentItem: setCurrentIndex,
-  };
-}
-
-const isBrowser = typeof window !== "undefined";
-function useTitle(initTitle) {
-  const [title, setTitle] = useState(initTitle);
-  useEffect(() => {
-    if (!isBrowser) return;
-    const el = document.querySelector("title");
-    el && el.setAttribute("title", title);
-    setTitle(initTitle);
-  }, [initTitle, title]);
-  return { title, setTitle };
-}
-
 /**
- * useWillUnmount hook
- * 컴포넌트가 언마운트 될 때 함수를 호출합니다.
- * @param {Function} callback 컴포넌트가 언마운트 될 때 호출 할 콜백 함수
+ * @description 컴포넌트가 언마운트 될 때 함수를 호출합니다.
  */
 function useWillUnmount(callback) {
   useEffect(() => {
@@ -203,12 +172,8 @@ export {
   useClick,
   useFadeIn,
   useFullscreen,
-  useInput,
   useLeaveBeforeSave,
   useNetwork,
-  useNotification,
   useScroll,
-  useTabs,
-  useTitle,
   useWillUnmount,
 };
