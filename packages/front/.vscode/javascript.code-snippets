@@ -1,6 +1,12 @@
 {
-  "reactFunction": {
-    "prefix": "rfc",
+  "reactClientComponent": {
+    "prefix": "cc",
+    "body": "\"use client\"\nexport default function ${1:${TM_FILENAME_BASE}}() {\n\treturn (\n\t\t<div>\n\t\t\t\n\t\t</div>\n\t);\n}\n\n",
+    "description": "Creates a React Function component",
+    "scope": "javascriptreact, typescriptreact"
+  },
+  "reactServerComponent": {
+    "prefix": "sc",
     "body": "export default function ${1:${TM_FILENAME_BASE}}() {\n\treturn (\n\t\t<div>\n\t\t\t\n\t\t</div>\n\t);\n}\n\n",
     "description": "Creates a React Function component",
     "scope": "javascriptreact, typescriptreact"

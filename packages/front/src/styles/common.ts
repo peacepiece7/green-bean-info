@@ -71,6 +71,12 @@ export const SPACE = {
   '28': '7rem',
 } as const
 
+export const WINDOW = {
+  mobile: '375px',
+  tablet: '768px',
+  desktop: '1280px',
+} as const
+
 export const SHADOW = {
   '1': '0 0 2px 2px rgba(0, 0, 0, 0.2)',
   '2': '0px 3px 8px rgba(0, 0, 0, 0.24)',
