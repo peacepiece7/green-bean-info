@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components'
 
 /**
  * CSS RESET : A (more) Modern CSS Reset
@@ -16,4 +16,4 @@ export const GlobalStyle = createGlobalStyle`
     html {
         font-size : 62.5%;
     }
-`;
+`

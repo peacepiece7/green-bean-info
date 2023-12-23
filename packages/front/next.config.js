@@ -3,18 +3,18 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "cdn.sanity.io",
-        port: "",
-        pathname: "/**",
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        port: '',
+        pathname: '/**',
       },
       {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
-        pathname: "/**",
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        pathname: '/**',
       },
     ],
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

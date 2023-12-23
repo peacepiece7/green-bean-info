@@ -1,21 +1,21 @@
-"use client";
-import { BG, COLOR } from "@/styles/common";
-import { BuiltInProviderType } from "next-auth/providers";
-import { ClientSafeProvider, LiteralUnion, signIn } from "next-auth/react";
-import styled from "styled-components";
+'use client'
+import { BG, COLOR } from '@/styles/common'
+import { BuiltInProviderType } from 'next-auth/providers'
+import { ClientSafeProvider, LiteralUnion, signIn } from 'next-auth/react'
+import styled from 'styled-components'
 
 interface TempSignInProps {
   providers: Record<
     LiteralUnion<BuiltInProviderType, string>,
     ClientSafeProvider
-  > | null;
-  callbackUrl: string | null;
+  > | null
+  callbackUrl: string | null
 }
 export default function TempSignIn({
   providers,
   callbackUrl,
 }: TempSignInProps) {
-  if (!providers || !callbackUrl) return null;
+  if (!providers || !callbackUrl) return null
 
   return (
     <>
@@ -25,10 +25,10 @@ export default function TempSignIn({
             key={id}
             onClick={() => signIn(id, { callbackUrl })}
           >{`Sign In with ${name}`}</Button>
-        );
+        )
       })}
     </>
-  );
+  )
 }
 
 const Button = styled.button`
@@ -42,4 +42,4 @@ const Button = styled.button`
   &:hover {
     background-color: ${COLOR.gray};
   }
-`;
+`

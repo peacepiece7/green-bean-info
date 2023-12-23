@@ -74,9 +74,6 @@
     "typescript": "^5.3.3"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "prettier --write"
-    ],
     "*.{ts,tsx}": [
       "pnpm lint:all"
     ]
