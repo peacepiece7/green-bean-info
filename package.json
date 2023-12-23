@@ -15,6 +15,7 @@
     "lint:all": "pnpm -r lint",
     "test:all": "pnpm -r test",
     "build:all": "pnpm -r build",
+    "e2e:all": "pnpm -r cy:run",
     "dev": "pnpm -r dev"
   },
   "keywords": [],

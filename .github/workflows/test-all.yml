@@ -1,0 +1,59 @@
+name: Client Test
+
+on:
+  pull_request:
+    branches: [dev]
+
+jobs:
+  test-all-packages:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Use repository source
+        uses: actions/checkout@v3
+
+      - name: Use node.js with pnpm
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.18.0
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Print pnpm version
+        run: pnpm --version
+
+      - name: Set front-end environment variables
+        working-directory: packages/front
+        run: |
+          pwd
+          touch .env
+          echo GOOGLE_OAUTH_ID=${{ secrets.GOOGLE_OAUTH_ID }} >> .env
+          echo GOOGLE_OAUTH_SECRET=${{ secrets.GOOGLE_OAUTH_SECRET }} >> .env
+          echo PROJECT_ID=${{ secrets.PROJECT_ID }} >> .env
+          echo DATASET=${{ secrets.DATASET }} >> .env
+          echo API_VERSION=${{ secrets.API_VERSION }} >> .env      
+          echo SECRET_TOKEN=${{ secrets.SECRET_TOKEN }} >> .env
+          echo NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} >> .env
+          echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env   
+          cat .env
+
+      - name: Install dependencies
+        uses: cypress-io/github-action@v5
+        with:
+          install-command: pnpm i
+          parallel: true
+          build: pnpm fe run build
+          start: pnpm fe run start
+          wait-on: 'http://localhost:3000'
+          command: pnpm run fe cy:run
+
+      - name: Unit Test
+        run: pnpm run test:all
+
+      - name: Lint
+        run: pnpm run lint:all
+
+      - name: Typecheck
+        run: pnpm run typecheck:all
