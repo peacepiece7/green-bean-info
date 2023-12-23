@@ -3,5 +3,5 @@ export default function Loading() {
     <main>
       <div>LOADING...</div>
     </main>
-  );
+  )
 }

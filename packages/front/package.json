@@ -12,9 +12,12 @@
     "cy:run": "cypress run"
   },
   "dependencies": {
+    "@sanity/client": "^6.10.0",
     "next": "14.0.4",
+    "next-auth": "^4.24.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@testing-library/cypress": "^10.0.1",

@@ -1,5 +1,5 @@
-import { Theme } from "@/styles/common";
+import { Theme } from '@/styles/common'
 
-declare module "styled-components" {
+declare module 'styled-components' {
   export interface DefaultTheme extends Theme {}
 }
