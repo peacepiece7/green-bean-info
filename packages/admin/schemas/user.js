@@ -1,15 +1,8 @@
-import { defineField } from "sanity";
-
-export default defineField({
-  title: "User",
-  name: "user",
+export default {
+  title: "yoloUser",
+  name: "yoloUser",
   type: "document",
   fields: [
-    {
-      title: "Username",
-      name: "username",
-      type: "string",
-    },
     {
       title: "Name",
       name: "name",
@@ -19,6 +12,7 @@ export default defineField({
       title: "Email",
       name: "email",
       type: "string",
+      validation: (Rule) => Rule.email(),
     },
     {
       title: "Image",
@@ -26,4 +20,10 @@ export default defineField({
       type: "string",
     },
   ],
-});
+  preview: {
+    select: {
+      title: "name",
+      subtitle: "email",
+    },
+  },
+};
