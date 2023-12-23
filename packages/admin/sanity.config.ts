@@ -9,20 +9,16 @@ import { visionTool } from "@sanity/vision";
 // import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 // import {media, mediaAssetSource} from 'sanity-plugin-media'
 // import {customDocumentActions} from './plugins/customDocumentActions'
-
 // const devOnlyPlugins = [visionTool()]
-
 export default defineConfig({
   name: "default",
-  title: "greenbean-info",
-
-  projectId: "opjc2k1k",
-  dataset: "production",
+  title: process.env.SANITY_STUDIO_TITLE,
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID as string,
+  dataset: process.env.SANITY_STUDIO_DATASET as string,
 
   schema: {
     types: schemaTypes,
   },
-
   plugins: [deskTool(), visionTool()],
   // form: {
   //   file: {

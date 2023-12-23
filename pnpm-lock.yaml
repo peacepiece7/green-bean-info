@@ -208,6 +208,9 @@ importers:
       '@types/slug':
         specifier: ^5.0.7
         version: 5.0.7
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.3.1
       eslint:
         specifier: ^8.6.0
         version: 8.55.0
