@@ -19,5 +19,4 @@ pnpm을 사용한 모노레포로 구성되어 있습니다.
 git clone https://github.com/peacepiece7/green-coffee.git
 nvm use
 pnpm i
-
 ```
