@@ -1,7 +1,7 @@
 import Temp from './_container/Temp'
 import { getProviders } from 'next-auth/react'
 import TempSignIn from './_container/TempSignIn'
-import { authOptions } from './api/auth/[...nextauth]/route'
+import { authOptions } from '@/service/sanity'
 import { getServerSession } from 'next-auth'
 import TempProfile from './_container/TempProfile'
 
