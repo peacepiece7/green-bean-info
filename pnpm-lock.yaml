@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      greenbean-pack:
+        specifier: workspace:^
+        version: link:packages/greenbean-pack
       next-auth:
         specifier: ^4.24.5
         version: 4.24.5(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
@@ -251,6 +254,9 @@ importers:
       '@sanity/client':
         specifier: ^6.10.0
         version: 6.10.0
+      greenbean-pack:
+        specifier: workspace:^
+        version: link:../greenbean-pack
       next:
         specifier: 14.0.4
         version: 14.0.4(@babel/core@7.23.5)(react-dom@18.2.0)(react@18.2.0)
