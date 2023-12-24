@@ -1,8 +1,9 @@
 'use client'
-import { BG, COLOR } from '@/styles/common'
+import { COLOR, SPACE, TEXT } from '@/styles/common'
 import { BuiltInProviderType } from 'next-auth/providers'
 import { ClientSafeProvider, LiteralUnion, signIn } from 'next-auth/react'
 import styled from 'styled-components'
+import Description from './Description'
 
 interface TempSignInProps {
   providers: Record<
@@ -11,7 +12,7 @@ interface TempSignInProps {
   > | null
   callbackUrl: string | null
 }
-export default function TempSignIn({
+export default function SignInForm({
   providers,
   callbackUrl,
 }: TempSignInProps) {
@@ -19,6 +20,8 @@ export default function TempSignIn({
 
   return (
     <>
+      {/* TODO : 헤더로 교체 */}
+      <Description />
       {Object.values(providers).map(({ id, name }) => {
         return (
           <Button
@@ -32,14 +35,16 @@ export default function TempSignIn({
 }
 
 const Button = styled.button`
-  background-color: ${BG.color.primary};
+  background-color: ${COLOR.white};
   color: ${COLOR.black};
-  border: none;
+  border: 2px solde ${COLOR.gray};
   border-radius: 4px;
   padding: 8px 16px;
-  font-size: 1rem;
+  font-size: ${TEXT.size.base};
+  margin-top: ${SPACE[10]};
+  float: right;
   cursor: pointer;
   &:hover {
-    background-color: ${COLOR.gray};
+    background-color: ${COLOR.tertiary};
   }
 `
