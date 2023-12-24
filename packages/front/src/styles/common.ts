@@ -44,6 +44,8 @@ export const BG = {
   color: {
     primary: '#f8f8f8',
     secondary: 'rgba(0, 0, 0, 0.5);',
+    white: '#FFFFFF',
+    black: '#000000',
   },
 } as const
 
@@ -78,13 +80,17 @@ export const WINDOW = {
 } as const
 
 export const SHADOW = {
-  '1': '0 0 2px 2px rgba(0, 0, 0, 0.2)',
-  '2': '0px 3px 8px rgba(0, 0, 0, 0.24)',
-  '3': '0 0 4px 4px rgba(0, 0, 0, 0.2)',
-  '4': '0 0 6px 6px rgba(0, 0, 0, 0.2)',
-  '5': '0 0 8px 8px rgba(0, 0, 0, 0.2)',
-  '6': '0 0 10px 10px rgba(0, 0, 0, 0.2)',
+  sm: '0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.16)',
+  base: '0 0.4rem 0.8rem 0 rgba(0, 0, 0, 0.16)',
+  lg: '0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.16)',
   map: 'rgba(60, 64, 67, 0.3) 0px 1px 2px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px',
+} as const
+
+export const TRANSITION = {
+  to: (property: string) => `${property} 0.2s ease-in-out `,
+  all: 'all 0.2s ease-in-out',
+  fast: 'all 0.1s ease-in-out',
+  slow: 'all 0.5s ease-in-out',
 } as const
 
 const theme = {
