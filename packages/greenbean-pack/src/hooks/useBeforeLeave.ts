@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export type BeforeLeaveEvent = WindowEventHandlersEventMap["beforeunload"];
 /**
@@ -51,4 +51,34 @@ export function useBeforeLeaveMouse(cb: () => void) {
     window.addEventListener("mouseout", handler);
     return () => window.removeEventListener("mouseout", handler);
   }, []);
+}
+
+/**
+ * @description 마우스가 특정 요소를 벗어나거나 들어오는 것을 감지합니다.
+ */
+export function useBeforeLeaveOrEnterMouse<T extends HTMLElement>() {
+  const [isEnter, setIsEnter] = useState(false);
+  const ref = useRef<T>(null);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsEnter(false);
+  }, []);
+
+  const handleMouseEnter = useCallback(() => {
+    setIsEnter(true);
+  }, []);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    ref.current.addEventListener("mouseenter", handleMouseEnter);
+    ref.current.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      if (!ref.current) return;
+      ref.current.removeEventListener("mouseenter", handleMouseEnter);
+      ref.current.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [handleMouseEnter, handleMouseLeave]);
+
+  return { ref, isEnter };
 }
