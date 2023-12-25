@@ -5,17 +5,18 @@ import { COLOR } from '@/styles/common'
 import styled from 'styled-components'
 
 interface AutoCompleteListProps {
-  items: Item[]
+  items?: Item[]
   open: boolean
 }
 // prettier-ignore
 export default function AutoCompleteList({items, open} : AutoCompleteListProps) {
-    return (
+  if(!items) return null
+  return (
         <List $open={open}>
           {items.map((item) => {
             return (
               <ListItem
-                key={item.key}
+                key={item.id}
                 value={item.value}
                 $active={!!item.selected}
                 $open={open}

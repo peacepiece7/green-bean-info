@@ -1,27 +1,18 @@
 'use client'
 import dayjs from 'dayjs'
 import AutoComplete from './AutoComplete'
-import { Item } from '@/hooks/useAutocomplete'
+import { useCategoryQuery } from '@/hooks/useCategoryQuery'
 import { useState } from 'react'
-export default function ExpenseAddForm() {
-  const [items, setItems] = useState([
-    { key: '1', value: '식비', label: '식비' },
-    { key: '2', value: '교통비', label: '교통비' },
-    { key: '43', value: '문화생활', label: '문화생활' },
-    { key: 'ac', value: '기타', label: '기타' },
-  ])
+import { User } from '@/model'
 
-  const handleOnChange = (item: Item) => {
-    setItems((prev) => {
-      return prev.map((prevItem) => {
-        if (prevItem.key === item.key) {
-          return { ...prevItem, selected: true }
-        }
-        return { ...prevItem, selected: false }
-      })
-    })
-  }
+interface ExpenseAddFormProps {
+  user: User
+}
+export default function ExpenseAddForm({ user }: ExpenseAddFormProps) {
+  const [searchQuery, setSearchQuery] = useState('')
+  const { data: items, isLoading } = useCategoryQuery(searchQuery, user.id)
 
+  console.log('items :', items)
   return (
     <div>
       <h2>
@@ -40,7 +31,8 @@ export default function ExpenseAddForm() {
         <AutoComplete
           items={items}
           onSubmit={(item) => console.log(item)}
-          onChange={handleOnChange}
+          onChange={(e) => setSearchQuery(e)}
+          isLoading={isLoading}
         />
         <input type='text' placeholder='금액' />
       </div>

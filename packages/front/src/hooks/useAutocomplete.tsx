@@ -1,14 +1,14 @@
 import { RefObject, useCallback, useEffect, useState } from 'react'
 
 export interface Item {
-  key: string
+  id: string
   value: string
   selected?: boolean
 }
 
 export default function useAutoComplete<T extends HTMLElement>(
   ref: RefObject<T>,
-  items: Item[],
+  items: Item[] | undefined,
   cb: (item: Item) => void,
   onSubmit: (item: Item) => void
 ) {
@@ -18,6 +18,7 @@ export default function useAutoComplete<T extends HTMLElement>(
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       setIdx((prevIdx) => {
+        if (!items) return null
         switch (e.key) {
           case 'ArrowDown':
             return prevIdx === null
@@ -48,7 +49,7 @@ export default function useAutoComplete<T extends HTMLElement>(
   }, [handleKeyDown, ref])
 
   useEffect(() => {
-    if (idx === null) return
+    if (idx === null || !items) return
     cb(items[idx])
   }, [idx])
 

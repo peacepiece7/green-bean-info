@@ -13,7 +13,7 @@ export default function HomeContainer({ user }: HomeContainer) {
   return (
     <div>
       <GNB user={user} />
-      <ExpenseAddForm />
+      <ExpenseAddForm user={user} />
       <Filter />
       <ExpenseList />
     </div>
