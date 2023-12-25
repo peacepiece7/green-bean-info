@@ -1,42 +1,47 @@
 export default {
-  title: "expenses",
-  name: "expenses",
-  type: "document",
+  title: 'expenses',
+  name: 'expenses',
+  type: 'document',
   fields: [
     {
-      title: "User",
-      name: "user",
-      type: "reference",
-      to: [{ type: "yoloUser" }],
+      title: 'User',
+      name: 'user',
+      type: 'reference',
+      to: [{ type: 'yoloUser' }],
     },
     {
-      title: "Category",
-      name: "category",
-      type: "string",
+      title: 'Category',
+      name: 'category',
+      type: 'string',
     },
     {
-      title: "Amount",
-      name: "amount",
-      type: "number",
+      title: 'Amount',
+      name: 'amount',
+      type: 'number',
     },
     {
-      date: "Date",
-      name: "date",
-      type: "date",
+      date: 'Date',
+      name: 'date',
+      type: 'date',
+    },
+    {
+      title: 'Note',
+      name: 'note',
+      type: 'string',
     },
   ],
   preview: {
     select: {
-      name: "user.name",
-      category: "category",
-      date: "date",
+      name: 'user.name',
+      category: 'category',
+      date: 'date',
     },
     prepare(selection) {
-      const { name, category, date } = selection;
+      const { name, category, date } = selection
       return {
         title: `${name} : ${category}`,
         subtitle: `created on ${date}`,
-      };
+      }
     },
   },
-};
+}
