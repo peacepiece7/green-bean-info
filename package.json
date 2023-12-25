@@ -6,7 +6,6 @@
   "scripts": {
     "postinstall": "husky install",
     "admin": "pnpm -F @monorepo/admin",
-    "be": "pnpm -F @monorepo/back",
     "fe": "pnpm -F @monorepo/front",
     "gp": "pnpm -F greenbean-pack",
     "shared": "pnpm -F @monorepo/shared",
