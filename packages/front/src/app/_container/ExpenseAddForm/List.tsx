@@ -7,10 +7,19 @@ import styled from 'styled-components'
 interface AutoCompleteListProps {
   items?: Item[]
   open: boolean
+  isLoading: boolean
 }
 // prettier-ignore
-export default function AutoCompleteList({items, open} : AutoCompleteListProps) {
-  if(!items) return null
+export default function AutoCompleteList({items, open, isLoading} : AutoCompleteListProps) {
+    
+  if(isLoading) return (
+    <List $open={open}>
+      <ListItem $active={false} $open={open}>로딩중...</ListItem>
+    </List>
+  )
+
+  if(!items || !items.length) return null
+
   return (
         <List $open={open}>
           {items.map((item) => {
@@ -31,12 +40,16 @@ export default function AutoCompleteList({items, open} : AutoCompleteListProps) 
 
 const List = styled.ul<{ $open: boolean }>`
   position: absolute;
+  width: 30rem;
   top: 4rem;
-  border: ${({ $open }) => ($open ? '1px solid black' : 'none')};
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: ${({ $open }) => ($open ? '2px solid black' : 'none')};
 `
 
 const ListItem = styled.li<{ $active: boolean; $open: boolean }>`
-  width: 30rem;
+  width: 100%;
   background-color: ${({ $active }) =>
     $active ? COLOR.tertiary : COLOR.white};
   height: ${({ $open }) => ($open ? '2rem' : '0px')};

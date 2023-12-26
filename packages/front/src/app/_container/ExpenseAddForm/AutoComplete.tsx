@@ -65,8 +65,7 @@ export default function AutoComplete({
         }}
         value={inputValue}
       />
-      {isLoading ? <div>로딩중...</div> : null}
-      <AutoCompleteList items={list} open={open} />
+      <AutoCompleteList items={list} open={open} isLoading={!!isLoading} />
     </Container>
   )
 }

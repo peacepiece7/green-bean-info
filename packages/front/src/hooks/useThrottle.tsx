@@ -1,4 +1,4 @@
-import { useDeferredValue, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export function useThrottle(value: string, delay: number) {
   const [throttledValue, setThrottledValue] = useState(value)
@@ -20,5 +20,5 @@ export function useThrottle(value: string, delay: number) {
     }
   }, [value, delay])
 
-  return useDeferredValue(throttledValue)
+  return throttledValue
 }
