@@ -9,7 +9,7 @@ export interface Item {
 export default function useAutoComplete<T extends HTMLElement>(
   ref: RefObject<T>,
   items: Item[] | undefined,
-  cb: (item: Item) => void,
+  onChamnge: (item: Item) => void,
   onSubmit: (item: Item) => void
 ) {
   const [open, setOpen] = useState(false)
@@ -17,8 +17,17 @@ export default function useAutoComplete<T extends HTMLElement>(
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
+      if (!items) {
+        setIdx(null)
+        return
+      }
+
+      if (e.key === 'Enter' && idx !== null) {
+        onSubmit(items[idx])
+        ref.current?.blur()
+      }
+
       setIdx((prevIdx) => {
-        if (!items) return null
         switch (e.key) {
           case 'ArrowDown':
             return prevIdx === null
@@ -26,18 +35,13 @@ export default function useAutoComplete<T extends HTMLElement>(
               : Math.min(prevIdx + 1, items.length - 1)
           case 'ArrowUp':
             return prevIdx === null ? 0 : Math.max(prevIdx - 1, 0)
-          case 'Enter':
-            if (prevIdx !== null) {
-              onSubmit(items[prevIdx])
-              ref.current?.blur()
-            }
-            return prevIdx
+
           default:
             return prevIdx
         }
       })
     },
-    [items, ref, onSubmit]
+    [items, ref, onSubmit, idx]
   )
 
   useEffect(() => {
@@ -50,7 +54,7 @@ export default function useAutoComplete<T extends HTMLElement>(
 
   useEffect(() => {
     if (idx === null || !items) return
-    cb(items[idx])
+    onChamnge(items[idx])
   }, [idx])
 
   return { open, setOpen }

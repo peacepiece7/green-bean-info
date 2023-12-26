@@ -11,7 +11,8 @@ interface AutoCompleteListProps {
 }
 // prettier-ignore
 export default function AutoCompleteList({items, open, isLoading} : AutoCompleteListProps) {
-    
+
+
   if(isLoading) return (
     <List $open={open}>
       <ListItem $active={false} $open={open}>로딩중...</ListItem>
@@ -45,7 +46,7 @@ const List = styled.ul<{ $open: boolean }>`
   left: 0;
   right: 0;
   margin: auto;
-  border: ${({ $open }) => ($open ? '2px solid black' : 'none')};
+  border: ${({ $open }) => ($open ? '1px solid black' : 'none')};
 `
 
 const ListItem = styled.li<{ $active: boolean; $open: boolean }>`
