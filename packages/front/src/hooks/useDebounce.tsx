@@ -22,10 +22,7 @@ export const useDebounceFirst = <T extends object | string>(
 }
 
 function useDebounce<A>(cb: (arg: A) => void, delay?: number): (arg: A) => void
-function useDebounce<A extends unknown[]>(
-  cb: (...args: A) => void,
-  delay: number = 2000
-) {
+function useDebounce<A extends unknown[]>(cb: (...args: A) => void, delay: number = 2000) {
   const argsRef = useRef<A>()
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
 

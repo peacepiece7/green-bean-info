@@ -1,15 +1,12 @@
 import { AddExpenseBody } from '@/app/api/expenses/route'
 import { sanity } from '@/service/sanity'
 
-export async function addExpeneseTransaction(
-  userId: string | null,
-  { content, cost, date, category }: AddExpenseBody
-) {
+export async function addExpeneseTransaction(userId: string | null, { content, cost, date, category }: AddExpenseBody) {
   try {
     if (!cost || !userId || !date || !category) {
       return {
         message: 'Missing required fields',
-        code: 22,
+        code: 22
       }
     }
     await sanity.client.create({
@@ -20,18 +17,18 @@ export async function addExpeneseTransaction(
       content,
       user: {
         _type: 'reference',
-        _ref: userId,
-      },
+        _ref: userId
+      }
     })
     return {
       message: 'Expense added successfully',
-      code: 0,
+      code: 0
     }
   } catch (error) {
     console.error(error)
     return {
       message: 'Something went wrong',
-      code: 1,
+      code: 1
     }
   }
 }

@@ -1,4 +1,4 @@
-import user from "./user";
-import expenses from "./expenses";
+import user from './user'
+import expenses from './expenses'
 
-export const schemaTypes = [user, expenses];
+export const schemaTypes = [user, expenses]

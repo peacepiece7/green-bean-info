@@ -18,10 +18,10 @@ export default function GNBDropdown({ open }: GNBDropdownProps) {
         <Nav>
           <List $virtical={true}>
             <Item>
-              <Link to='/my-page'>마이 페이지</Link>
+              <Link to="/my-page">마이 페이지</Link>
             </Item>
             <Item>
-              <Link to='/analyze'>소비 현황 분석하기</Link>
+              <Link to="/analyze">소비 현황 분석하기</Link>
             </Item>
           </List>
         </Nav>

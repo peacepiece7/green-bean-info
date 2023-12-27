@@ -8,9 +8,7 @@ interface ExpenseListProps {
   user: User
 }
 export default function ExpenseList({ user }: ExpenseListProps) {
-  const { expenseList, triggerRef, isLoading } = useExpensesListInfiniteQuery(
-    user.id
-  )
+  const { expenseList, triggerRef, isLoading } = useExpensesListInfiniteQuery(user.id)
 
   const handleOnEdit = (expense: Expenses) => {
     console.log(expense)
@@ -21,11 +19,7 @@ export default function ExpenseList({ user }: ExpenseListProps) {
 
   return (
     <>
-      <List
-        expenses={expenseList}
-        onEdit={handleOnEdit}
-        onDelete={handleOnDelete}
-      />
+      <List expenses={expenseList} onEdit={handleOnEdit} onDelete={handleOnDelete} />
       {isLoading && <div>loading...</div>}
       <div ref={triggerRef} />
     </>

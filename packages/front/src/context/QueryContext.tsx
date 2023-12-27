@@ -6,16 +6,14 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: false,
       staleTime: 6000,
-      retry: 0,
-    },
-  },
+      retry: 0
+    }
+  }
 })
 
 interface QueryContextProps {
   children: React.ReactNode
 }
 export default function QueryContext({ children }: QueryContextProps) {
-  return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  )
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 }

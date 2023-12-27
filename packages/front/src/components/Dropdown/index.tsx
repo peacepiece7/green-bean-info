@@ -17,7 +17,7 @@ interface DropdownProps {
 export default function Dropdown({
   open,
   options = { height: 200, width: 200, pos: 'right' },
-  children,
+  children
 }: DropdownProps) {
   const { width, height, pos } = options
   return (

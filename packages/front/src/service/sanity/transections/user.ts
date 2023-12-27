@@ -9,7 +9,7 @@ export async function addUser(user: User) {
       _type: 'yoloUser',
       name: username,
       email,
-      image,
+      image
     })
   } catch (error) {
     console.error(error)

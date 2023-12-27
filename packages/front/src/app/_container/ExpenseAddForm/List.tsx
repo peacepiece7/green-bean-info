@@ -51,8 +51,7 @@ const List = styled.ul<{ $open: boolean }>`
 
 const ListItem = styled.li<{ $active: boolean; $open: boolean }>`
   width: 100%;
-  background-color: ${({ $active }) =>
-    $active ? COLOR.tertiary : COLOR.white};
+  background-color: ${({ $active }) => ($active ? COLOR.tertiary : COLOR.white)};
   height: ${({ $open }) => ($open ? '2rem' : '0px')};
   z-index: 1;
   overflow: hidden;

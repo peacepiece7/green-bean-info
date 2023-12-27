@@ -6,24 +6,24 @@ export default {
     {
       title: 'Name',
       name: 'name',
-      type: 'string',
+      type: 'string'
     },
     {
       title: 'Email',
       name: 'email',
       type: 'string',
-      validation: (Rule) => Rule.email(),
+      validation: (Rule) => Rule.email()
     },
     {
       title: 'Image',
       name: 'image',
-      type: 'string',
-    },
+      type: 'string'
+    }
   ],
   preview: {
     select: {
       title: 'name',
-      subtitle: 'email',
-    },
-  },
+      subtitle: 'email'
+    }
+  }
 }

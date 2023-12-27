@@ -30,9 +30,7 @@ export default function useAutoComplete<T extends HTMLElement>(
       setIdx((prevIdx) => {
         switch (e.key) {
           case 'ArrowDown':
-            return prevIdx === null
-              ? 0
-              : Math.min(prevIdx + 1, items.length - 1)
+            return prevIdx === null ? 0 : Math.min(prevIdx + 1, items.length - 1)
           case 'ArrowUp':
             return prevIdx === null ? 0 : Math.max(prevIdx - 1, 0)
 

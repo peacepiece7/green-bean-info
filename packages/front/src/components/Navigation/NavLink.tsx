@@ -9,12 +9,7 @@ interface LinkProps {
   disabled?: boolean
 }
 
-export const NavLink = ({
-  children,
-  to,
-  onClick,
-  disabled = false,
-}: LinkProps) => {
+export const NavLink = ({ children, to, onClick, disabled = false }: LinkProps) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (disabled) {
       e.preventDefault()

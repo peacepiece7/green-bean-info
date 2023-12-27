@@ -29,13 +29,13 @@ export async function getExpensesTransaction(
     return {
       code: 0,
       data: response,
-      message: 'Successfully fetched expenses',
+      message: 'Successfully fetched expenses'
     }
   } catch (error) {
     return {
       code: 1,
       data: null,
-      message: 'Error occured while fetching expenses',
+      message: 'Error occured while fetching expenses'
     }
   }
 }

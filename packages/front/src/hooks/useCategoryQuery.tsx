@@ -13,7 +13,7 @@ export const useCategoryQuery = (queryParam: string, userId: string) => {
   const res = useQuery<ResponseItem[]>({
     queryKey: ['category', query],
     queryFn: () => fetcher(`/api/categories/${query}?userId=${userId}`),
-    enabled: !!query,
+    enabled: !!query
   })
   return res
 }

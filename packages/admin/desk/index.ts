@@ -1,13 +1,13 @@
 /**
  * Desk structure overrides
  */
-import { ListItemBuilder, StructureResolver } from "sanity/desk";
-import collections from "./collectionStructure";
-import colorThemes from "./colorThemeStructure";
-import home from "./homeStructure";
-import pages from "./pageStructure";
-import products from "./productStructure";
-import settings from "./settingStructure";
+import { ListItemBuilder, StructureResolver } from 'sanity/desk'
+import collections from './collectionStructure'
+import colorThemes from './colorThemeStructure'
+import home from './homeStructure'
+import pages from './pageStructure'
+import products from './productStructure'
+import settings from './settingStructure'
 
 /**
  * Desk structure overrides
@@ -24,27 +24,20 @@ import settings from "./settingStructure";
 
 // If you add document types to desk structure manually, you can add them to this function to prevent duplicates in the root pane
 const hiddenDocTypes = (listItem: ListItemBuilder) => {
-  const id = listItem.getId();
+  const id = listItem.getId()
 
   if (!id) {
-    return false;
+    return false
   }
 
-  return ![
-    "collection",
-    "colorTheme",
-    "home",
-    "media.tag",
-    "page",
-    "product",
-    "productVariant",
-    "settings",
-  ].includes(id);
-};
+  return !['collection', 'colorTheme', 'home', 'media.tag', 'page', 'product', 'productVariant', 'settings'].includes(
+    id
+  )
+}
 
 export const structure: StructureResolver = (S, context) =>
   S.list()
-    .title("Content")
+    .title('Content')
     .items([
       home(S, context),
       pages(S, context),
@@ -56,5 +49,5 @@ export const structure: StructureResolver = (S, context) =>
       S.divider(),
       settings(S, context),
       S.divider(),
-      ...S.documentTypeListItems().filter(hiddenDocTypes),
-    ]);
+      ...S.documentTypeListItems().filter(hiddenDocTypes)
+    ])
