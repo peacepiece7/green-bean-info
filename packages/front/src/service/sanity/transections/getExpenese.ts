@@ -20,7 +20,8 @@ export async function getExpensesTransaction(
             "date" : date,
             "cost" : amount,
             "category" : category,
-            "content" : content
+            "content" : content,
+            ...
         }
       }`
     const response = await sanity.client.fetch(query)

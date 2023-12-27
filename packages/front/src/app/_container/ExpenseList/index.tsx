@@ -1,26 +1,25 @@
 'use client'
 
-import { Expenses, User } from '@/model'
+import { Expenses } from '@/model'
 import { useExpensesListInfiniteQuery } from '@/hooks/useExpensesListQuery'
 import List from './List'
 
-interface ExpenseListProps {
-  user: User
-}
-export default function ExpenseList({ user }: ExpenseListProps) {
-  const { expenseList, triggerRef, isLoading } = useExpensesListInfiniteQuery(user.id)
+export default function ExpenseList() {
+  const { expenseList, triggerRef, isFetching, updateExpenseMutate, deleteExpenseMutate } =
+    useExpensesListInfiniteQuery()
 
   const handleOnEdit = (expense: Expenses) => {
-    console.log(expense)
+    updateExpenseMutate(expense)
   }
-  const handleOnDelete = (id: number) => {
-    console.log(id)
+
+  const handleOnDelete = (expense: Expenses) => {
+    deleteExpenseMutate(expense.id)
   }
 
   return (
     <>
       <List expenses={expenseList} onEdit={handleOnEdit} onDelete={handleOnDelete} />
-      {isLoading && <div>loading...</div>}
+      {isFetching && <div>Fetching...</div>}
       <div ref={triggerRef} />
     </>
   )

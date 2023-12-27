@@ -1,8 +1,11 @@
 import { fetcher } from '@/client/fetcher'
 import { Expenses } from '@/model'
-import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
+import { useMutation, useSuspenseInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { useIntersectionObserver } from './useIntersectionObserver'
 import { useEffect, useRef } from 'react'
+import { deleteExpenseApi, updateExpenseApi } from '@/client/expenses'
+import { useSetRecoilState } from 'recoil'
+import { expenseIsFetching } from '@/store/expenseFetchingState'
 
 export interface ExpensesListData {
   content: Expenses[]
@@ -12,20 +15,20 @@ export interface ExpensesListData {
   totalPage: number
 }
 
-export const useExpensesListInfiniteQuery = (userId: string | null) => {
-  const { data, fetchNextPage, isLoading } =
-    useSuspenseInfiniteQuery<ExpensesListData>({
-      queryKey: ['expenses'],
-      queryFn: ({ pageParam }) =>
-        fetcher(`/api/expenses?userId=${userId}&page=${pageParam}`),
-      getNextPageParam: (lastPage) => {
-        if (lastPage.totalPage > lastPage.currentPage) {
-          return lastPage.currentPage + 1
-        }
-        return undefined
-      },
-      initialPageParam: 0,
-    })
+export const useExpensesListInfiniteQuery = () => {
+  const queryClient = useQueryClient()
+  const setIsFetching = useSetRecoilState(expenseIsFetching)
+  const { data, fetchNextPage, isLoading, isFetching } = useSuspenseInfiniteQuery<ExpensesListData>({
+    queryKey: ['expenses'],
+    queryFn: ({ pageParam }) => fetcher(`/api/expenses?page=${pageParam}`),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.totalPage > lastPage.currentPage) {
+        return lastPage.currentPage + 1
+      }
+      return undefined
+    },
+    initialPageParam: 0
+  })
 
   const ref = useRef<HTMLDivElement>(null)
   const entry = useIntersectionObserver(ref, {})
@@ -34,7 +37,45 @@ export const useExpensesListInfiniteQuery = (userId: string | null) => {
     if (entry) fetchNextPage()
   }, [entry])
 
+  const errorHandler = (error: Error) => {
+    process.env.NODE_ENV === 'development' && console.error(error)
+    alert(error.message)
+  }
+
+  const updateExpense = useMutation({
+    mutationFn: updateExpenseApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['expenses']
+      })
+    },
+    onError: errorHandler,
+    onSettled: () => {
+      setIsFetching(false)
+    }
+  })
+
+  const deleteExpense = useMutation({
+    mutationFn: deleteExpenseApi,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['expenses']
+      })
+    },
+    onError: errorHandler,
+    onSettled: () => {
+      setIsFetching(false)
+    }
+  })
+
   const expenseList = data.pages.flatMap((page) => [...page.content])
 
-  return { expenseList, triggerRef: ref, isLoading }
+  return {
+    expenseList,
+    triggerRef: ref,
+    isFetching,
+    isLoading,
+    updateExpenseMutate: updateExpense.mutate,
+    deleteExpenseMutate: deleteExpense.mutate
+  }
 }

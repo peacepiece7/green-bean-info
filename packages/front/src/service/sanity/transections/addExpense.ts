@@ -1,7 +1,7 @@
-import { AddExpenseBody } from '@/app/api/expenses/route'
+import { Expenses } from '@/model'
 import { sanity } from '@/service/sanity'
 
-export async function addExpeneseTransaction(userId: string | null, { content, cost, date, category }: AddExpenseBody) {
+export async function addExpeneseTransaction(userId: string, { content, cost, date, category }: Omit<Expenses, 'id'>) {
   try {
     if (!cost || !userId || !date || !category) {
       return {

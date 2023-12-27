@@ -1,18 +1,15 @@
 import { fetchCategoriesTransaction } from '@/service/sanity/transections/fetchCategories'
+import { withSessionUser } from '@/util/session'
 import { NextRequest, NextResponse } from 'next/server'
 
-interface Context {
+interface GetContext {
   params: { query: string }
 }
-export async function GET(req: NextRequest, ctx: Context) {
-  const searchParams = req.nextUrl.searchParams
-  const userId = searchParams.get('userId')
-  const { query } = ctx.params
-  const categoryList = await fetchCategoryList(userId, query)
-  return NextResponse.json(categoryList)
-}
-
-async function fetchCategoryList(userId: string | null, query: string) {
-  if (!userId) return null
-  return fetchCategoriesTransaction(userId, query)
+export async function GET(_req: NextRequest, ctx: GetContext) {
+  return withSessionUser(async (user) => {
+    const { id: userId } = user
+    const { query } = ctx.params
+    const categoryList = await fetchCategoriesTransaction(userId, query)
+    return NextResponse.json(categoryList)
+  })
 }

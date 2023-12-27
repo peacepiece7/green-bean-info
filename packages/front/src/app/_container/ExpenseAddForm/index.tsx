@@ -3,12 +3,12 @@ import dayjs from 'dayjs'
 import AutoComplete from './AutoComplete'
 import { useCategoryQuery } from '@/hooks/useCategoryQuery'
 import { useState } from 'react'
-import { User } from '@/model'
 import styled from 'styled-components'
 import { SPACE } from '@/styles/common'
 import { usePersistCategory } from '@/hooks/usePersistCategory'
 import { useForm } from 'react-hook-form'
 import { fetcher } from '@/client/fetcher'
+import { dateToISOString } from '@/util'
 // import { fetcher } from '@/client/fetcher'
 
 interface AddExpenseBody {
@@ -16,17 +16,18 @@ interface AddExpenseBody {
   cost: number
   content: string
 }
-interface ExpenseAddFormProps {
-  user: User
-}
-export default function ExpenseAddForm({ user }: ExpenseAddFormProps) {
+
+export default function ExpenseAddForm() {
   const [searchQuery, setSearchQuery] = useState('')
-  const { data: items, isLoading } = useCategoryQuery(searchQuery, user.id)
+  const { data: items, isLoading } = useCategoryQuery(searchQuery)
   const { state, setState } = usePersistCategory()
   const { register, handleSubmit } = useForm<AddExpenseBody>()
 
   const onSubmit = (body: AddExpenseBody) => {
-    fetcher(`/api/expenses?userId=${user.id}`, {
+    setState(searchQuery)
+    body.date = dateToISOString(body.date)
+    // TODO : API로 뺍시다.
+    fetcher(`/api/expenses`, {
       method: 'POST',
       body: JSON.stringify({ ...body, category: searchQuery })
     })
@@ -44,7 +45,6 @@ export default function ExpenseAddForm({ user }: ExpenseAddFormProps) {
       <AutoComplete
         items={items}
         onSubmit={(item) => {
-          setState(item.value)
           setSearchQuery(item.value)
         }}
         onChange={(e) => setSearchQuery(e)}

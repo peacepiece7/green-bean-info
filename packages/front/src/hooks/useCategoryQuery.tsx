@@ -8,11 +8,11 @@ interface ResponseItem {
   value: string
 }
 
-export const useCategoryQuery = (queryParam: string, userId: string) => {
+export const useCategoryQuery = (queryParam: string) => {
   const query = useThrottle(queryParam, 1000)
   const res = useQuery<ResponseItem[]>({
     queryKey: ['category', query],
-    queryFn: () => fetcher(`/api/categories/${query}?userId=${userId}`),
+    queryFn: () => fetcher(`/api/categories/${query}`),
     enabled: !!query
   })
   return res
