@@ -90,11 +90,6 @@ export const ResetStyle = createGlobalStyle`
     font: inherit;
   }
 
-  /* 행 속성이 없는 textarea가 너무 작지 않도록 합니다. */
-  textarea:not([rows]) {
-    min-height: 10em;
-  }
-
   /* 고정된 모든 항목에는 여분의 스크롤 여백이 있어야 합니다. */
   :target {
     scroll-margin-block: 5ex;

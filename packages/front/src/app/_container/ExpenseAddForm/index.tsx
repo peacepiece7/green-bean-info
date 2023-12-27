@@ -28,15 +28,15 @@ export default function ExpenseAddForm({ user }: ExpenseAddFormProps) {
   const onSubmit = (body: AddExpenseBody) => {
     fetcher(`/api/expenses?userId=${user.id}`, {
       method: 'POST',
-      body: JSON.stringify({ ...body, category: searchQuery }),
+      body: JSON.stringify({ ...body, category: searchQuery })
     })
   }
 
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
-      <DateInput
-        type='date'
-        placeholder='날짜'
+      <input
+        type="date"
+        placeholder="날짜"
         defaultValue={dayjs(Date.now()).format('YYYY-MM-DD')}
         required
         {...register('date')}
@@ -51,14 +51,9 @@ export default function ExpenseAddForm({ user }: ExpenseAddFormProps) {
         isLoading={isLoading}
         recommendStateBeforeChange={state}
       />
-      <CostInput
-        type='number'
-        placeholder='금액'
-        required
-        {...register('cost')}
-      />
-      <TextArea placeholder='내용' rows={2} {...register('content')} />
-      <SubmitInput type='submit' />
+      <input type="number" placeholder="금액" required {...register('cost')} />
+      <input placeholder="내용" {...register('content')} />
+      <input type="submit" />
     </FormContainer>
   )
 }
@@ -67,23 +62,8 @@ const FormContainer = styled.form`
   display: flex;
   justify-content: center;
   input {
+    width: 15rem;
+    height: 4rem;
     margin: 0 ${SPACE[4]};
   }
-`
-const DateInput = styled.input`
-  width: 15rem;
-  height: 4rem;
-`
-
-const CostInput = styled.input`
-  width: 15rem;
-  height: 4rem;
-`
-
-const TextArea = styled.textarea`
-  width: 15rem;
-  height: 4rem;
-`
-const SubmitInput = styled.input`
-  width: 15rem;
 `

@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
   const userId = searchParams.get('userId')
   const body: AddExpenseBody = await req.json()
   const response = await addExpenses(userId, body)
-  await new Promise((res) => setTimeout(res, 5000))
+
   if (response.code === 0) {
     return NextResponse.json({ message: 'Expense added successfully' })
   } else {

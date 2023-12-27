@@ -17,26 +17,19 @@ export default function AutoComplete({
   onSubmit,
   onChange: onChageInput,
   isLoading,
-  recommendStateBeforeChange: state,
+  recommendStateBeforeChange: state
 }: AutoCompleteProps) {
   const [list, setList] = useState<Item[] | undefined>()
   const [inputValue, setInputValue] = useState('')
   // * debounce callback을 등록합니다.
   const inputRef = useRef<HTMLInputElement>(null)
-  const { open, setOpen } = useAutoComplete<HTMLInputElement>(
-    inputRef,
-    list,
-    handleKeyDown,
-    handleSubmit
-  )
+  const { open, setOpen } = useAutoComplete<HTMLInputElement>(inputRef, list, handleKeyDown, handleSubmit)
 
   function handleKeyDown(item: Item) {
     setList(
       (prev) =>
         prev?.map((prevItem) =>
-          prevItem.id === item.id
-            ? { ...prevItem, selected: true }
-            : { ...prevItem, selected: false }
+          prevItem.id === item.id ? { ...prevItem, selected: true } : { ...prevItem, selected: false }
         )
     )
   }
@@ -52,7 +45,7 @@ export default function AutoComplete({
       const recommendList = state?.map((item) => ({
         id: item,
         value: item,
-        selected: false,
+        selected: false
       }))
       setList(recommendList)
     } else {
@@ -64,9 +57,9 @@ export default function AutoComplete({
     <Container>
       <Input
         ref={inputRef}
-        type='text'
-        placeholder='카테고리'
-        autoComplete='off'
+        type="text"
+        placeholder="카테고리"
+        autoComplete="off"
         onBlur={() => setOpen(false)}
         onFocus={() => setOpen(true)}
         onChange={(e) => {
