@@ -2,7 +2,7 @@ import { Expenses } from '@/model'
 import { fetcher } from '@/client/fetcher'
 
 export const addExpenseApi = (expense: Omit<Expenses, 'id'>) => {
-  return fetcher(`/api/expensesfffffff`, {
+  return fetcher(`/api/expenses`, {
     method: 'POST',
     body: JSON.stringify(expense)
   })
