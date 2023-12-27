@@ -15,7 +15,6 @@ export default async function HomePage() {
 
   return (
     <main>
-      {/* TODO : Props Drilling 해결합시다. (이번엔 recoil 쓰자) */}
       <HomeContainer user={session.user} />
     </main>
   )

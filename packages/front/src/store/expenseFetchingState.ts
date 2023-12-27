@@ -1,6 +1,6 @@
 import { atom } from 'recoil'
 
-export const expenseIsFetching = atom({
+export const expenseAsyncState = atom({
   key: 'expenseIsFetchingState',
   default: false
 })

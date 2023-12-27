@@ -1,5 +1,12 @@
 import { Expenses } from '@/model'
-import { fetcher } from '../fetcher'
+import { fetcher } from '@/client/fetcher'
+
+export const addExpenseApi = (expense: Omit<Expenses, 'id'>) => {
+  return fetcher(`/api/expensesfffffff`, {
+    method: 'POST',
+    body: JSON.stringify(expense)
+  })
+}
 
 export const updateExpenseApi = (expense: Expenses) => {
   return fetcher(`/api/expenses`, {

@@ -21,5 +21,5 @@ export function usePersistCategory() {
     }
   }
 
-  return { state, setState: beforeSetState }
+  return { persistState: state, setPersist: beforeSetState }
 }

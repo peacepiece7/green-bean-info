@@ -41,7 +41,7 @@ export default function AutoCompleteList({items, open, isLoading} : AutoComplete
 
 const List = styled.ul<{ $open: boolean }>`
   position: absolute;
-  width: 30rem;
+  width: 100%;
   top: 4rem;
   left: 0;
   right: 0;

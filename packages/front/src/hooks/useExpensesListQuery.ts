@@ -3,9 +3,9 @@ import { Expenses } from '@/model'
 import { useMutation, useSuspenseInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { useIntersectionObserver } from './useIntersectionObserver'
 import { useEffect, useRef } from 'react'
-import { deleteExpenseApi, updateExpenseApi } from '@/client/expenses'
+import { addExpenseApi, deleteExpenseApi, updateExpenseApi } from '@/client/expenses'
 import { useSetRecoilState } from 'recoil'
-import { expenseIsFetching } from '@/store/expenseFetchingState'
+import { expenseAsyncState } from '@/store/expenseFetchingState'
 
 export interface ExpensesListData {
   content: Expenses[]
@@ -17,7 +17,7 @@ export interface ExpensesListData {
 
 export const useExpensesListInfiniteQuery = () => {
   const queryClient = useQueryClient()
-  const setIsFetching = useSetRecoilState(expenseIsFetching)
+  const setIsFetching = useSetRecoilState(expenseAsyncState)
   const { data, fetchNextPage, isLoading, isFetching } = useSuspenseInfiniteQuery<ExpensesListData>({
     queryKey: ['expenses'],
     queryFn: ({ pageParam }) => fetcher(`/api/expenses?page=${pageParam}`),
@@ -41,6 +41,19 @@ export const useExpensesListInfiniteQuery = () => {
     process.env.NODE_ENV === 'development' && console.error(error)
     alert(error.message)
   }
+
+  const addExpense = useMutation({
+    mutationFn: addExpenseApi,
+    onError: errorHandler,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['expenses']
+      })
+    },
+    onSettled: () => {
+      setIsFetching(false)
+    }
+  })
 
   const updateExpense = useMutation({
     mutationFn: updateExpenseApi,
@@ -76,6 +89,7 @@ export const useExpensesListInfiniteQuery = () => {
     isFetching,
     isLoading,
     updateExpenseMutate: updateExpense.mutate,
-    deleteExpenseMutate: deleteExpense.mutate
+    deleteExpenseMutate: deleteExpense.mutate,
+    addExpenseMutate: addExpense.mutate
   }
 }

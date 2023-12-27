@@ -7,9 +7,10 @@ import styled from 'styled-components'
 import { SPACE } from '@/styles/common'
 import { usePersistCategory } from '@/hooks/usePersistCategory'
 import { useForm } from 'react-hook-form'
-import { fetcher } from '@/client/fetcher'
 import { dateToISOString } from '@/util'
-// import { fetcher } from '@/client/fetcher'
+import { useRecoilState } from 'recoil'
+import { expenseAsyncState } from '@/store/expenseFetchingState'
+import { useExpensesListMutation } from '@/hooks/mutation/expense'
 
 interface AddExpenseBody {
   date: string
@@ -19,18 +20,21 @@ interface AddExpenseBody {
 
 export default function ExpenseAddForm() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [isReset, setIsReset] = useState(false)
   const { data: items, isLoading } = useCategoryQuery(searchQuery)
-  const { state, setState } = usePersistCategory()
-  const { register, handleSubmit } = useForm<AddExpenseBody>()
+  const { addExpenseMutate } = useExpensesListMutation()
+  const [isFetching, setIsFetching] = useRecoilState(expenseAsyncState)
+  const { persistState, setPersist } = usePersistCategory()
+  const { register, reset, handleSubmit } = useForm<AddExpenseBody>()
 
   const onSubmit = (body: AddExpenseBody) => {
-    setState(searchQuery)
+    if (isFetching) return
     body.date = dateToISOString(body.date)
-    // TODO : API로 뺍시다.
-    fetcher(`/api/expenses`, {
-      method: 'POST',
-      body: JSON.stringify({ ...body, category: searchQuery })
-    })
+    addExpenseMutate({ ...body, category: searchQuery })
+    setIsFetching(true)
+    setPersist(searchQuery)
+    reset()
+    setIsReset(true)
   }
 
   return (
@@ -44,12 +48,15 @@ export default function ExpenseAddForm() {
       />
       <AutoComplete
         items={items}
-        onSubmit={(item) => {
-          setSearchQuery(item.value)
-        }}
-        onChange={(e) => setSearchQuery(e)}
+        recommendStateBeforeChange={persistState}
         isLoading={isLoading}
-        recommendStateBeforeChange={state}
+        onSelect={(e) => {
+          setIsReset(false)
+          setSearchQuery(e)
+        }}
+        onEnter={(item) => setSearchQuery(item.value)}
+        // onClick
+        reset={isReset}
       />
       <input type="number" placeholder="금액" required {...register('cost')} />
       <input placeholder="내용" {...register('content')} />
@@ -61,7 +68,7 @@ export default function ExpenseAddForm() {
 const FormContainer = styled.form`
   display: flex;
   justify-content: center;
-  input {
+  & > input {
     width: 15rem;
     height: 4rem;
     margin: 0 ${SPACE[4]};

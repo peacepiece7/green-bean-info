@@ -7,17 +7,19 @@ import AutoCompleteList from './List'
 
 interface AutoCompleteProps {
   items?: Item[]
-  onSubmit: (item: Item) => void
-  onChange?: (value: string) => void
+  onEnter: (item: Item) => void
+  onSelect?: (value: string) => void
   isLoading?: boolean
   recommendStateBeforeChange?: string[]
+  reset: boolean
 }
 export default function AutoComplete({
   items,
-  onSubmit,
-  onChange: onChageInput,
+  onEnter,
+  onSelect: onSelectList,
   isLoading,
-  recommendStateBeforeChange: state
+  recommendStateBeforeChange: state,
+  reset
 }: AutoCompleteProps) {
   const [list, setList] = useState<Item[] | undefined>()
   const [inputValue, setInputValue] = useState('')
@@ -35,8 +37,9 @@ export default function AutoComplete({
   }
 
   function handleSubmit(item: Item) {
+    inputRef.current!.value = ''
     setInputValue(item.value)
-    onSubmit(item)
+    onEnter(item)
   }
 
   // * Open 상태이고, 인풋 창이 비었을 때, 추천 카테고리를 보여줍니다.
@@ -53,6 +56,12 @@ export default function AutoComplete({
     }
   }, [inputValue, open, state, items])
 
+  useEffect(() => {
+    if (reset) {
+      setInputValue('')
+    }
+  }, [reset])
+
   return (
     <Container>
       <Input
@@ -64,7 +73,7 @@ export default function AutoComplete({
         onFocus={() => setOpen(true)}
         onChange={(e) => {
           setInputValue(e.target.value)
-          onChageInput && onChageInput(e.target.value)
+          onSelectList && onSelectList(e.target.value)
         }}
         value={inputValue}
         required
@@ -76,8 +85,10 @@ export default function AutoComplete({
 
 const Container = styled.div`
   position: relative;
+  width: 30rem;
 `
 const Input = styled.input`
-  width: 30rem;
+  display: inline-block;
+  width: 100%;
   height: 4rem;
 `

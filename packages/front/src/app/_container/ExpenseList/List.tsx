@@ -1,7 +1,7 @@
 'use client'
 
 import { Expenses } from '@/model'
-import { expenseIsFetching } from '@/store/expenseFetchingState'
+import { expenseAsyncState } from '@/store/expenseFetchingState'
 import { SPACE, TEXT } from '@/styles/common'
 import dayjs from 'dayjs'
 import { useRef } from 'react'
@@ -14,7 +14,7 @@ interface ListProps {
   onEdit: (expense: Expenses) => void
 }
 export default function List({ expenses, onEdit, onDelete }: ListProps) {
-  const [isFetching, setIsFetching] = useRecoilState(expenseIsFetching)
+  const [isFetching, setIsFetching] = useRecoilState(expenseAsyncState)
   const ref = useRef<HTMLUListElement>(null)
   const handleOnSubmit = (id: string, cb: (expense: Expenses) => void) => {
     setIsFetching(true)
