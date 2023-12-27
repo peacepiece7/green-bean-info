@@ -12,7 +12,7 @@ class Sanity {
       dataset: process.env.DATASET,
       apiVersion: process.env.API_VERSION,
       token: process.env.SECRET_TOKEN,
-      useCdn: false,
+      useCdn: false
     })
   }
 }
@@ -24,8 +24,8 @@ export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_OAUTH_ID!,
-      clientSecret: process.env.GOOGLE_OAUTH_SECRET!,
-    }),
+      clientSecret: process.env.GOOGLE_OAUTH_SECRET!
+    })
   ],
   // TODO : Yup이나 Zod등 유효성 검사
   callbacks: {
@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
       session.user = {
         ...user,
         username: user?.email?.split('@')[0] || '',
-        id: jwt.id as string,
+        id: jwt.id as string
       }
       return session
     },
@@ -47,16 +47,16 @@ export const authOptions: NextAuthOptions = {
         id,
         email: email,
         username: name,
-        image: image,
+        image: image
       })
       return true
     },
     async jwt({ token, user }) {
       if (user) token.id = user.id
       return token
-    },
+    }
   },
   pages: {
-    signIn: '/auth/signin',
-  },
+    signIn: '/auth/signin'
+  }
 }

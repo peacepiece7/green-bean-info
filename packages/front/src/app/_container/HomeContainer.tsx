@@ -5,6 +5,7 @@ import { User } from '@/model'
 import ExpenseAddForm from './ExpenseAddForm'
 import ExpenseList from './ExpenseList'
 import Filter from './Filter'
+import { Suspense } from 'react'
 
 interface HomeContainer {
   user: User
@@ -15,7 +16,8 @@ export default function HomeContainer({ user }: HomeContainer) {
       <GNB user={user} />
       <ExpenseAddForm />
       <Filter />
-      <ExpenseList />
+      {/* TODO : CSR로 동작하게 막아뒀습니다. SSRSuspense같은 이름의 컴포넌트로 변경합시다. */}
+      <Suspense fallback={<div>loading...</div>}>{typeof window === 'undefined' ? null : <ExpenseList />}</Suspense>
     </div>
   )
 }

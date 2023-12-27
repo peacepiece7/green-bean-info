@@ -10,13 +10,13 @@ export const COLOR = {
 
   error: '#F14646',
   warning: '#EF8523',
-  success: '#31A115',
+  success: '#31A115'
 } as const
 
 export const TEXT = {
   color: {
     primary: '#212121',
-    secondary: '#454f5d',
+    secondary: '#454f5d'
   },
   size: {
     xs: '1.4rem',
@@ -29,15 +29,15 @@ export const TEXT = {
     '4xl': '3.5rem',
     '5xl': '4rem',
     '6xl': '4.5rem',
-    '7xl': '5rem',
-  },
+    '7xl': '5rem'
+  }
 } as const
 
 export const LINE = {
   color: {
     primary: '#777777',
-    secondary: '#BABABA',
-  },
+    secondary: '#BABABA'
+  }
 } as const
 
 export const BG = {
@@ -45,8 +45,8 @@ export const BG = {
     primary: '#f8f8f8',
     secondary: 'rgba(0, 0, 0, 0.5);',
     white: '#FFFFFF',
-    black: '#000000',
-  },
+    black: '#000000'
+  }
 } as const
 
 export const SPACE = {
@@ -70,27 +70,27 @@ export const SPACE = {
   '16': '4rem',
   '20': '5rem',
   '24': '6rem',
-  '28': '7rem',
+  '28': '7rem'
 } as const
 
 export const WINDOW = {
   mobile: '375px',
   tablet: '768px',
-  desktop: '1280px',
+  desktop: '1280px'
 } as const
 
 export const SHADOW = {
   sm: '0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.16)',
   base: '0 0.4rem 0.8rem 0 rgba(0, 0, 0, 0.16)',
   lg: '0 0.8rem 1.6rem 0 rgba(0, 0, 0, 0.16)',
-  map: 'rgba(60, 64, 67, 0.3) 0px 1px 2px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px',
+  map: 'rgba(60, 64, 67, 0.3) 0px 1px 2px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px'
 } as const
 
 export const TRANSITION = {
   to: (property: string) => `${property} 0.2s ease-in-out `,
   all: 'all 0.2s ease-in-out',
   fast: 'all 0.1s ease-in-out',
-  slow: 'all 0.5s ease-in-out',
+  slow: 'all 0.5s ease-in-out'
 } as const
 
 const theme = {
@@ -99,7 +99,7 @@ const theme = {
   background: BG,
   text: TEXT,
   space: SPACE,
-  shadow: SHADOW,
+  shadow: SHADOW
 }
 
 /**

@@ -9,13 +9,8 @@ export default function GNBLogo() {
   const { ref, isEnter } = useBeforeLeaveOrEnterMouse<HTMLAnchorElement>()
 
   return (
-    <Link ref={ref} href='/'>
-      <Image
-        src='/png/wallet.png'
-        alt='my-wallet logo'
-        width={150}
-        height={150}
-      ></Image>
+    <Link ref={ref} href="/">
+      <Image src="/png/wallet.png" alt="my-wallet logo" width={150} height={150}></Image>
       <>
         {isEnter && (
           <>

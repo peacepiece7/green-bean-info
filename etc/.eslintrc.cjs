@@ -6,26 +6,23 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:import/recommended',
-    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended'
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh'],
   rules: {
     'import/order': getImportOrderRules(),
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react/self-closing-comp': [
       'error',
       {
         component: true,
-        html: true,
-      },
+        html: true
+      }
     ],
-    'react/react-in-jsx-scope': 'off',
-  },
+    'react/react-in-jsx-scope': 'off'
+  }
 }
 
 /**
@@ -36,47 +33,37 @@ function getImportOrderRules() {
   return [
     'error',
     {
-      groups: [
-        'type',
-        'builtin',
-        'external',
-        'internal',
-        'parent',
-        'sibling',
-        'index',
-        'object',
-        'unknown',
-      ],
+      groups: ['type', 'builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'unknown'],
       pathGroups: [
         {
           pattern: '@/react*',
           group: 'external',
-          position: 'before',
+          position: 'before'
         },
         {
           pattern: '@/hooks/*',
           group: 'internal',
-          position: 'after',
+          position: 'after'
         },
         {
           pattern: '@/pages/*',
           group: 'internal',
-          position: 'after',
+          position: 'after'
         },
         {
           pattern: '@/components/*',
           group: 'internal',
-          position: 'after',
+          position: 'after'
         },
         {
           pattern: '*.style',
-          group: 'unknown',
-        },
+          group: 'unknown'
+        }
       ],
       pathGroupsExcludedImportTypes: ['@tanstack*'],
       alphabetize: {
-        order: 'asc',
-      },
-    },
+        order: 'asc'
+      }
+    }
   ]
 }

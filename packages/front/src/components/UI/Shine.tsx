@@ -13,12 +13,7 @@ interface ShineProps {
     bottom?: number
   }
 }
-export default function Shine({
-  width = 25,
-  height = 25,
-  disable = false,
-  options,
-}: ShineProps) {
+export default function Shine({ width = 25, height = 25, disable = false, options }: ShineProps) {
   const optionsAttr = {
     width,
     height,
@@ -26,17 +21,12 @@ export default function Shine({
     top: options?.top,
     left: options?.left,
     right: options?.right,
-    bottom: options?.bottom,
+    bottom: options?.bottom
   }
 
   return (
     <ShineWrapper $options={optionsAttr}>
-      <Image
-        src='/svg/shine3.svg'
-        width={width}
-        height={height}
-        alt='shine icon like star'
-      ></Image>
+      <Image src="/svg/shine3.svg" width={width} height={height} alt="shine icon like star"></Image>
     </ShineWrapper>
   )
 }
