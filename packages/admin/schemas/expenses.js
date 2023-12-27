@@ -7,41 +7,41 @@ export default {
       title: 'User',
       name: 'user',
       type: 'reference',
-      to: [{ type: 'yoloUser' }],
+      to: [{ type: 'yoloUser' }]
     },
     {
       title: 'Category',
       name: 'category',
-      type: 'string',
+      type: 'string'
     },
     {
       title: 'Amount',
       name: 'amount',
-      type: 'number',
+      type: 'number'
     },
     {
       date: 'Date',
       name: 'date',
-      type: 'date',
+      type: 'date'
     },
     {
-      title: 'Note',
-      name: 'note',
-      type: 'string',
-    },
+      title: 'Content',
+      name: 'content',
+      type: 'string'
+    }
   ],
   preview: {
     select: {
       name: 'user.name',
       category: 'category',
-      date: 'date',
+      date: 'date'
     },
     prepare(selection) {
       const { name, category, date } = selection
       return {
         title: `${name} : ${category}`,
-        subtitle: `created on ${date}`,
+        subtitle: `created on ${date}`
       }
-    },
-  },
+    }
+  }
 }
