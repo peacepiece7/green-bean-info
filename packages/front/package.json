@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@sanity/client": "^6.10.0",
-    "@tanstack/react-query-next-experimental": "^5.14.6",
     "greenbean-pack": "workspace:^",
     "next": "14.0.4",
     "next-auth": "^4.24.5",

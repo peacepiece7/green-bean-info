@@ -3,32 +3,19 @@ import { COLOR, SPACE, TEXT } from '@/styles/common'
 import { BuiltInProviderType } from 'next-auth/providers'
 import { ClientSafeProvider, LiteralUnion, signIn } from 'next-auth/react'
 import styled from 'styled-components'
-import Description from './Description'
 
 interface TempSignInProps {
-  providers: Record<
-    LiteralUnion<BuiltInProviderType, string>,
-    ClientSafeProvider
-  > | null
+  providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null
   callbackUrl: string | null
 }
-export default function SignInForm({
-  providers,
-  callbackUrl,
-}: TempSignInProps) {
-  if (!providers || !callbackUrl) return null
-
+export default function SignInForm({ providers, callbackUrl }: TempSignInProps) {
+  if (!providers || !callbackUrl) {
+    return null
+  }
   return (
     <>
-      {/* TODO : 헤더로 교체 */}
-      <Description />
       {Object.values(providers).map(({ id, name }) => {
-        return (
-          <Button
-            key={id}
-            onClick={() => signIn(id, { callbackUrl })}
-          >{`Sign In with ${name}`}</Button>
-        )
+        return <Button key={id} onClick={() => signIn(id, { callbackUrl })}>{`Sign In with ${name}`}</Button>
       })}
     </>
   )

@@ -1,6 +1,6 @@
 import 'server-only'
 import { User } from '@/model'
-import { authOptions } from '@/service/sanity'
+import { authOptions } from '@/service/nextAuth'
 import { getServerSession } from 'next-auth'
 
 export async function withSessionUser(handler: (user: User) => Promise<Response>): Promise<Response> {

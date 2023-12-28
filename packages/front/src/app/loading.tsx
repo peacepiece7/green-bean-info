@@ -11,7 +11,7 @@ export default function Loading() {
         display: 'flex',
         alignItems: 'center',
         height: '100dvh',
-        ...style,
+        ...style
       }}
     >
       <LoadingCoin />
