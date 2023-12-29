@@ -3,22 +3,22 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type { Config } from "jest";
+import type { Config } from 'jest'
 
 const config: Config = {
   clearMocks: true,
   collectCoverage: true,
-  coverageDirectory: "coverage",
-  coverageProvider: "v8",
-  testEnvironment: "jsdom",
+  coverageDirectory: 'coverage',
+  coverageProvider: 'v8',
+  testEnvironment: 'jsdom',
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    '^.+\\.tsx?$': 'ts-jest'
   },
-  testMatch: ["**/?(*.)+(test).[jt]s?(x)"],
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  testMatch: ['**/?(*.)+(test).[jt]s?(x)'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
-    "^@/(.+)$": "<rootDir>/src/$1",
-  },
-};
+    '^@/(.+)$': '<rootDir>/src/$1'
+  }
+}
 
-export default config;
+export default config

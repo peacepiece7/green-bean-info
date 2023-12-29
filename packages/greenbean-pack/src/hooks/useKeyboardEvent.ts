@@ -1,4 +1,5 @@
 import { RefObject, useCallback, useEffect, useState } from 'react'
+import { AutoCompleteItem } from '../components/AutoComplete'
 
 export interface Item {
   id: string
@@ -6,11 +7,11 @@ export interface Item {
   selected?: boolean
 }
 
-export default function useAutoComplete<T extends HTMLElement>(
+export default function useKeyboardEvent<T extends HTMLElement, I extends AutoCompleteItem>(
   ref: RefObject<T>,
-  items: Item[] | undefined,
-  onChamnge: (item: Item) => void,
-  onSubmit: (item: Item) => void
+  items: I[] | undefined,
+  onChange: (item: I) => void,
+  onSubmit: (item: I) => void
 ) {
   const [open, setOpen] = useState(false)
   const [idx, setIdx] = useState<number | null>(null)
@@ -24,6 +25,7 @@ export default function useAutoComplete<T extends HTMLElement>(
 
       if (e.key === 'Enter' && idx !== null) {
         onSubmit(items[idx])
+        setIdx(null)
         ref.current?.blur()
       }
 
@@ -33,7 +35,6 @@ export default function useAutoComplete<T extends HTMLElement>(
             return prevIdx === null ? 0 : Math.min(prevIdx + 1, items.length - 1)
           case 'ArrowUp':
             return prevIdx === null ? 0 : Math.max(prevIdx - 1, 0)
-
           default:
             return prevIdx
         }
@@ -52,7 +53,7 @@ export default function useAutoComplete<T extends HTMLElement>(
 
   useEffect(() => {
     if (idx === null || !items) return
-    onChamnge(items[idx])
+    onChange(items[idx])
   }, [idx])
 
   return { open, setOpen }

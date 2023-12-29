@@ -1,11 +1,11 @@
 import { fetcher } from '@/client/fetcher'
 import { Expenses } from '@/model'
 import { useMutation, useSuspenseInfiniteQuery, useQueryClient } from '@tanstack/react-query'
-import { useIntersectionObserver } from './useIntersectionObserver'
 import { useEffect, useRef } from 'react'
 import { addExpenseApi, deleteExpenseApi, updateExpenseApi } from '@/client/expenses'
 import { useSetRecoilState } from 'recoil'
 import { expenseAsyncState } from '@/store/expenseFetchingState'
+import { useIntersectionObserver } from 'greenbean-pack'
 
 export interface ExpensesListData {
   content: Expenses[]
