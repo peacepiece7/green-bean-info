@@ -1,6 +1,6 @@
 'use client'
 import dayjs from 'dayjs'
-import AutoCompleteModule from './module'
+
 import { useCategoryQuery } from '@/hooks/useCategoryQuery'
 import { useState } from 'react'
 import styled from 'styled-components'
@@ -11,6 +11,7 @@ import { dateToISOString } from '@/util'
 import { useRecoilState } from 'recoil'
 import { expenseAsyncState } from '@/store/expenseFetchingState'
 import { useExpensesListMutation } from '@/hooks/mutation/expense'
+import { AutoComplete } from 'greenbean-pack'
 
 interface AddExpenseBody {
   date: string
@@ -46,7 +47,7 @@ export default function ExpenseAddForm() {
         required
         {...register('date')}
       />
-      <AutoCompleteModule
+      <AutoComplete
         items={items}
         recommendStateBeforeChange={persistState}
         isLoading={isLoading}
