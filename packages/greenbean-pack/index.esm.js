@@ -178,6 +178,25 @@ function useThrottle(value, delay) {
     return throttledValue;
 }
 
+function useIntersectionObserver(elementRef, { threshold = 0, root = null, rootMargin = '0%', freezeOnceVisible = false }) {
+    const [entry, setEntry] = useState();
+    const frozen = (entry === null || entry === void 0 ? void 0 : entry.isIntersecting) && freezeOnceVisible;
+    const updateEntry = ([entry]) => {
+        setEntry(entry);
+    };
+    useEffect(() => {
+        const node = elementRef === null || elementRef === void 0 ? void 0 : elementRef.current;
+        const hasIOSupport = !!window.IntersectionObserver;
+        if (!hasIOSupport || frozen || !node)
+            return;
+        const observerParams = { threshold, root, rootMargin };
+        const observer = new IntersectionObserver(updateEntry, observerParams);
+        observer.observe(node);
+        return () => observer.disconnect();
+    }, [elementRef === null || elementRef === void 0 ? void 0 : elementRef.current, JSON.stringify(threshold), root, rootMargin, frozen]);
+    return entry;
+}
+
 function useKeyboardEvent(ref, items, onChange, onSubmit) {
     const [open, setOpen] = useState(false);
     const [idx, setIdx] = useState(null);
@@ -297,4 +316,4 @@ function AutoComplete({ items, onEnter, onSelect: onSelectList, isLoading, recom
                 }, value: inputValue, required: true, style: Object.assign(Object.assign({}, inputStyle), { margin: 0, padding: 0 }) }), jsx(AutoCompleteList, { items: list, open: open, onMounseDown: (item) => handleMounseDown(item), isLoading: isLoading, renderListOptions: renderListOptions, renderListIsLoading: renderListIsLoading })] }));
 }
 
-export { AutoComplete, useBeforeLeaveMouse, useClick, useFadeIn, useFullscreen, useLeaveBeforeSave, useNetwork, useScroll, useThrottle, useWillUnmount };
+export { AutoComplete, useBeforeLeaveMouse, useClick, useFadeIn, useFullscreen, useIntersectionObserver, useLeaveBeforeSave, useNetwork, useScroll, useThrottle, useWillUnmount };

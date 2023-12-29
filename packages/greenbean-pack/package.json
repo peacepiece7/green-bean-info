@@ -1,6 +1,6 @@
 {
   "name": "greenbean-pack",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "리액트와 관련된 기능이 들어있는 패키지 저장소 입니다.",
   "sideEffects": false,
   "author": "scv7282@gmail.com",
