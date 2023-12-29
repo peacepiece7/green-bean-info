@@ -14,6 +14,6 @@ export declare function useBeforeLeaveMouse(cb: () => void): void;
  * @description 마우스가 특정 요소를 벗어나거나 들어오는 것을 감지합니다.
  */
 export declare function useBeforeLeaveOrEnterMouse<T extends HTMLElement>(): {
-  ref: import("react").RefObject<T>;
-  isEnter: boolean;
+    ref: import("react").RefObject<T>;
+    isEnter: boolean;
 };

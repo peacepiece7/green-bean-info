@@ -5,8 +5,8 @@
  * 테스트 코드가 없습니다.
  */
 export declare function useFullscreen<T extends HTMLElement>(): {
-  ref: import("react").RefObject<T>;
-  triggerFull: () => void;
-  exitFull: () => void;
-  isFull: boolean;
+    ref: import("react").RefObject<T>;
+    triggerFull: () => void;
+    exitFull: () => void;
+    isFull: boolean;
 };
