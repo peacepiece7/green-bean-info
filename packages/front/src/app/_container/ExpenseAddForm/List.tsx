@@ -1,6 +1,6 @@
 'use client'
 
-import { Item } from '@/hooks/useAutocomplete'
+import { Item } from '@/hooks/useKeyboardEvent'
 import { COLOR } from '@/styles/common'
 import styled from 'styled-components'
 
@@ -42,7 +42,6 @@ export default function AutoCompleteList({items, open, isLoading} : AutoComplete
 const List = styled.ul<{ $open: boolean }>`
   position: absolute;
   width: 100%;
-  top: 4rem;
   left: 0;
   right: 0;
   margin: auto;

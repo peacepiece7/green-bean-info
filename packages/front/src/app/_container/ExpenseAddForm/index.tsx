@@ -1,10 +1,10 @@
 'use client'
 import dayjs from 'dayjs'
-import AutoComplete from './AutoComplete'
+import AutoCompleteModule from './module'
 import { useCategoryQuery } from '@/hooks/useCategoryQuery'
 import { useState } from 'react'
 import styled from 'styled-components'
-import { SPACE } from '@/styles/common'
+import { COLOR, SPACE } from '@/styles/common'
 import { usePersistCategory } from '@/hooks/usePersistCategory'
 import { useForm } from 'react-hook-form'
 import { dateToISOString } from '@/util'
@@ -46,7 +46,7 @@ export default function ExpenseAddForm() {
         required
         {...register('date')}
       />
-      <AutoComplete
+      <AutoCompleteModule
         items={items}
         recommendStateBeforeChange={persistState}
         isLoading={isLoading}
@@ -55,8 +55,12 @@ export default function ExpenseAddForm() {
           setSearchQuery(e)
         }}
         onEnter={(item) => setSearchQuery(item.value)}
-        // onClick
         reset={isReset}
+        renderListIsLoading={() => '데이터를 불러오는 중입니다...'}
+        renderListOptions={(item, isSelected) => {
+          return <RenderItem $selected={isSelected}>{item.value}</RenderItem>
+        }}
+        inputStyle={{ width: '15rem', height: '4rem', margin: `0 ${SPACE[4]}` }}
       />
       <input type="number" placeholder="금액" required {...register('cost')} />
       <input placeholder="내용" {...register('content')} />
@@ -72,5 +76,12 @@ const FormContainer = styled.form`
     width: 15rem;
     height: 4rem;
     margin: 0 ${SPACE[4]};
+  }
+`
+
+const RenderItem = styled.div<{ $selected: boolean }>`
+  background-color: ${({ $selected }) => ($selected ? `${COLOR.tertiary}` : `${COLOR.white}`)};
+  &:hover {
+    background-color: ${COLOR.tertiary};
   }
 `

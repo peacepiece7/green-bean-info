@@ -5,12 +5,9 @@
  * duration: 1000
  * delay: 100
  */
-export declare function useFadeIn<T extends HTMLElement>(
-  duration?: number,
-  delay?: number,
-): {
-  ref: import("react").RefObject<T>;
-  style: {
-    opacity: string;
-  };
+export declare function useFadeIn<T extends HTMLElement>(duration?: number, delay?: number): {
+    ref: import("react").RefObject<T>;
+    style: {
+        opacity: string;
+    };
 };

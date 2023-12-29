@@ -1,6 +1,6 @@
 'use client'
 
-import useAutoComplete, { Item } from '@/hooks/useAutocomplete'
+import useAutoComplete, { Item } from '@/hooks/useKeyboardEvent'
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import AutoCompleteList from './List'
@@ -25,7 +25,7 @@ export default function AutoComplete({
   const [inputValue, setInputValue] = useState('')
   // * debounce callback을 등록합니다.
   const inputRef = useRef<HTMLInputElement>(null)
-  const { open, setOpen } = useAutoComplete<HTMLInputElement>(inputRef, list, handleKeyDown, handleSubmit)
+  const { open, setOpen } = useAutoComplete<HTMLInputElement, Item>(inputRef, list, handleKeyDown, handleSubmit)
 
   function handleKeyDown(item: Item) {
     setList(

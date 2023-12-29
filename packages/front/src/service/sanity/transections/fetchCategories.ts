@@ -1,5 +1,10 @@
-import { Item } from '@/hooks/useAutocomplete'
 import { sanity } from '@/service/sanity'
+
+interface Item {
+  id: string
+  value: string
+  selected?: boolean
+}
 
 export async function fetchCategoriesTransaction(userId: string, query: string) {
   try {
