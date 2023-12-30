@@ -1,3 +1,4 @@
+import { EXPENSES } from '@/constants/query'
 import { Expenses } from '@/model'
 import { sanity } from '@/service/sanity'
 
@@ -10,7 +11,7 @@ export async function addExpeneseTransaction(userId: string, { content, cost, da
       }
     }
     await sanity.client.create({
-      _type: 'expenses',
+      _type: EXPENSES,
       amount: Number(cost),
       category,
       date,

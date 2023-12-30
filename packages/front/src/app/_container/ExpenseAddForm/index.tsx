@@ -13,6 +13,7 @@ import { expenseAsyncState } from '@/store/expenseFetchingState'
 import { useExpensesListMutation } from '@/hooks/mutation/expense'
 import { AutoComplete } from 'greenbean-pack'
 import { Spin } from '@/components/Loading/Spin'
+import { DATE_FORMAT } from '@/constants'
 
 interface AddExpenseBody {
   date: string
@@ -43,7 +44,7 @@ export default function ExpenseAddForm() {
       <input
         type="date"
         placeholder="날짜"
-        defaultValue={dayjs(Date.now()).format('YYYY-MM-DD')}
+        defaultValue={dayjs(Date.now()).format(DATE_FORMAT)}
         required
         {...register('date')}
       />

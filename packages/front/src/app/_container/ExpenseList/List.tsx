@@ -1,6 +1,7 @@
 'use client'
 
 import { Spin } from '@/components/Loading/Spin'
+import { DATE_FORMAT } from '@/constants'
 import { Expenses } from '@/model'
 import { expenseDeleteQueue, expenseEditQueue } from '@/store/expenseFetchingState'
 import { SPACE, TEXT } from '@/styles/common'
@@ -33,7 +34,7 @@ export default function List({ expenses, onEdit, onDelete }: ListProps) {
             <input className="category" type="text" defaultValue={item.category} required />
             <input className="cost" type="number" defaultValue={item.cost} required />
             <input className="content" type="text" defaultValue={item.content} />
-            <input className="date" type="date" defaultValue={dayjs(item.date).format('YYYY-MM-DD')} required />
+            <input className="date" type="date" defaultValue={dayjs(item.date).format(DATE_FORMAT)} required />
             <Button
               type="button"
               onClick={() => {

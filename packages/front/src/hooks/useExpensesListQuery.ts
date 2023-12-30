@@ -6,6 +6,7 @@ import { addExpenseApi, deleteExpenseApi, updateExpenseApi } from '@/client/expe
 import { useIntersectionObserver } from 'greenbean-pack'
 import { useSetRecoilState } from 'recoil'
 import { expenseDeleteQueue, expenseEditQueue } from '@/store/expenseFetchingState'
+import { EXPENSES } from '@/constants/query'
 
 export interface ExpensesListData {
   content: Expenses[]
@@ -21,7 +22,7 @@ export const useExpensesListInfiniteQuery = () => {
   const setExpenseDeleteQueue = useSetRecoilState(expenseDeleteQueue)
   const { data, fetchNextPage, isLoading, isFetching, isFetchingNextPage } = useSuspenseInfiniteQuery<ExpensesListData>(
     {
-      queryKey: ['expenses'],
+      queryKey: [EXPENSES],
       queryFn: ({ pageParam }) => fetcher(`/api/expenses?page=${pageParam}`),
       getNextPageParam: (lastPage) => {
         if (lastPage.totalPage > lastPage.currentPage) {
@@ -50,7 +51,7 @@ export const useExpensesListInfiniteQuery = () => {
     onError: errorHandler,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['expenses']
+        queryKey: [EXPENSES]
       })
     }
   })
@@ -59,7 +60,7 @@ export const useExpensesListInfiniteQuery = () => {
     mutationFn: updateExpenseApi,
     onSuccess: (_data, variable) => {
       queryClient.invalidateQueries({
-        queryKey: ['expenses']
+        queryKey: [EXPENSES]
       })
       setExpenseEditQueue((prev) => prev.filter((id) => id !== variable.id))
     },
@@ -69,7 +70,7 @@ export const useExpensesListInfiniteQuery = () => {
   const deleteExpense = useMutation({
     mutationFn: deleteExpenseApi,
     onMutate: (expenseId) => {
-      queryClient.setQueryData(['expenses'], (prev: { pages: ExpensesListData[]; pageParams: number[] }) => {
+      queryClient.setQueryData([EXPENSES], (prev: { pages: ExpensesListData[]; pageParams: number[] }) => {
         const pages = prev.pages.map((page) => ({
           ...page,
           content: page.content.filter((expense) => expense.id !== expenseId)
@@ -82,7 +83,7 @@ export const useExpensesListInfiniteQuery = () => {
     },
     onSuccess: (_data, expenseId) => {
       queryClient.invalidateQueries({
-        queryKey: ['expenses']
+        queryKey: [EXPENSES]
       })
       setExpenseDeleteQueue((prev) => prev.filter((id) => id !== expenseId))
     },
