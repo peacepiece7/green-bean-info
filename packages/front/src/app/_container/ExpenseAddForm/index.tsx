@@ -12,6 +12,7 @@ import { useRecoilState } from 'recoil'
 import { expenseAsyncState } from '@/store/expenseFetchingState'
 import { useExpensesListMutation } from '@/hooks/mutation/expense'
 import { AutoComplete } from 'greenbean-pack'
+import { Spin } from '@/components/Loading/Spin'
 
 interface AddExpenseBody {
   date: string
@@ -29,7 +30,6 @@ export default function ExpenseAddForm() {
   const { register, reset, handleSubmit } = useForm<AddExpenseBody>()
 
   const onSubmit = (body: AddExpenseBody) => {
-    if (isFetching) return
     body.date = dateToISOString(body.date)
     addExpenseMutate({ ...body, category: searchQuery })
     setIsFetching(true)
@@ -65,7 +65,7 @@ export default function ExpenseAddForm() {
       />
       <input type="number" placeholder="금액" required {...register('cost')} />
       <input placeholder="내용" {...register('content')} />
-      <input type="submit" />
+      <button type="submit">{isFetching ? <Spin /> : '추가'}</button>
     </FormContainer>
   )
 }

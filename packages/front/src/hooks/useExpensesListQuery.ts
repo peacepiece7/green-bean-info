@@ -3,9 +3,9 @@ import { Expenses } from '@/model'
 import { useMutation, useSuspenseInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 import { addExpenseApi, deleteExpenseApi, updateExpenseApi } from '@/client/expenses'
-import { useSetRecoilState } from 'recoil'
-import { expenseAsyncState } from '@/store/expenseFetchingState'
 import { useIntersectionObserver } from 'greenbean-pack'
+import { useSetRecoilState } from 'recoil'
+import { expenseDeleteQueue, expenseEditQueue } from '@/store/expenseFetchingState'
 
 export interface ExpensesListData {
   content: Expenses[]
@@ -17,18 +17,21 @@ export interface ExpensesListData {
 
 export const useExpensesListInfiniteQuery = () => {
   const queryClient = useQueryClient()
-  const setIsFetching = useSetRecoilState(expenseAsyncState)
-  const { data, fetchNextPage, isLoading, isFetching } = useSuspenseInfiniteQuery<ExpensesListData>({
-    queryKey: ['expenses'],
-    queryFn: ({ pageParam }) => fetcher(`/api/expenses?page=${pageParam}`),
-    getNextPageParam: (lastPage) => {
-      if (lastPage.totalPage > lastPage.currentPage) {
-        return lastPage.currentPage + 1
-      }
-      return undefined
-    },
-    initialPageParam: 0
-  })
+  const setExpenseEditQueue = useSetRecoilState(expenseEditQueue)
+  const setExpenseDeleteQueue = useSetRecoilState(expenseDeleteQueue)
+  const { data, fetchNextPage, isLoading, isFetching, isFetchingNextPage } = useSuspenseInfiniteQuery<ExpensesListData>(
+    {
+      queryKey: ['expenses'],
+      queryFn: ({ pageParam }) => fetcher(`/api/expenses?page=${pageParam}`),
+      getNextPageParam: (lastPage) => {
+        if (lastPage.totalPage > lastPage.currentPage) {
+          return lastPage.currentPage + 1
+        }
+        return undefined
+      },
+      initialPageParam: 0
+    }
+  )
 
   const ref = useRef<HTMLDivElement>(null)
   const entry = useIntersectionObserver(ref, {})
@@ -49,36 +52,41 @@ export const useExpensesListInfiniteQuery = () => {
       queryClient.invalidateQueries({
         queryKey: ['expenses']
       })
-    },
-    onSettled: () => {
-      setIsFetching(false)
     }
   })
 
   const updateExpense = useMutation({
     mutationFn: updateExpenseApi,
-    onSuccess: () => {
+    onSuccess: (_data, variable) => {
       queryClient.invalidateQueries({
         queryKey: ['expenses']
       })
+      setExpenseEditQueue((prev) => prev.filter((id) => id !== variable.id))
     },
-    onError: errorHandler,
-    onSettled: () => {
-      setIsFetching(false)
-    }
+    onError: errorHandler
   })
 
   const deleteExpense = useMutation({
     mutationFn: deleteExpenseApi,
-    onSuccess: () => {
+    onMutate: (expenseId) => {
+      queryClient.setQueryData(['expenses'], (prev: { pages: ExpensesListData[]; pageParams: number[] }) => {
+        const pages = prev.pages.map((page) => ({
+          ...page,
+          content: page.content.filter((expense) => expense.id !== expenseId)
+        }))
+        return {
+          ...prev,
+          pages
+        }
+      })
+    },
+    onSuccess: (_data, expenseId) => {
       queryClient.invalidateQueries({
         queryKey: ['expenses']
       })
+      setExpenseDeleteQueue((prev) => prev.filter((id) => id !== expenseId))
     },
-    onError: errorHandler,
-    onSettled: () => {
-      setIsFetching(false)
-    }
+    onError: errorHandler
   })
 
   const expenseList = data.pages.flatMap((page) => [...page.content])
@@ -87,6 +95,7 @@ export const useExpensesListInfiniteQuery = () => {
     expenseList,
     triggerRef: ref,
     isFetching,
+    isFetchingNextPage,
     isLoading,
     updateExpenseMutate: updateExpense.mutate,
     deleteExpenseMutate: deleteExpense.mutate,

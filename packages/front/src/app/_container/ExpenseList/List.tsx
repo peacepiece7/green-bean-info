@@ -1,7 +1,8 @@
 'use client'
 
+import { Spin } from '@/components/Loading/Spin'
 import { Expenses } from '@/model'
-import { expenseAsyncState } from '@/store/expenseFetchingState'
+import { expenseDeleteQueue, expenseEditQueue } from '@/store/expenseFetchingState'
 import { SPACE, TEXT } from '@/styles/common'
 import dayjs from 'dayjs'
 import { useRef } from 'react'
@@ -14,13 +15,13 @@ interface ListProps {
   onEdit: (expense: Expenses) => void
 }
 export default function List({ expenses, onEdit, onDelete }: ListProps) {
-  const [isFetching, setIsFetching] = useRecoilState(expenseAsyncState)
   const ref = useRef<HTMLUListElement>(null)
+  const [editStateQueue, setEditStateQueue] = useRecoilState(expenseEditQueue)
+  const [deleteStateQueue, setDeleteStateQueue] = useRecoilState(expenseDeleteQueue)
+
   const handleOnSubmit = (id: string, cb: (expense: Expenses) => void) => {
-    setIsFetching(true)
     const item = ref.current!.querySelector(`#${id}`)!
-    const [category, cost, content, date] = //
-      getTextContext(item, '.category', '.cost', '.content', '.date')
+    const [category, cost, content, date] = getTextContext(item, '.category', '.cost', '.content', '.date')
     cb({ id, category, cost: Number(cost), content, date })
   }
 
@@ -33,12 +34,26 @@ export default function List({ expenses, onEdit, onDelete }: ListProps) {
             <input className="cost" type="number" defaultValue={item.cost} required />
             <input className="content" type="text" defaultValue={item.content} />
             <input className="date" type="date" defaultValue={dayjs(item.date).format('YYYY-MM-DD')} required />
-            <button type="button" onClick={() => handleOnSubmit(item.id, onEdit)} disabled={isFetching}>
-              수정
-            </button>
-            <button type="button" onClick={() => handleOnSubmit(item.id, onDelete)} disabled={isFetching}>
-              삭제
-            </button>
+            <Button
+              type="button"
+              onClick={() => {
+                setEditStateQueue((prev) => [...prev, item.id])
+                handleOnSubmit(item.id, onEdit)
+              }}
+              disabled={editStateQueue.includes(item.id)}
+            >
+              {editStateQueue.includes(item.id) ? <Spin /> : <p>수정</p>}
+            </Button>
+            <Button
+              type="button"
+              onClick={() => {
+                setDeleteStateQueue((prev) => [...prev, item.id])
+                handleOnSubmit(item.id, onDelete)
+              }}
+              disabled={deleteStateQueue.includes(item.id)}
+            >
+              {deleteStateQueue.includes(item.id) ? <Spin /> : <p>삭제</p>}
+            </Button>
           </ListItem>
         )
       })}
@@ -59,6 +74,15 @@ const ListItem = styled.li`
   button {
     width: 10rem;
     cursor: pointer;
+  }
+`
+
+const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    white-space: nowrap;
   }
 `
 
