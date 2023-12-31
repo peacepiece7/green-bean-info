@@ -58,9 +58,13 @@ export function AutoComplete<T extends AutoCompleteItem>({
     onEnter(item)
   }
 
-  // * Open 상태이고, 인풋 창이 비었을 때, 추천 카테고리를 보여줍니다.
   useEffect(() => {
-    if (open && !inputValue) {
+    if (!open) {
+      setList([])
+      return
+    }
+    // * 인풋 창이 비었다면 추천 카테고리를 보여줍니다.
+    if (!inputValue) {
       const recommendList = state?.map((item) => ({
         id: item,
         value: item,
@@ -84,9 +88,7 @@ export function AutoComplete<T extends AutoCompleteItem>({
       style={{
         position: 'relative',
         width: `${inputStyle?.width ?? '100%'}`,
-        height: `${inputStyle?.height ?? 'auto'}`,
-        padding: `${inputStyle?.padding ?? '0'}`,
-        margin: `${inputStyle?.margin ?? '0'}`
+        height: `${inputStyle?.height ?? 'auto'}`
       }}
     >
       <input
@@ -102,7 +104,7 @@ export function AutoComplete<T extends AutoCompleteItem>({
         }}
         value={inputValue}
         required
-        style={{ ...inputStyle, margin: 0, padding: 0 }}
+        style={{ margin: 0, padding: 0, ...inputStyle }}
       />
       <AutoCompleteList
         items={list}

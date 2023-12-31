@@ -244,8 +244,20 @@ function AutoCompleteList({ items, open, isLoading, renderListOptions, renderLis
     const handleOnClick = (item) => {
         onMounseDown(item);
     };
-    if (isLoading)
-        return (jsxRuntime.jsx(List, { "$open": open, children: jsxRuntime.jsx(ListItem, { "$open": open, children: renderListIsLoading ? renderListIsLoading() : 'Loading...' }) }));
+    if (isLoading) {
+        const value = renderListIsLoading ? renderListIsLoading() : 'Loading...';
+        if (typeof value === 'string') {
+            const loadingItem = {
+                id: 'loading',
+                value,
+                selected: false
+            };
+            return (jsxRuntime.jsx(List, { "$open": open, children: jsxRuntime.jsx(ListItem, { "$open": open, children: renderListOptions(loadingItem, false) }) }));
+        }
+        else {
+            return (jsxRuntime.jsx(List, { "$open": open, children: jsxRuntime.jsx(ListItem, { "$open": open, children: value }) }));
+        }
+    }
     if (!items || !items.length)
         return null;
     return (jsxRuntime.jsx(List, { "$open": open, children: items.map((item) => {
@@ -259,17 +271,16 @@ const List = styled.ul `
   right: 0;
   margin: auto;
   border: ${({ $open }) => ($open ? '1px solid black' : 'none')};
+  z-index: 999999;
 `;
 const ListItem = styled.li `
   width: 100%;
-  height: ${({ $open }) => ($open ? '2rem' : '0px')};
-  z-index: 1;
   overflow: hidden;
   transition: height 0.2s ease-in-out;
 `;
 
 function AutoComplete({ items, onEnter, onSelect: onSelectList, isLoading, recommendStateBeforeChange: state, reset, renderListIsLoading, renderListOptions, inputStyle }) {
-    var _a, _b, _c, _d;
+    var _a, _b;
     const [list, setList] = react.useState();
     const [inputValue, setInputValue] = react.useState('');
     const inputRef = react.useRef(null);
@@ -287,9 +298,13 @@ function AutoComplete({ items, onEnter, onSelect: onSelectList, isLoading, recom
         setInputValue(item.value);
         onEnter(item);
     }
-    // * Open 상태이고, 인풋 창이 비었을 때, 추천 카테고리를 보여줍니다.
     react.useEffect(() => {
-        if (open && !inputValue) {
+        if (!open) {
+            setList([]);
+            return;
+        }
+        // * 인풋 창이 비었다면 추천 카테고리를 보여줍니다.
+        if (!inputValue) {
             const recommendList = state === null || state === void 0 ? void 0 : state.map((item) => ({
                 id: item,
                 value: item,
@@ -309,13 +324,11 @@ function AutoComplete({ items, onEnter, onSelect: onSelectList, isLoading, recom
     return (jsxRuntime.jsxs("div", { className: "greenbean-pack-auto-complete", style: {
             position: 'relative',
             width: `${(_a = inputStyle === null || inputStyle === void 0 ? void 0 : inputStyle.width) !== null && _a !== void 0 ? _a : '100%'}`,
-            height: `${(_b = inputStyle === null || inputStyle === void 0 ? void 0 : inputStyle.height) !== null && _b !== void 0 ? _b : 'auto'}`,
-            padding: `${(_c = inputStyle === null || inputStyle === void 0 ? void 0 : inputStyle.padding) !== null && _c !== void 0 ? _c : '0'}`,
-            margin: `${(_d = inputStyle === null || inputStyle === void 0 ? void 0 : inputStyle.margin) !== null && _d !== void 0 ? _d : '0'}`
+            height: `${(_b = inputStyle === null || inputStyle === void 0 ? void 0 : inputStyle.height) !== null && _b !== void 0 ? _b : 'auto'}`
         }, children: [jsxRuntime.jsx("input", { ref: inputRef, type: "text", placeholder: "\uCE74\uD14C\uACE0\uB9AC", autoComplete: "off", onBlur: () => setTimeout(() => setOpen(false), 200), onFocus: () => setOpen(true), onChange: (e) => {
                     setInputValue(e.target.value);
                     onSelectList && onSelectList(e.target.value);
-                }, value: inputValue, required: true, style: Object.assign(Object.assign({}, inputStyle), { margin: 0, padding: 0 }) }), jsxRuntime.jsx(AutoCompleteList, { items: list, open: open, onMounseDown: (item) => handleMounseDown(item), isLoading: isLoading, renderListOptions: renderListOptions, renderListIsLoading: renderListIsLoading })] }));
+                }, value: inputValue, required: true, style: Object.assign({ margin: 0, padding: 0 }, inputStyle) }), jsxRuntime.jsx(AutoCompleteList, { items: list, open: open, onMounseDown: (item) => handleMounseDown(item), isLoading: isLoading, renderListOptions: renderListOptions, renderListIsLoading: renderListIsLoading })] }));
 }
 
 exports.AutoComplete = AutoComplete;
