@@ -104,7 +104,7 @@ export function AutoComplete<T extends AutoCompleteItem>({
         }}
         value={inputValue}
         required
-        style={{ ...inputStyle, margin: 0, padding: 0 }}
+        style={{ margin: 0, padding: 0, ...inputStyle }}
       />
       <AutoCompleteList
         items={list}

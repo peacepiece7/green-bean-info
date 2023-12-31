@@ -328,7 +328,7 @@ function AutoComplete({ items, onEnter, onSelect: onSelectList, isLoading, recom
         }, children: [jsxRuntime.jsx("input", { ref: inputRef, type: "text", placeholder: "\uCE74\uD14C\uACE0\uB9AC", autoComplete: "off", onBlur: () => setTimeout(() => setOpen(false), 200), onFocus: () => setOpen(true), onChange: (e) => {
                     setInputValue(e.target.value);
                     onSelectList && onSelectList(e.target.value);
-                }, value: inputValue, required: true, style: Object.assign(Object.assign({}, inputStyle), { margin: 0, padding: 0 }) }), jsxRuntime.jsx(AutoCompleteList, { items: list, open: open, onMounseDown: (item) => handleMounseDown(item), isLoading: isLoading, renderListOptions: renderListOptions, renderListIsLoading: renderListIsLoading })] }));
+                }, value: inputValue, required: true, style: Object.assign({ margin: 0, padding: 0 }, inputStyle) }), jsxRuntime.jsx(AutoCompleteList, { items: list, open: open, onMounseDown: (item) => handleMounseDown(item), isLoading: isLoading, renderListOptions: renderListOptions, renderListIsLoading: renderListIsLoading })] }));
 }
 
 exports.AutoComplete = AutoComplete;
