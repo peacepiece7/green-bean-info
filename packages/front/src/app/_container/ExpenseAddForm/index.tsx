@@ -16,6 +16,9 @@ import { Spin } from '@/components/Loading/Spin'
 import { DATE_FORMAT } from '@/constants'
 import { Button } from '@/components/Buttons/Button'
 import { Input } from '@/components/Inputs/Input'
+import { ChildrenWith } from '@/components/UI/ChildrenWith'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { AddIcon } from '@/components/UI/AddIcon'
 
 interface AddExpenseBody {
   date: string
@@ -26,11 +29,16 @@ interface AddExpenseBody {
 export default function ExpenseAddForm() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isReset, setIsReset] = useState(false)
+
   const { data: items, isLoading } = useCategoryQuery(searchQuery)
   const { addExpenseMutate } = useExpensesListMutation()
+
   const [isFetching, setIsFetching] = useRecoilState(expenseAsyncState)
   const { persistState, setPersist } = usePersistCategory()
+
   const { register, reset, handleSubmit } = useForm<AddExpenseBody>()
+
+  const { isMobile } = useMediaQuery()
 
   const onSubmit = (body: AddExpenseBody) => {
     body.date = dateToISOString(body.date)
@@ -76,7 +84,15 @@ export default function ExpenseAddForm() {
       />
       <Input type="number" placeholder="금액" required min={0} {...register('cost')} />
       <Input placeholder="내용" {...register('content')} />
-      <Button type="submit">{isFetching ? <Spin /> : '추가'}</Button>
+      <Button type="submit" $size="small" title="소비 아이템 추가하기">
+        <ChildrenWith
+          isLoading={isFetching}
+          loadingElement={<Spin />}
+          isMobile={isMobile}
+          mobileElement={<AddIcon />}
+          defaultElement={<p>추가</p>}
+        />
+      </Button>
     </FormContainer>
   )
 }
