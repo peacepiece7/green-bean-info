@@ -6,11 +6,12 @@ interface Item {
   selected?: boolean
 }
 
-export async function fetchCategoriesTransaction(userId: string, query: string) {
+export async function fetchCategoriesTransaction(userId: string, query?: string) {
   try {
+    const categoryQuery = query ? `&& category match "*${query}*" ` : ''
     const data: Item[] = await sanity.client.fetch(
       `
-      *[_type == "expenses" && user._ref == "${userId}" && category match "*${query}*"] {
+      *[_type == "expenses" && user._ref == "${userId}" ${categoryQuery}] {
         "id" : _id,
         "value" : category
        }
