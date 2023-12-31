@@ -70,7 +70,7 @@ const List = styled.ul<{ $open: boolean }>`
 
 const ListItem = styled.li<{ $open: boolean }>`
   width: 100%;
-  z-index: 1;
+  z-index: 999999;
   overflow: hidden;
   transition: height 0.2s ease-in-out;
 `

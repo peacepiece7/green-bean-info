@@ -7,6 +7,7 @@ import ExpenseList from './ExpenseList'
 import Filter from './Filter'
 import { SSRSuspense } from '@/components/SSRSuspense'
 import styled from 'styled-components'
+import FloatingImage from '@/components/Layouts/FloatingImage'
 
 interface HomeContainer {
   user: User
@@ -16,11 +17,13 @@ export default function HomeContainer({ user }: HomeContainer) {
     <>
       <GNB user={user} />
       <ContentWrapper>
-        <ExpenseAddForm />
-        <Filter />
-        <SSRSuspense fallback={<></>}>
-          <ExpenseList />
-        </SSRSuspense>
+        <FloatingImage>
+          <ExpenseAddForm />
+          <Filter />
+          <SSRSuspense fallback={<></>}>
+            <ExpenseList />
+          </SSRSuspense>
+        </FloatingImage>
       </ContentWrapper>
     </>
   )
