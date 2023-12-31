@@ -2,6 +2,8 @@ export const COLOR = {
   primary: '#F08080',
   secondary: '#f4a9a8',
   tertiary: '#FFD3D8',
+  focus: '#f4a9a8',
+  focusLight: '#f4a9a8',
 
   yellow: '#F7E600',
   gray: '#787878',

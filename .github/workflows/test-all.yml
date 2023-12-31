@@ -46,8 +46,8 @@ jobs:
         with:
           install-command: pnpm i
           parallel: true
-          build: pnpm fe run build
-          start: pnpm fe run start:e2e
+          build: pnpm fe run build:e2e
+          start: pnpm fe run start
           wait-on: 'http://localhost:3000'
           command: pnpm run fe cy:run
 

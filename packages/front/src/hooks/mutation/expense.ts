@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { addExpenseApi, deleteExpenseApi, updateExpenseApi } from '@/client/expenses'
 import { useSetRecoilState } from 'recoil'
 import { expenseAsyncState } from '@/store/expenseFetchingState'
+import { EXPENSES } from '@/constants/query'
 
 export const useExpensesListMutation = () => {
   const queryClient = useQueryClient()
@@ -19,7 +20,7 @@ export const useExpensesListMutation = () => {
     onError: errorHandler,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['expenses']
+        queryKey: [EXPENSES]
       })
     },
     onSettled: () => {
@@ -31,7 +32,7 @@ export const useExpensesListMutation = () => {
     mutationFn: updateExpenseApi,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['expenses']
+        queryKey: [EXPENSES]
       })
     },
     onError: errorHandler,
@@ -44,7 +45,7 @@ export const useExpensesListMutation = () => {
     mutationFn: deleteExpenseApi,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['expenses']
+        queryKey: [EXPENSES]
       })
     },
     onError: errorHandler,
