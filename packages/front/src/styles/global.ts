@@ -14,6 +14,20 @@ export const GlobalStyle = createGlobalStyle`
         margin : 0;
     }
     html {
-        font-size : 62.5%;
+        font-size : 62.5%; // 1rem = 10px
+    }
+
+
+    @media screen and (min-width: 768px) {
+        html {
+            font-size : 56.25%; // 1rem = 9px
+        }
+
+    }
+
+    @media screen and (min-width: 1024px) {
+        html {
+            font-size : 50%; // 1rem = 8px
+        }
     }
 `

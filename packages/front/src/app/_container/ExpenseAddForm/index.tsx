@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { useCategoryQuery } from '@/hooks/useCategoryQuery'
 import { useState } from 'react'
 import styled from 'styled-components'
-import { COLOR, SPACE } from '@/styles/common'
+import { COLOR, SPACE, TEXT } from '@/styles/common'
 import { usePersistCategory } from '@/hooks/usePersistCategory'
 import { useForm } from 'react-hook-form'
 import { dateToISOString } from '@/util'
@@ -15,6 +15,7 @@ import { AutoComplete } from 'greenbean-pack'
 import { Spin } from '@/components/Loading/Spin'
 import { DATE_FORMAT } from '@/constants'
 import { Button } from '@/components/Buttons/Button'
+import { Input } from '@/components/Inputs/Input'
 
 interface AddExpenseBody {
   date: string
@@ -42,9 +43,10 @@ export default function ExpenseAddForm() {
 
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
-      <input
+      <Input
         type="date"
         placeholder="날짜"
+        $size="large"
         defaultValue={dayjs(Date.now()).format(DATE_FORMAT)}
         required
         {...register('date')}
@@ -59,14 +61,21 @@ export default function ExpenseAddForm() {
         }}
         onEnter={(item) => setSearchQuery(item.value)}
         reset={isReset}
-        renderListIsLoading={() => '데이터를 불러오는 중입니다...'}
+        renderListIsLoading={() => '로딩중...'}
         renderListOptions={(item, isSelected) => {
           return <RenderItem $selected={isSelected}>{item.value}</RenderItem>
         }}
-        inputStyle={{ width: '15rem', height: '4rem', margin: `0 ${SPACE[4]}` }}
+        inputStyle={{
+          width: '15rem',
+          height: '4.8rem',
+          fontSize: '1.6rem',
+          borderRadius: '0.5rem',
+          border: '1px solid black',
+          padding: '1rem'
+        }}
       />
-      <input type="number" placeholder="금액" required {...register('cost')} />
-      <input placeholder="내용" {...register('content')} />
+      <Input type="number" placeholder="금액" required min={0} {...register('cost')} />
+      <Input placeholder="내용" {...register('content')} />
       <Button type="submit">{isFetching ? <Spin /> : '추가'}</Button>
     </FormContainer>
   )
@@ -75,14 +84,14 @@ export default function ExpenseAddForm() {
 const FormContainer = styled.form`
   display: flex;
   justify-content: center;
-  & > input {
-    width: 15rem;
-    height: 4rem;
+  input {
     margin: 0 ${SPACE[4]};
   }
 `
 
 const RenderItem = styled.div<{ $selected: boolean }>`
+  font-size: ${TEXT.size.base};
+  padding: ${SPACE[2]};
   background-color: ${({ $selected }) => ($selected ? `${COLOR.tertiary}` : `${COLOR.white}`)};
   &:hover {
     background-color: ${COLOR.tertiary};

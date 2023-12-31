@@ -2,10 +2,14 @@
 
 import { Button } from '@/components/Buttons/Button'
 import { Spin } from '@/components/Loading/Spin'
+import { DeleteIcon } from '@/components/UI/DeleteIcon'
+import { EditIcon } from '@/components/UI/EditIcon'
+import { ChildrenWith } from '@/components/UI/ChildrenWith'
 import { DATE_FORMAT } from '@/constants'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { Expenses } from '@/model'
 import { expenseDeleteQueue, expenseEditQueue } from '@/store/expenseFetchingState'
-import { SPACE, TEXT } from '@/styles/common'
+import { SHADOW, SPACE, TEXT } from '@/styles/common'
 import dayjs from 'dayjs'
 import { useRef } from 'react'
 import { useRecoilState } from 'recoil'
@@ -20,6 +24,7 @@ export default function List({ expenses, onEdit, onDelete }: ListProps) {
   const ref = useRef<HTMLUListElement>(null)
   const [editStateQueue, setEditStateQueue] = useRecoilState(expenseEditQueue)
   const [deleteStateQueue, setDeleteStateQueue] = useRecoilState(expenseDeleteQueue)
+  const { isMobile } = useMediaQuery()
 
   const handleOnSubmit = (id: string, cb: (expense: Expenses) => void) => {
     const item = ref.current!.querySelector(`#${id}`)!
@@ -38,16 +43,24 @@ export default function List({ expenses, onEdit, onDelete }: ListProps) {
             <input className="date" type="date" defaultValue={dayjs(item.date).format(DATE_FORMAT)} required />
             <Button
               type="button"
+              $size="small"
               onClick={() => {
                 setEditStateQueue((prev) => [...prev, item.id])
                 handleOnSubmit(item.id, onEdit)
               }}
               disabled={editStateQueue.includes(item.id)}
             >
-              {editStateQueue.includes(item.id) ? <Spin /> : <p>수정</p>}
+              <ChildrenWith
+                isLoading={editStateQueue.includes(item.id)}
+                loadingElement={<Spin />}
+                isMobile={isMobile}
+                mobileElement={<EditIcon />}
+                defaultElement={<p>수정</p>}
+              />
             </Button>
             <Button
               type="button"
+              $size="small"
               $variant="warn"
               onClick={() => {
                 setDeleteStateQueue((prev) => [...prev, item.id])
@@ -55,7 +68,13 @@ export default function List({ expenses, onEdit, onDelete }: ListProps) {
               }}
               disabled={deleteStateQueue.includes(item.id)}
             >
-              {deleteStateQueue.includes(item.id) ? <Spin /> : <p>삭제</p>}
+              <ChildrenWith
+                isLoading={deleteStateQueue.includes(item.id)}
+                loadingElement={<Spin />}
+                isMobile={isMobile}
+                mobileElement={<DeleteIcon />}
+                defaultElement={<p>삭제</p>}
+              />
             </Button>
           </ListItem>
         )
@@ -67,15 +86,23 @@ export default function List({ expenses, onEdit, onDelete }: ListProps) {
 const ListItem = styled.li`
   display: flex;
   align-items: center;
-  height: 30rem;
+  height: 10rem;
   font-size: ${TEXT.size.xl};
+  padding: ${SPACE[2]};
+  margin: ${SPACE[4]};
+  box-shadow: ${SHADOW.base};
+  border-radius: 1rem;
   input,
   button {
+    display: block;
+    height: 5rem;
     margin: 0 ${SPACE[4]};
-    min-height: 7rem;
+  }
+  input {
+    width: 100%;
   }
   button {
-    width: 10rem;
+    white-space: nowrap;
     cursor: pointer;
   }
 `
