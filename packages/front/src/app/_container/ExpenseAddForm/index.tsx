@@ -84,7 +84,7 @@ export default function ExpenseAddForm() {
       />
       <Input type="number" placeholder="금액" required min={0} {...register('cost')} />
       <Input placeholder="내용" {...register('content')} />
-      <Button type="submit" $size="small" title="소비 아이템 추가하기">
+      <Button type="submit" $size="small" title="소비 내역 추가하기">
         <ChildrenWith
           isLoading={isFetching}
           loadingElement={<Spin />}

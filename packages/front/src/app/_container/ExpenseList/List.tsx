@@ -44,6 +44,7 @@ export default function List({ expenses, onEdit, onDelete }: ListProps) {
             <Button
               type="button"
               $size="small"
+              title="소비 내역 수정하기"
               onClick={() => {
                 setEditStateQueue((prev) => [...prev, item.id])
                 handleOnSubmit(item.id, onEdit)
@@ -62,6 +63,7 @@ export default function List({ expenses, onEdit, onDelete }: ListProps) {
               type="button"
               $size="small"
               $variant="warn"
+              title="소비 내역 삭제하기"
               onClick={() => {
                 setDeleteStateQueue((prev) => [...prev, item.id])
                 handleOnSubmit(item.id, onDelete)
