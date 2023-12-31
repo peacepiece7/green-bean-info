@@ -271,10 +271,10 @@ const List = styled.ul `
   right: 0;
   margin: auto;
   border: ${({ $open }) => ($open ? '1px solid black' : 'none')};
+  z-index: 999999;
 `;
 const ListItem = styled.li `
   width: 100%;
-  z-index: 999999;
   overflow: hidden;
   transition: height 0.2s ease-in-out;
 `;
