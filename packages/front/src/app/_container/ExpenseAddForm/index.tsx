@@ -14,6 +14,7 @@ import { useExpensesListMutation } from '@/hooks/mutation/expense'
 import { AutoComplete } from 'greenbean-pack'
 import { Spin } from '@/components/Loading/Spin'
 import { DATE_FORMAT } from '@/constants'
+import { Button } from '@/components/Buttons/Button'
 
 interface AddExpenseBody {
   date: string
@@ -66,7 +67,7 @@ export default function ExpenseAddForm() {
       />
       <input type="number" placeholder="금액" required {...register('cost')} />
       <input placeholder="내용" {...register('content')} />
-      <button type="submit">{isFetching ? <Spin /> : '추가'}</button>
+      <Button type="submit">{isFetching ? <Spin /> : '추가'}</Button>
     </FormContainer>
   )
 }

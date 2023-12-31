@@ -15,7 +15,7 @@ const SpinWrapper = styled.span<{
 }>`
   height: ${({ $height }) => $height};
   width: ${({ $width }) => $width};
-  border: 5px solid #fff;
+  border: 5px solid ${COLOR.gray};
   border-bottom-color: ${COLOR.tertiary};
   border-radius: 50%;
   display: inline-block;

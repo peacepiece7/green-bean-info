@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/Buttons/Button'
 import { Spin } from '@/components/Loading/Spin'
 import { DATE_FORMAT } from '@/constants'
 import { Expenses } from '@/model'
@@ -47,6 +48,7 @@ export default function List({ expenses, onEdit, onDelete }: ListProps) {
             </Button>
             <Button
               type="button"
+              $variant="warn"
               onClick={() => {
                 setDeleteStateQueue((prev) => [...prev, item.id])
                 handleOnSubmit(item.id, onDelete)
@@ -75,15 +77,6 @@ const ListItem = styled.li`
   button {
     width: 10rem;
     cursor: pointer;
-  }
-`
-
-const Button = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  p {
-    white-space: nowrap;
   }
 `
 
