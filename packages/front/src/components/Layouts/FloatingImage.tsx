@@ -32,6 +32,6 @@ const ImageWrapper = styled.div`
   img {
     min-width: 500px;
     opacity: 0.4;
-    /* object-fit: scale-down; */
+    object-fit: cover;
   }
 `

@@ -16,7 +16,10 @@ export const GlobalStyle = createGlobalStyle`
     html {
         font-size : 62.5%; // 1rem = 10px
     }
-
+    main,
+    section {
+        width : 100%;
+    }
 
     @media screen and (max-width: 768px) {
         html {
