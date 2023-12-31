@@ -60,19 +60,17 @@ describe('AutoComplete', () => {
     render(<MockComponent />)
 
     // 인풋창을 포커스하고 글자를 입력합니다. 인풋창에 글자를 입력합니다.
-    fireEvent.click(screen.getByRole('textbox'))
-    fireEvent.input(screen.getByRole('textbox'), { target: { value: 'text' } })
+    fireEvent.input(screen.getByRole('textbox'), { target: { value: 'test' } })
+    fireEvent.focus(screen.getByRole('textbox'))
     expect(screen.getByText('test')).toBeInTheDocument()
   })
 
   it('인풋창에 글자를 입력한 뒤 키보드 다운을 누르면 아이템이 선택됩니다.', () => {
     render(<MockComponent />)
 
-    // * 인풋창을 포커스합니다.
-    fireEvent.click(screen.getByRole('textbox'))
-
     // 인풋창에 글자를 입력합니다. (추천 리스트 -> 검색 리스트로 변경됩니다.)
     fireEvent.input(screen.getByRole('textbox'), { target: { value: 'inputValue' } })
+    fireEvent.focus(screen.getByRole('textbox'))
 
     fireEvent.keyDown(screen.getByRole('textbox'), { key: 'ArrowDown', code: 'ArrowDown' })
     fireEvent.keyDown(screen.getByRole('textbox'), { key: 'ArrowDown', code: 'ArrowDown' })
