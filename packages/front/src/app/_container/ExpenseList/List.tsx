@@ -94,6 +94,7 @@ const ListItem = styled.li`
   margin: ${SPACE[4]};
   box-shadow: ${SHADOW.base};
   border-radius: 1rem;
+  backdrop-filter: blur(0.5rem);
   input,
   button {
     display: block;

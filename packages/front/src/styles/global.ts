@@ -18,14 +18,14 @@ export const GlobalStyle = createGlobalStyle`
     }
 
 
-    @media screen and (min-width: 768px) {
+    @media screen and (max-width: 768px) {
         html {
             font-size : 56.25%; // 1rem = 9px
         }
 
     }
 
-    @media screen and (min-width: 1024px) {
+    @media screen and (max-width: 480px) {
         html {
             font-size : 50%; // 1rem = 8px
         }

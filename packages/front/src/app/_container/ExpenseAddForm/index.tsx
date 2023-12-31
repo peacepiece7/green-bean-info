@@ -103,6 +103,9 @@ const FormContainer = styled.form`
   input {
     margin: 0 ${SPACE[4]};
   }
+  button {
+    width: fit-content;
+  }
 `
 
 const RenderItem = styled.div<{ $selected: boolean }>`
