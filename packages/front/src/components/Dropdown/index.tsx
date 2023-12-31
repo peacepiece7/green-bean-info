@@ -48,6 +48,7 @@ const Container = styled.div<DowndownProps>`
   transition: ${TRANSITION.all};
   overflow: hidden;
   padding: 0.5rem;
+  z-index: 10;
 `
 const DropdownForm = styled.div<{ $height: number }>`
   display: flex;
