@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   $variant?: 'default' | 'primary' | 'warn'
-  $size?: 'small' | 'medium' | 'large'
+  $size?: 'small' | 'medium' | 'large' | 'auto'
 }
 
 export const Input = (props: InputProps) => {
@@ -46,6 +46,9 @@ const InputSizes = {
   `,
   large: css`
     width: 15rem;
+  `,
+  auto: css`
+    width: auto;
   `
 }
 

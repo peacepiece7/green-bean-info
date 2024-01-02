@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   $variant?: 'default' | 'primary' | 'warn'
-  $size?: 'small' | 'medium' | 'large'
+  $size?: 'small' | 'medium' | 'large' | 'auto'
 }
 
 export const UncontrolledInput = forwardRef<HTMLInputElement, InputProps>((props: InputProps, ref) => {
@@ -47,6 +47,9 @@ const InputSizes = {
   `,
   large: css`
     width: 15rem;
+  `,
+  auto: css`
+    width: auto;
   `
 }
 

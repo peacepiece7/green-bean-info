@@ -4,7 +4,7 @@ import GNB from '@/components/GNB/GNB'
 import { User } from '@/model'
 import ExpenseAddForm from './ExpenseAddForm'
 import ExpenseList from './ExpenseList'
-import Filter from './Filter'
+import ActionBox from './ActionBox'
 import { SSRSuspense } from '@/components/SSRSuspense'
 import styled from 'styled-components'
 import FloatingImage from '@/components/Layouts/FloatingImage'
@@ -19,7 +19,7 @@ export default function HomeContainer({ user }: HomeContainer) {
       <ContentWrapper>
         <FloatingImage>
           <ExpenseAddForm />
-          <Filter />
+          <ActionBox />
           <SSRSuspense fallback={<></>}>
             <ExpenseList />
           </SSRSuspense>

@@ -99,6 +99,7 @@ export default function ExpenseAddForm() {
 const FormContainer = styled.form`
   display: flex;
   justify-content: center;
+  margin-top: ${SPACE[12]};
   input {
     margin: 0 ${SPACE[4]};
   }
