@@ -19,5 +19,5 @@ export const searchState = atom<string | null>({
 
 export const sortState = atom<'asc' | 'desc'>({
   key: 'sortState',
-  default: 'asc'
+  default: 'desc'
 })

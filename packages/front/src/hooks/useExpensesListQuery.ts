@@ -7,7 +7,7 @@ import { useIntersectionObserver } from 'greenbean-pack'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { expenseDeleteQueue, expenseEditQueue } from '@/store/expenseFetchingState'
 import { EXPENSES } from '@/constants/query'
-import { searchState } from '@/store/filterState'
+import { searchState, sortState } from '@/store/filterState'
 
 export interface ExpensesListData {
   content: Expenses[]
@@ -22,10 +22,12 @@ export const useExpensesListInfiniteQuery = () => {
   const setExpenseEditQueue = useSetRecoilState(expenseEditQueue)
   const setExpenseDeleteQueue = useSetRecoilState(expenseDeleteQueue)
   const searchQuery = useRecoilValue(searchState)
+  const sortQuery = useRecoilValue(sortState)
   const { data, fetchNextPage, isLoading, isFetching, isFetchingNextPage } = useSuspenseInfiniteQuery<ExpensesListData>(
     {
-      queryKey: [EXPENSES, searchQuery],
-      queryFn: ({ pageParam }) => fetcher(`/api/expenses?page=${pageParam}${searchQuery ? `&q=${searchQuery}` : ''}`),
+      queryKey: [EXPENSES, searchQuery, sortQuery],
+      queryFn: ({ pageParam }) =>
+        fetcher(`/api/expenses?page=${pageParam}&q=${searchQuery ?? ''}&sort=${sortQuery ?? ''}`),
       getNextPageParam: (lastPage) => {
         if (lastPage.totalPage > lastPage.currentPage) {
           return lastPage.currentPage + 1

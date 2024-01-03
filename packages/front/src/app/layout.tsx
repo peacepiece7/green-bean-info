@@ -9,17 +9,13 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'My Wallet',
-  description: 'My Wallet is a simple wallet app',
+  description: 'My Wallet is a simple wallet app'
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en'>
-      <body className={inter.className}>
+    <html lang="en">
+      <body id="portal" className={inter.className}>
         <StyledComponentsRegistry>
           <AuthContext>
             <QueryContext>

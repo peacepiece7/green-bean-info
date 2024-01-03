@@ -8,17 +8,20 @@ import ActionBox from './ActionBox'
 import { SSRSuspense } from '@/components/SSRSuspense'
 import styled from 'styled-components'
 import FloatingImage from '@/components/Layouts/FloatingImage'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import ExpenseAddFormMobile from './ExpenseAddForm/Mobile'
 
 interface HomeContainer {
   user: User
 }
 export default function HomeContainer({ user }: HomeContainer) {
+  const { isMobile } = useMediaQuery()
   return (
     <>
       <GNB user={user} />
       <ContentWrapper>
         <FloatingImage>
-          <ExpenseAddForm />
+          {!isMobile ? <ExpenseAddForm /> : <ExpenseAddFormMobile />}
           <ActionBox />
           <SSRSuspense fallback={<></>}>
             <ExpenseList />

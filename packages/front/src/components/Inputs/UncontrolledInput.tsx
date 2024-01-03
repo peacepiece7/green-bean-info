@@ -3,12 +3,12 @@ import styled, { css } from 'styled-components'
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   $variant?: 'default' | 'primary' | 'warn'
-  $size?: 'small' | 'medium' | 'large' | 'auto'
+  $size?: 'small' | 'medium' | 'large' | 'auto' | 'full'
 }
 
 export const UncontrolledInput = forwardRef<HTMLInputElement, InputProps>((props: InputProps, ref) => {
   const { $variant = 'default', $size = 'medium', ...rest } = props
-  return <InputWrapper ref={ref} $variant={$variant} $size={$size} {...rest} />
+  return <Input ref={ref} $variant={$variant} $size={$size} {...rest} />
 })
 
 UncontrolledInput.displayName = 'UncontrolledInput'
@@ -50,10 +50,13 @@ const InputSizes = {
   `,
   auto: css`
     width: auto;
+  `,
+  full: css`
+    width: 100%;
   `
 }
 
-const InputWrapper = styled.input<InputProps>`
+const Input = styled.input<InputProps>`
   font-size: 1.6rem;
   padding: 1rem;
   border-radius: 0.5rem;
