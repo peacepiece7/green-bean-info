@@ -6,13 +6,18 @@ const { persistAtom } = recoilPersist({
   storage: typeof window !== 'undefined' ? localStorage : undefined
 })
 
-export const filterState = atom({
-  key: 'filterState',
-  default: 'all'
-})
-
 export const recommendCategoryState = atom<string[]>({
   key: 'recommendCategoryState',
   default: [],
   effects_UNSTABLE: [persistAtom]
+})
+
+export const searchState = atom<string | null>({
+  key: 'searchState',
+  default: null
+})
+
+export const sortState = atom<'asc' | 'desc'>({
+  key: 'sortState',
+  default: 'desc'
 })

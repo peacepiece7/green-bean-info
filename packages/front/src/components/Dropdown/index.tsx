@@ -7,22 +7,17 @@ import LogoutBtn from '@/components/Buttons/LogoutBtn'
 interface DropdownProps {
   open: boolean
   options?: {
-    height: number
     width: number
     pos: 'left' | 'right' | 'center'
   }
   children?: React.ReactNode
 }
 
-export default function Dropdown({
-  open,
-  options = { height: 200, width: 200, pos: 'right' },
-  children
-}: DropdownProps) {
-  const { width, height, pos } = options
+export default function Dropdown({ open, options = { width: 200, pos: 'right' }, children }: DropdownProps) {
+  const { width, pos } = options
   return (
-    <Container $open={open} $height={height} $width={width} $pos={pos}>
-      <DropdownForm $height={height}>
+    <Container $open={open} $width={width} $pos={pos}>
+      <DropdownForm>
         {children}
         <LogoutBtn />
       </DropdownForm>
@@ -32,7 +27,6 @@ export default function Dropdown({
 
 interface DowndownProps {
   $open: boolean
-  $height: number
   $width: number
   $pos?: 'left' | 'right' | 'center'
 }
@@ -43,18 +37,17 @@ const Container = styled.div<DowndownProps>`
   right: ${({ $pos }) => ($pos === 'right' ? '0' : 'auto')};
   left: ${({ $pos }) => ($pos === 'left' ? '0' : 'auto')};
   margin: ${({ $pos }) => ($pos === 'center' ? '0 auto' : '0')};
-  height: ${({ $open, $height }) => ($open ? `${$height + 50}px` : '0')};
+  height: ${({ $open }) => ($open ? `auto` : '0')};
   width: ${({ $width }) => `${$width}px`};
   transition: ${TRANSITION.all};
   overflow: hidden;
   padding: 0.5rem;
   z-index: 10;
 `
-const DropdownForm = styled.div<{ $height: number }>`
+const DropdownForm = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: ${({ $height }) => `${$height}px`};
   background-color: ${COLOR.white};
   margin-top: 2rem;
   padding: 1rem 0;

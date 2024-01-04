@@ -4,22 +4,25 @@ import GNB from '@/components/GNB/GNB'
 import { User } from '@/model'
 import ExpenseAddForm from './ExpenseAddForm'
 import ExpenseList from './ExpenseList'
-import Filter from './Filter'
+import ActionBox from './ActionBox'
 import { SSRSuspense } from '@/components/SSRSuspense'
 import styled from 'styled-components'
 import FloatingImage from '@/components/Layouts/FloatingImage'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import ExpenseAddFormMobile from './ExpenseAddForm/Mobile'
 
 interface HomeContainer {
   user: User
 }
 export default function HomeContainer({ user }: HomeContainer) {
+  const { isMobile } = useMediaQuery()
   return (
     <>
       <GNB user={user} />
       <ContentWrapper>
         <FloatingImage>
-          <ExpenseAddForm />
-          <Filter />
+          {!isMobile ? <ExpenseAddForm /> : <ExpenseAddFormMobile />}
+          <ActionBox />
           <SSRSuspense fallback={<></>}>
             <ExpenseList />
           </SSRSuspense>

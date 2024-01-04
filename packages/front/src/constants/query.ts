@@ -1,1 +1,1 @@
-export const EXPENSES = 'EXPENSES'
+export const EXPENSES = 'expenses'

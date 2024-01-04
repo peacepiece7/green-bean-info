@@ -4,17 +4,28 @@ import { sanity } from '@/service/sanity'
 
 dayjs.extend(weekOfYear)
 
+// userId: string | null,
+// page: string | null = '1',
+// pageSize: string | null = '10'
+
 export async function getExpensesTransaction(
   userId: string | null,
-  page: string | null = '1',
-  pageSize: string | null = '10'
+  options: {
+    page?: string | null
+    pageSize?: string | null
+    query?: string | null
+    sort?: string | null // asc | desc
+  }
 ) {
   try {
+    const { page = '1', pageSize = '10', query: q, sort: s } = options
     const pageStart = Number(page) * Number(pageSize)
     const pageEnd = pageStart + Number(pageSize)
+    const searchQuery = q ? `&& category match "*${q}*" || content match "*${q}*"` : ''
+    const sort = s ? s : 'desc'
     const query = `{
-        "totalCount" : count(*[_type == "expenses" && user._ref == "${userId}"]),
-        "content" : *[_type == "expenses" && user._ref == "${userId}"] | order(date desc) [${pageStart}...${pageEnd}]
+        "totalCount" : count(*[_type == "expenses" && user._ref == "${userId}" ${searchQuery}]),
+        "content" : *[_type == "expenses" && user._ref == "${userId}" ${searchQuery}] | order(date ${sort}) [${pageStart}...${pageEnd}]
         {
             "id" : _id,
             "date" : date,

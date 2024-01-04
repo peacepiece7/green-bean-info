@@ -11,7 +11,13 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams
     const { id: userId } = user
     const page = searchParams.get('page')
-    const response = await getExpensesTransaction(userId, page)
+    const query = searchParams.get('q')
+    const sort = searchParams.get('sort')
+    const response = await getExpensesTransaction(userId, {
+      page,
+      query,
+      sort
+    })
     if (response.code === 0) {
       return NextResponse.json(response.data)
     } else {
