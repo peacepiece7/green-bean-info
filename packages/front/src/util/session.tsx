@@ -21,7 +21,7 @@ export async function withSessionUser(handler: (user: User) => Promise<Response>
 
 export async function getServerSessionWithUser() {
   if (process.env.TEST !== 'enabled') return await getServerSession(authOptions)
-
+  // TODO : msw 서버 생성하면 providers callback url 변경하기
   const mockSession: Session = {
     user: {
       id: process.env.MOCK_ID!,

@@ -5,6 +5,10 @@ import { NextRequest, NextResponse } from 'next/server'
  * 로그인 여부를 검사하는 미들웨어 입니다.
  */
 export async function middleware(req: NextRequest) {
+  // TODO : getToken 보고 msw 에서 social login callback으로 jwt 토큰 생성하기, 삭제 등 구현하기
+  // const { cookies, headers } = req
+  // const authorization = req.headers.get('authorization')
+
   const token = await getToken({ req })
 
   // * 토큰이 있거나, 테스트 환경일 경우 미들웨어를 통과시킵니다.
