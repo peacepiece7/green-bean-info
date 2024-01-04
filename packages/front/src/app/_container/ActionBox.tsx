@@ -20,7 +20,7 @@ interface InputValue {
 export default function ActionBox() {
   const [sort, setSort] = useRecoilState(sortState)
   const [search, setSearch] = useRecoilState(searchState)
-  const { register, handleSubmit } = useForm<InputValue>()
+  const { register, handleSubmit, resetField } = useForm<InputValue>()
 
   const submitForm = (form: InputValue) => {
     setSort((prev) => form.sort as typeof prev)
@@ -46,7 +46,15 @@ export default function ActionBox() {
               backgroundColor: 'transparent'
             }}
           >
-            <DeleteIcon />
+            {search && (
+              <DeleteIcon
+                onClick={() => {
+                  console.log('DELETE SEARCH QUERY')
+                  setSearch(null)
+                  resetField('search')
+                }}
+              />
+            )}
           </Button>
         </InputWrapper>
         <Select id="sort" {...register('sort')} defaultValue={sort}>
