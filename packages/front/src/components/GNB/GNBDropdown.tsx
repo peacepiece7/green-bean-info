@@ -23,6 +23,9 @@ export default function GNBDropdown({ open }: GNBDropdownProps) {
             <Item>
               <Link to="/analyze">소비 현황 분석하기</Link>
             </Item>
+            <Item>
+              <Link to="/calendar">캘린더 보러가기</Link>
+            </Item>
           </List>
         </Nav>
       </ItemWrapper>

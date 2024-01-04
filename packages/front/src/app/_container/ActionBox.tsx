@@ -85,7 +85,7 @@ const FormWrapper = styled.form`
   display: flex;
   justify-content: flex-end;
   button {
-    margin-left: 2rem;
+    margin-left: 1rem;
   }
 `
 const InputWrapper = styled.div`

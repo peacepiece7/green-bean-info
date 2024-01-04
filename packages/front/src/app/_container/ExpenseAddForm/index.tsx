@@ -49,7 +49,7 @@ export default function ExpenseAddForm() {
       <AutoCompleteInput />
       {/* prettier-ignore */}
       <Input type="number" placeholder="금액" required min={0} $size={isMobile ? 'full' : 'medium'} {...register('cost')} />
-      <Input type="text" placeholder="내용" $size={isMobile ? 'full' : 'medium'} {...register('content')} />
+      <Input type="text" placeholder="내용" $size={isMobile ? 'full' : 'large'} {...register('content')} />
       <Button
         type="submit"
         $size="small"
@@ -59,7 +59,10 @@ export default function ExpenseAddForm() {
             ? {
                 alignSelf: 'flex-end'
               }
-            : {}
+            : {
+                margin: 0,
+                marginLeft: '0.5rem'
+              }
         }
       >
         <ChildrenWith
