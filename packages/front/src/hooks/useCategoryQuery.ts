@@ -8,7 +8,7 @@ interface ResponseItem {
   value: string
 }
 
-export const useCategoryQuery = (queryParam: string) => {
+export const useCategoryQuery = (queryParam: string = '') => {
   const query = useThrottle(queryParam, 1000)
   const res = useQuery<ResponseItem[]>({
     queryKey: ['category', query],

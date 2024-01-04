@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components'
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode
   $variant?: 'default' | 'primary' | 'warn'
-  $size?: 'small' | 'medium' | 'large'
+  $size?: 'small' | 'medium' | 'large' | 'auto'
 }
 
 export const Button = (props: ButtonProps) => {
@@ -28,10 +28,11 @@ const ButtonVariants = {
     }
   `,
   primary: css`
-    color: ${COLOR.white};
-    background-color: ${COLOR.gray};
+    color: ${COLOR.success};
+    background-color: ${COLOR.white};
+    border: 1px solid ${COLOR.success};
     &:focus {
-      background-color: ${COLOR.focus};
+      background-color: ${COLOR.focusLight};
     }
   `,
   warn: css`
@@ -53,6 +54,9 @@ const ButtomSizes = {
   `,
   large: css`
     width: 20rem;
+  `,
+  auto: css`
+    width: auto;
   `
 }
 

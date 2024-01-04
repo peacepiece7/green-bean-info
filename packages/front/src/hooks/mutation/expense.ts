@@ -2,12 +2,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { addExpenseApi, deleteExpenseApi, updateExpenseApi } from '@/client/expenses'
 import { useSetRecoilState } from 'recoil'
-import { expenseAsyncState } from '@/store/expenseFetchingState'
+import { expenseAddIsFetchingState } from '@/store/expenseFetchingState'
 import { EXPENSES } from '@/constants/query'
 
 export const useExpensesListMutation = () => {
   const queryClient = useQueryClient()
-  const setIsFetching = useSetRecoilState(expenseAsyncState)
+  const setIsFetching = useSetRecoilState(expenseAddIsFetchingState)
 
   const errorHandler = (res: Response) => {
     if (res.status === 401) alert('접근 권한이 없습니다.')
