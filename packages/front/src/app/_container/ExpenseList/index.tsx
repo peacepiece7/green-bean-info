@@ -22,7 +22,7 @@ export default function ExpenseList() {
     <>
       {isFetching && <Fetching>페이지 정보를 불러오고 있습니다.</Fetching>}
       <List expenses={expenseList} onEdit={handleOnEdit} onDelete={handleOnDelete} />
-      {isFetchingNextPage && <Fetching>다음 페이지 정보를 가져오고 있습니다.</Fetching>}
+      {!isFetching && isFetchingNextPage && <Fetching>다음 페이지 정보를 가져오고 있습니다.</Fetching>}
       <div ref={triggerRef} />
     </>
   )
