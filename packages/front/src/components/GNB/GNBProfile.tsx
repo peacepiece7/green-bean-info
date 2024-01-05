@@ -14,7 +14,7 @@ export default function GNBProfile({ user }: GNBProfileProps) {
 
   return (
     <Container ref={ref}>
-      <ProfileImage src={user.image} alt={user.username} width={50} height={50} />
+      <ProfileImage src={user.image} alt={'user profile'} width={50} height={50} />
       <p>{`반갑습니다 ${user.username}님`}</p>
       <GNBDropdown open={isEnter} />
     </Container>
