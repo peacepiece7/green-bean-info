@@ -8,5 +8,15 @@ interface CalendarLayoutProps {
 }
 
 export default function CalendarLayout({ children }: CalendarLayoutProps) {
-  return children
+  return (
+    <div
+      style={{
+        height: '100dvh',
+        maxHeight: '100dvh',
+        overflow: 'hidden'
+      }}
+    >
+      {children}
+    </div>
+  )
 }

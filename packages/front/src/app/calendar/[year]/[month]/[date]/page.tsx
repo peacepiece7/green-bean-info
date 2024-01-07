@@ -1,7 +1,6 @@
-import Link from 'next/link'
-import Calendar from './_container/Calendar'
+import CalendarContainer from './_container/CalendarContainer'
 
-interface CalendarPageProps {
+export interface CalendarPageProps {
   params: {
     year: string
     month: string
@@ -10,14 +9,10 @@ interface CalendarPageProps {
 }
 
 export default function CalendarPage(props: CalendarPageProps) {
-  const { year, month, date } = props.params
   return (
     <div>
-      Calendar Page
-      <Calendar {...props.params} />
-      <Link href={`/calendar/${year}/${month}/${Number(date) + 1}`}>Next date</Link>
-      <div></div>
-      <Link href={`/calendar/${year}/${month}/${Number(date) - 1}`}>Before date</Link>
+      <h1>Calendar Page</h1>
+      <CalendarContainer {...props.params} />
     </div>
   )
 }

@@ -1,4 +1,3 @@
-import 'server-only'
 import { User } from '@/model'
 import { authOptions } from '@/service/nextAuth'
 import { getServerSession } from 'next-auth'
