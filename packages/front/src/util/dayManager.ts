@@ -25,6 +25,13 @@ class DayManger {
     return dayjs(date).format(DEFAULT_ROUTER_FORMAT)
   }
 
+  /**
+   * @description YYYY-MM-DD 형식으로 반환합니다.
+   */
+  dayToDefaultFormat(date: ConfigType) {
+    return dayjs(date).format(DEFAULT_DATE_FORMAT)
+  }
+
   dayToDateObject(date: string) {
     return dayjs(date).toDate()
   }
