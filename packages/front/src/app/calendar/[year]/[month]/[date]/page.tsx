@@ -1,4 +1,7 @@
+import { getServerSession } from 'next-auth'
 import CalendarContainer from './_container/CalendarContainer'
+import { authOptions } from '@/service/nextAuth'
+import { redirect } from 'next/navigation'
 
 export interface CalendarPageProps {
   params: {
@@ -8,11 +11,14 @@ export interface CalendarPageProps {
   }
 }
 
-export default function CalendarPage(props: CalendarPageProps) {
+export default async function CalendarPage(props: CalendarPageProps) {
+  const session = await getServerSession(authOptions)
+
+  if (!session) return redirect('/auth/signin')
+
   return (
-    <div>
-      <h1>Calendar Page</h1>
-      <CalendarContainer {...props.params} />
-    </div>
+    <main>
+      <CalendarContainer {...props.params} user={session.user} />
+    </main>
   )
 }

@@ -97,7 +97,7 @@
 
 .react-calendar__tile {
   max-width: 100%;
-  padding: 2rem 2rem;
+  padding: 1rem 2rem 3rem 2rem;
   background: none;
   text-align: center;
   line-height: 16px;

@@ -9,17 +9,12 @@ import './Calendar.css'
 
 type CalendarProps = CalendarPageProps['params'] & {
   predicateTitleContent?: (args: TileArgs) => React.ReactNode
-  children?: React.ReactNode
 }
-export default function Calendar({ date, month, year, predicateTitleContent, children }: CalendarProps) {
+export default function Calendar({ date, month, year, predicateTitleContent }: CalendarProps) {
   const router = useRouter()
 
   return (
     <div>
-      Calendar
-      <p>year : {year}</p>
-      <p>month : {month}</p>
-      <p>date : {date}</p>
       <ReactCalendar
         value={dayManager.dayToDateObject(`${year}/${month}/${date}`)}
         onChange={(e) => {
@@ -36,18 +31,13 @@ export default function Calendar({ date, month, year, predicateTitleContent, chi
         // console.log('onViewChange : ', e)
         // }}
         onActiveStartDateChange={(e) => {
-          console.log('onActiveStartDateChange : ')
           const routeFormatDay = dayManager.dayToRouterFormat(e.activeStartDate)
           router.push(`/calendar/${routeFormatDay}`)
         }}
         formatDay={(_props, date) => {
           return date.getDate().toString()
         }}
-        tileContent={(args) => {
-          const content = predicateTitleContent && predicateTitleContent(args)
-          if (content) return content
-          return children
-        }}
+        tileContent={(args) => predicateTitleContent && predicateTitleContent(args)}
       />
       <div>
         <button onClick={() => router.push(`/calendar/${year}/${month}/${Number(date) + 1}`)}>Next date</button>
