@@ -74,16 +74,20 @@ export const useExpensesListInfiniteQuery = () => {
   const deleteExpense = useMutation({
     mutationFn: deleteExpenseApi,
     onMutate: (expenseId) => {
-      queryClient.setQueryData([EXPENSES], (prev: { pages: ExpensesListData[]; pageParams: number[] }) => {
-        const pages = prev.pages.map((page) => ({
-          ...page,
-          content: page.content.filter((expense) => expense.id !== expenseId)
-        }))
-        return {
-          ...prev,
-          pages
+      queryClient.setQueryData(
+        [EXPENSES, searchQuery, sortQuery],
+        (prev: { pages: ExpensesListData[]; pageParams: number[] }) => {
+          console.log('PREV DATA :', prev)
+          const pages = prev.pages.map((page) => ({
+            ...page,
+            content: page.content.filter((expense) => expense.id !== expenseId)
+          }))
+          return {
+            ...prev,
+            pages
+          }
         }
-      })
+      )
     },
     onSuccess: (_data, expenseId) => {
       queryClient.invalidateQueries({

@@ -33,7 +33,9 @@ export default function ExpenseAddForm() {
   const { isMobile } = useMediaQuery()
 
   const onSubmit = (body: AddExpenseBody) => {
-    body.date = dateToISOString(body.date)
+    if (!date) return
+    body.date = dateToISOString(date)
+    console.log(body)
     addExpenseMutate({ ...body, category: searchQuery })
     setIsFetching(true)
     setPersist(searchQuery)

@@ -15,6 +15,7 @@ export default function ExpenseList() {
   }
 
   const handleOnDelete = (expense: Expenses) => {
+    console.log('delete', expense)
     deleteExpenseMutate(expense.id)
   }
 
