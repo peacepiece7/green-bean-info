@@ -1,27 +1,27 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import ReactCalendar, { TileArgs } from 'react-calendar'
+import ReactCalendar, { OnArgs, TileArgs } from 'react-calendar'
 import { dayManager } from '@/util/dayManager'
 import { CalendarPageProps } from '../../page'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { useCalendarQuery } from '@/hooks/useCalendarQuery'
+import { Value } from 'react-calendar/dist/cjs/shared/types'
+import { Expenses } from '@/model'
 import './Calendar.css'
 
 type CalendarProps = CalendarPageProps['params'] & {
   onOpen: (date: string) => void
 }
+
 export default function Calendar({ date, month, year, onOpen }: CalendarProps) {
   const router = useRouter()
   const [activeDate, setActiveDate] = useState(dayManager.dayToDefaultFormat(`${year}/${month}/${date}`))
   const { data, isLoading } = useCalendarQuery(year, month)
 
   const handleTitleContent = (tile: TileArgs): React.ReactNode => {
-    const tileDay = dayManager.dayToDefaultFormat(tile.date)
-    const totalCost = data?.reduce(
-      (prev, item) => (dayManager.dayToDefaultFormat(item.date) === tileDay ? item.cost + prev : prev),
-      0
-    )
+    const totalCost = getTotalCost(dayManager.dayToDefaultFormat(tile.date), data)
+
     return (
       <ContentWrapper>
         {!isLoading && totalCost ? (
@@ -33,33 +33,41 @@ export default function Calendar({ date, month, year, onOpen }: CalendarProps) {
       </ContentWrapper>
     )
   }
+  const handleOnClickDay = (date: Date) => {
+    const clickedDate = dayManager.dayToDefaultFormat(date)
+    setActiveDate(clickedDate)
+    if (clickedDate === activeDate) {
+      const totalCost = getTotalCost(dayManager.dayToDefaultFormat(date), data)
+      if (totalCost) onOpen(clickedDate)
+    }
+  }
+  const handleOnActiveStartDateChange = (args: OnArgs) => {
+    const routeFormatDay = dayManager.dayToRouterFormat(args.activeStartDate)
+    router.push(`/calendar/${routeFormatDay}`)
+  }
+  const handleOnChange = (e: Value) => {
+    if (e instanceof Date) {
+      const routeFormatDay = dayManager.dayToRouterFormat(e)
+      router.push(`/calendar/${routeFormatDay}`)
+    }
+  }
 
   return (
     <div>
       <ReactCalendar
         value={dayManager.dayToDateObject(`${year}/${month}/${date}`)}
-        onChange={(e) => {
-          if (e instanceof Date) {
-            const routeFormatDay = dayManager.dayToRouterFormat(e)
-            router.push(`/calendar/${routeFormatDay}`)
-          }
-        }}
-        onClickDay={(e) => {
-          const clickedDate = dayManager.dayToDefaultFormat(e)
-          setActiveDate(clickedDate)
-          if (clickedDate === activeDate) onOpen(clickedDate)
-        }}
-        onActiveStartDateChange={(e) => {
-          const routeFormatDay = dayManager.dayToRouterFormat(e.activeStartDate)
-          router.push(`/calendar/${routeFormatDay}`)
-        }}
-        formatDay={(_props, date) => {
-          return date.getDate().toString()
-        }}
+        onChange={handleOnChange}
+        onClickDay={handleOnClickDay}
+        onActiveStartDateChange={handleOnActiveStartDateChange}
+        formatDay={(_props, date) => date.getDate().toString()}
         tileContent={handleTitleContent}
       />
     </div>
   )
+}
+
+function getTotalCost(date: Date | string, data: Expenses[] | undefined) {
+  return data?.reduce((prev, item) => (dayManager.dayToDefaultFormat(item.date) === date ? item.cost + prev : prev), 0)
 }
 
 const ContentWrapper = styled.div`
