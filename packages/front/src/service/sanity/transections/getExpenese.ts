@@ -25,14 +25,14 @@ export async function getExpensesTransaction(
     const sort = s ? s : 'desc'
     const query = `{
         "totalCount" : count(*[_type == "expenses" && user._ref == "${userId}" ${searchQuery}]),
-        "content" : *[_type == "expenses" && user._ref == "${userId}" ${searchQuery}] | order(date ${sort}) [${pageStart}...${pageEnd}]
+        "content" : *[_type == "expenses" && user._ref == "${userId}" ${searchQuery}] | order(date ${sort}, _updatedAt desc) [${pageStart}...${pageEnd}]
         {
             "id" : _id,
             "date" : date,
             "cost" : amount,
             "category" : category,
             "content" : content,
-            ...
+            "updatedAt" : _updatedAt
         }
       }`
     const response = await sanity.client.fetch(query)
@@ -44,6 +44,7 @@ export async function getExpensesTransaction(
       message: 'Successfully fetched expenses'
     }
   } catch (error) {
+    console.error('Error occured while fetching expenses', error)
     return {
       code: 1,
       data: null,

@@ -13,7 +13,7 @@ export async function withSessionUser(handler: (user: User) => Promise<Response>
 
     return handler(loggedInUser)
   } catch (e) {
-    console.log('withSessionUser', e)
+    console.error('Authentication Error : ', e)
     return new Response('Authentication Error', { status: 401 })
   }
 }

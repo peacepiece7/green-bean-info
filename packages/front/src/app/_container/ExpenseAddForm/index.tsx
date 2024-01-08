@@ -4,10 +4,8 @@ import styled from 'styled-components'
 import { SPACE } from '@/styles/common'
 import { usePersistCategory } from '@/hooks/usePersistCategory'
 import { useForm } from 'react-hook-form'
-import { dateToISOString } from '@/util'
 import { useRecoilState } from 'recoil'
 import { expenseAddIsFetchingState, searchQueryState } from '@/store/expenseFetchingState'
-import { useExpensesListMutation } from '@/hooks/mutation/expense'
 import { Spin } from '@/components/Loading/Spin'
 import { Button } from '@/components/Buttons/Button'
 import { UncontrolledInput as Input } from '@/components/Inputs/UncontrolledInput'
@@ -17,6 +15,8 @@ import { AddIcon } from '@/components/UI/AddIcon'
 import DatePicker from 'react-datepicker'
 import { AutoCompleteInput } from './AutoCompleteInput'
 import 'react-datepicker/dist/react-datepicker.css'
+import { dayManager } from '@/util/dayManager'
+import { useExpensesListMutation } from '@/hooks/mutation/expense'
 interface AddExpenseBody {
   date: string
   cost: number
@@ -34,8 +34,7 @@ export default function ExpenseAddForm() {
 
   const onSubmit = (body: AddExpenseBody) => {
     if (!date) return
-    body.date = dateToISOString(date)
-    console.log(body)
+    body.date = dayManager.dayToDefaultFormat(date)
     addExpenseMutate({ ...body, category: searchQuery })
     setIsFetching(true)
     setPersist(searchQuery)
