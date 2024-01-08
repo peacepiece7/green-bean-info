@@ -1,4 +1,4 @@
-export function SSRCalendarSkeleton({ year, month, date }: { year: string; month: string; date: string }) {
+export function SSRCalendarSkeleton({ year, month }: { year: string; month: string }) {
   return (
     <div className="react-calendar">
       <div className="react-calendar__navigation">
@@ -25,7 +25,7 @@ export function SSRCalendarSkeleton({ year, month, date }: { year: string; month
           }}
         >
           <span className="react-calendar__navigation__label__labelText react-calendar__navigation__label__labelText--from">
-            {year}년 {month}월 {date}일
+            {year}년 {month}월
           </span>
         </button>
         <button
@@ -172,7 +172,7 @@ export function SSRCalendarSkeleton({ year, month, date }: { year: string; month
                     </button>
                   )
                 })}
-                <button
+                {/* <button
                   className="react-calendar__tile react-calendar__month-view__days__day react-calendar__month-view__days__day--weekend"
                   type="button"
                   style={{
@@ -182,7 +182,7 @@ export function SSRCalendarSkeleton({ year, month, date }: { year: string; month
                   }}
                 >
                   <abbr aria-label="2022년 6월 30일">30</abbr>
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
