@@ -53,16 +53,14 @@ export default function Calendar({ date, month, year, onOpen }: CalendarProps) {
   }
 
   return (
-    <div>
-      <ReactCalendar
-        value={dayManager.dayToDateObject(`${year}/${month}/${date}`)}
-        onChange={handleOnChange}
-        onClickDay={handleOnClickDay}
-        onActiveStartDateChange={handleOnActiveStartDateChange}
-        formatDay={(_props, date) => date.getDate().toString()}
-        tileContent={handleTitleContent}
-      />
-    </div>
+    <ReactCalendar
+      value={dayManager.dayToDateObject(`${year}/${month}/${date}`)}
+      onChange={handleOnChange}
+      onClickDay={handleOnClickDay}
+      onActiveStartDateChange={handleOnActiveStartDateChange}
+      formatDay={(_props, date) => date.getDate().toString()}
+      tileContent={handleTitleContent}
+    />
   )
 }
 

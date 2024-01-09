@@ -19,6 +19,7 @@ export const GlobalStyle = createGlobalStyle`
     main,
     section {
         width : 100%;
+        height: inherit;
     }
 
 
