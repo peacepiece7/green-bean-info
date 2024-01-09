@@ -19,6 +19,12 @@ export const GlobalStyle = createGlobalStyle`
     main,
     section {
         width : 100%;
+        height: inherit;
+    }
+
+
+    html .my-wallet-prose-text {
+        font-size: initial;
     }
 
     @media screen and (max-width: 768px) {

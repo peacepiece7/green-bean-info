@@ -1,4 +1,3 @@
-import 'server-only'
 import { User } from '@/model'
 import { authOptions } from '@/service/nextAuth'
 import { Session, getServerSession } from 'next-auth'
@@ -14,7 +13,7 @@ export async function withSessionUser(handler: (user: User) => Promise<Response>
 
     return handler(loggedInUser)
   } catch (e) {
-    console.log('withSessionUser', e)
+    console.error('Authentication Error : ', e)
     return new Response('Authentication Error', { status: 401 })
   }
 }

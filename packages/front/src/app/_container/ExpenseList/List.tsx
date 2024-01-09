@@ -27,7 +27,7 @@ export default function List({ expenses, onEdit, onDelete }: ListProps) {
   const { isMobile } = useMediaQuery()
 
   const handleOnSubmit = (id: string, cb: (expense: Expenses) => void) => {
-    const item = ref.current!.querySelector(`#${id}`)!
+    const item = document.getElementById(id)
     const [category, cost, content, date] = getTextContext(item, '.category', '.cost', '.content', '.date')
     cb({ id, category, cost: Number(cost), content, date })
   }
@@ -130,6 +130,6 @@ const ButtonWrapper = styled.div`
   justify-content: flex-end;
 `
 
-function getTextContext(element: Element, ...selectors: string[]) {
-  return selectors.map((s) => (element.querySelector(s) as HTMLInputElement)?.value)
+function getTextContext(element: Element | null, ...selectors: string[]) {
+  return selectors.map((s) => (element?.querySelector(s) as HTMLInputElement)?.value)
 }

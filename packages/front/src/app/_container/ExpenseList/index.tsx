@@ -5,10 +5,11 @@ import { useExpensesListInfiniteQuery } from '@/hooks/useExpensesListQuery'
 import List from './List'
 import styled from 'styled-components'
 import { TEXT } from '@/styles/common'
+import { useExpensesListMutation } from '@/hooks/mutation/expense'
 
 export default function ExpenseList() {
-  const { expenseList, triggerRef, isFetching, isFetchingNextPage, updateExpenseMutate, deleteExpenseMutate } =
-    useExpensesListInfiniteQuery()
+  const { expenseList, triggerRef, isFetching, isFetchingNextPage } = useExpensesListInfiniteQuery()
+  const { updateExpenseMutate, deleteExpenseMutate } = useExpensesListMutation()
 
   const handleOnEdit = (expense: Expenses) => {
     updateExpenseMutate(expense)

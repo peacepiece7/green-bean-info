@@ -1,6 +1,5 @@
-import { Modal } from '@/components/Modal'
+import Modal from '@/components/Modal'
 import ExpenseAddForm from './index'
-import { ExpenseAddModalForm } from './ModalForm'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/Buttons/Button'
 import styled from 'styled-components'
@@ -23,16 +22,16 @@ export default function ExpenseAddFormMobile() {
         <Text>소비 내역 추가하기</Text>
       </Button>
       {open && (
-        <Modal>
-          <ExpenseAddModalForm onClose={() => setOpen(false)}>
+        <Modal.Portal>
+          <Modal.Form onClose={() => setOpen(false)}>
             <ExpenseFormWrapper>
               <FormTitle>Expense Add Form</FormTitle>
               <div>
                 <ExpenseAddForm />
               </div>
             </ExpenseFormWrapper>
-          </ExpenseAddModalForm>
-        </Modal>
+          </Modal.Form>
+        </Modal.Portal>
       )}
     </Container>
   )

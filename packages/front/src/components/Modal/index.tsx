@@ -1,14 +1,9 @@
-'use client'
-import { createPortal } from 'react-dom'
+import { Modal as ModalPortal } from './Modal'
+import { ModalForm } from './ModalForm'
 
-interface ModalProps {
-  children: React.ReactNode
-}
+const Modal = ({ children }: { children: React.ReactNode }) => children
 
-export function Modal({ children }: ModalProps) {
-  if (typeof window === 'undefined') return null
+Modal.Portal = ModalPortal
+Modal.Form = ModalForm
 
-  const node = document.getElementById('portal') as HTMLDivElement
-
-  return createPortal(children, node)
-}
+export default Modal
