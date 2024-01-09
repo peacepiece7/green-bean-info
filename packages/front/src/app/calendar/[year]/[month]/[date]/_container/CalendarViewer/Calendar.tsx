@@ -68,20 +68,27 @@ export default function Calendar({ date, month, year, onOpen }: CalendarProps) {
   }, [wheel])
 
   return (
-    <ReactCalendar
-      value={dayManager.dayToDateObject(`${year}/${month}/${date}`)}
-      onChange={handleOnChange}
-      onClickDay={handleOnClickDay}
-      onActiveStartDateChange={handleOnActiveStartDateChange}
-      formatDay={(_props, date) => date.getDate().toString()}
-      tileContent={handleTitleContent}
-    />
+    <CalendarWrapper>
+      <ReactCalendar
+        value={dayManager.dayToDateObject(`${year}/${month}/${date}`)}
+        onChange={handleOnChange}
+        onClickDay={handleOnClickDay}
+        onActiveStartDateChange={handleOnActiveStartDateChange}
+        formatDay={(_props, date) => date.getDate().toString()}
+        tileContent={handleTitleContent}
+      />
+    </CalendarWrapper>
   )
 }
 
 function getTotalCost(date: Date | string, data: Expenses[] | undefined) {
   return data?.reduce((prev, item) => (dayManager.dayToDefaultFormat(item.date) === date ? item.cost + prev : prev), 0)
 }
+
+const CalendarWrapper = styled.div`
+  position: relative;
+  height: 100%;
+`
 
 const ContentWrapper = styled.div`
   height: 3rem;
