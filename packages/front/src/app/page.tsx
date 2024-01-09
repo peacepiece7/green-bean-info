@@ -1,11 +1,10 @@
-import { authOptions } from '@/service/nextAuth'
-import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import HomeContainer from './_container/HomeContainer'
+import { getServerSessionWithUser } from '@/util/session'
 
 export default async function HomePage() {
   const start = Date.now()
-  const session = await getServerSession(authOptions)
+  const session = await getServerSessionWithUser()
 
   if (!session) return redirect('/auth/signin')
 

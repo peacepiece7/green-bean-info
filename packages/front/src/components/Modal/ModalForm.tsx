@@ -4,11 +4,11 @@ import { Button } from '@/components/Buttons/Button'
 import { CloseIcon } from '@/components/UI/CloseIcon'
 import styled from 'styled-components'
 
-interface ExpenseAddModalFormProps {
+interface ModalFormProps {
   children: React.ReactNode
   onClose: VoidFunction
 }
-export function ExpenseAddModalForm({ children, onClose }: ExpenseAddModalFormProps) {
+export function ModalForm({ children, onClose }: ModalFormProps) {
   return (
     <Section
       onClick={(event) => {

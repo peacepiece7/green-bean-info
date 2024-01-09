@@ -22,7 +22,7 @@ export default {
     {
       date: 'Date',
       name: 'date',
-      type: 'datetime'
+      type: 'date'
     },
     {
       title: 'Content',
