@@ -11,13 +11,17 @@ import { useState } from 'react'
 import Modal from '@/components/Modal'
 import { CalendarModalContent } from './Modal/CalendarModalContent'
 import { COLOR, SPACE } from '@/styles/common'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { useRecoilState } from 'recoil'
+import { calendarModalState } from '@/store/calendarModalState'
 
 type CalendarContainerProps = CalendarPageProps['params'] & {
   user: User
 }
 export default function CalendarContainer({ year, month, date, user }: CalendarContainerProps) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useRecoilState(calendarModalState)
   const [activeDate, setActiveDate] = useState<null | string>(null)
+  const { isMobile } = useMediaQuery()
 
   const handleOpenDateModal = (date: string) => {
     setActiveDate(date)
@@ -34,7 +38,7 @@ export default function CalendarContainer({ year, month, date, user }: CalendarC
       {open && (
         <Modal.Portal>
           <Modal.Form onClose={() => setOpen(false)}>
-            <CalendarFormContentWrapper>
+            <CalendarFormContentWrapper $isMobile={isMobile}>
               <CalendarModalContent year={year} month={month} activeDate={activeDate} />
             </CalendarFormContentWrapper>
           </Modal.Form>
@@ -48,9 +52,9 @@ const Title = styled.h1`
   margin: ${SPACE['16']};
 `
 
-const CalendarFormContentWrapper = styled.div`
+const CalendarFormContentWrapper = styled.div<{ $isMobile: boolean }>`
   position: absolute;
-  width: 90%;
+  width: ${({ $isMobile }) => ($isMobile ? '100%' : '80%')};
   height: 80%;
   inset: 0;
   margin: auto;

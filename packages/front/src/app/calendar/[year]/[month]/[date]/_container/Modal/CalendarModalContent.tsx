@@ -10,5 +10,5 @@ interface CalendarModalContentProps {
 export function CalendarModalContent({ year, month, activeDate }: CalendarModalContentProps) {
   const { data } = useCalendarQuery(year, month)
   const activeExpenseDataList = data?.filter((item) => item.date === activeDate)
-  return <div>{activeExpenseDataList && <ExpenseCalendarFormList expenseList={activeExpenseDataList} />}</div>
+  return activeExpenseDataList && <ExpenseCalendarFormList expenseList={activeExpenseDataList} />
 }

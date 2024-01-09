@@ -3,12 +3,15 @@ import { useRouter } from 'next/navigation'
 import ReactCalendar, { OnArgs, TileArgs } from 'react-calendar'
 import { dayManager } from '@/util/dayManager'
 import { CalendarPageProps } from '../../page'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useCalendarQuery } from '@/hooks/useCalendarQuery'
 import { Value } from 'react-calendar/dist/cjs/shared/types'
 import { Expenses } from '@/model'
 import './Calendar.css'
+import { useMouseWheel } from '@/hooks/useMouseWheel'
+import { useRecoilValue } from 'recoil'
+import { calendarModalState } from '@/store/calendarModalState'
 
 type CalendarProps = CalendarPageProps['params'] & {
   onOpen: (date: string) => void
@@ -16,8 +19,10 @@ type CalendarProps = CalendarPageProps['params'] & {
 
 export default function Calendar({ date, month, year, onOpen }: CalendarProps) {
   const router = useRouter()
+  const wheel = useMouseWheel()
   const [activeDate, setActiveDate] = useState(dayManager.dayToDefaultFormat(`${year}/${month}/${date}`))
   const { data, isLoading } = useCalendarQuery(year, month)
+  const isOpenCalendarModal = useRecoilValue(calendarModalState)
 
   const handleTitleContent = (tile: TileArgs): React.ReactNode => {
     const totalCost = getTotalCost(dayManager.dayToDefaultFormat(tile.date), data)
@@ -51,6 +56,16 @@ export default function Calendar({ date, month, year, onOpen }: CalendarProps) {
       router.push(`/calendar/${routeFormatDay}`)
     }
   }
+
+  useEffect(() => {
+    if (isOpenCalendarModal) return
+
+    if (wheel > 0) {
+      router.push(`/calendar/${dayManager.addDateWith(`${year}/${month}/${date}`, 'month').dayToRouterFormat()}`)
+    } else if (wheel < 0) {
+      router.push(`/calendar/${dayManager.subtractDateWith(`${year}/${month}/${date}`, 'month').dayToRouterFormat()}`)
+    }
+  }, [wheel])
 
   return (
     <ReactCalendar
