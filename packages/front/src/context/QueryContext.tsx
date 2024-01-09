@@ -10,7 +10,7 @@ export default function QueryContext({ children }: QueryContextProps) {
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
-        staleTime: 6000,
+        staleTime: 1000 * 60 * 60,
         retry: 0
       }
     }

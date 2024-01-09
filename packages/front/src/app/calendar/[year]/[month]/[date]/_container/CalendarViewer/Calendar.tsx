@@ -1,12 +1,11 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import ReactCalendar, { OnArgs, TileArgs } from 'react-calendar'
+import ReactCalendar, { TileArgs } from 'react-calendar'
 import { dayManager } from '@/util/dayManager'
 import { CalendarPageProps } from '../../page'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useCalendarQuery } from '@/hooks/useCalendarQuery'
-import { Value } from 'react-calendar/dist/cjs/shared/types'
 import { Expenses } from '@/model'
 import './Calendar.css'
 import { useMouseWheel } from '@/hooks/useMouseWheel'
@@ -38,28 +37,25 @@ export default function Calendar({ date, month, year, onOpen }: CalendarProps) {
       </ContentWrapper>
     )
   }
-  const handleOnClickDay = (date: Date) => {
+
+  const handleOnClickDay = useCallback((date: Date) => {
     const clickedDate = dayManager.dayToDefaultFormat(date)
-    setActiveDate(clickedDate)
+    const routeFormatDay = dayManager.dayToRouterFormat(date)
     if (clickedDate === activeDate) {
       const totalCost = getTotalCost(dayManager.dayToDefaultFormat(date), data)
       if (totalCost) onOpen(clickedDate)
     }
-  }
-  const handleOnActiveStartDateChange = (args: OnArgs) => {
-    const routeFormatDay = dayManager.dayToRouterFormat(args.activeStartDate)
+    setActiveDate(clickedDate)
     router.push(`/calendar/${routeFormatDay}`)
-  }
-  const handleOnChange = (e: Value) => {
-    if (e instanceof Date) {
-      const routeFormatDay = dayManager.dayToRouterFormat(e)
-      router.push(`/calendar/${routeFormatDay}`)
-    }
-  }
+  }, [])
+
+  const handleOnClickMonth = useCallback((date: Date) => {
+    const routeFormatDate = dayManager.dayToRouterFormat(date)
+    router.push(`/calendar/${routeFormatDate}`)
+  }, [])
 
   useEffect(() => {
     if (isOpenCalendarModal) return
-
     if (wheel > 0) {
       router.push(`/calendar/${dayManager.addDateWith(`${year}/${month}/${date}`, 'month').dayToRouterFormat()}`)
     } else if (wheel < 0) {
@@ -71,9 +67,11 @@ export default function Calendar({ date, month, year, onOpen }: CalendarProps) {
     <CalendarWrapper>
       <ReactCalendar
         value={dayManager.dayToDateObject(`${year}/${month}/${date}`)}
-        onChange={handleOnChange}
         onClickDay={handleOnClickDay}
-        onActiveStartDateChange={handleOnActiveStartDateChange}
+        onClickMonth={handleOnClickMonth}
+        onClickYear={(date, e) => {
+          console.log('onClickYear :', date, e)
+        }}
         formatDay={(_props, date) => date.getDate().toString()}
         tileContent={handleTitleContent}
       />
