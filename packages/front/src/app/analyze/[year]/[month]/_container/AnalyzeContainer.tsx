@@ -1,66 +1,78 @@
 'use client'
+// prettier-ignore
+import { Chart, CategoryScale, LinearScale,  BarElement, Title, Tooltip, Legend, ArcElement, PointElement, LineElement } from 'chart.js'
 import { SSRSuspense } from '@/components/SSRSuspense'
-import {
-  Chart,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-  PointElement,
-  LineElement
-} from 'chart.js'
 import { AnalyzePageProps } from '../page'
 import { User } from '@/model'
 import GNB from '@/components/GNB/GNB'
 import { AnnualExpenses } from './AnnualExpenses'
-import { MonthyExpensesCategory } from './MonthyExpenseCategory'
+import { MonthlyCategortExpensesRate } from './MonthyCategoryExpenseRate'
 import { DailyExpenses } from './DailyExpenses'
 import { useSetRecoilState } from 'recoil'
 import { dayState } from '@/store/dayState'
 import { useEffect } from 'react'
-
-type AnalyzeContainerProps = AnalyzePageProps['params'] & {
-  user: User
-}
-export function AnalyzeContainer({ year, month, user }: AnalyzeContainerProps) {
-  const setDay = useSetRecoilState(dayState)
-
-  useEffect(() => {
-    setDay((prev) => ({ ...prev, year, month }))
-  }, [])
-
-  return (
-    <>
-      <GNB user={user} />
-      <SSRSuspense>
-        <AnnualExpenses />
-      </SSRSuspense>
-      <SSRSuspense>
-        <MonthyExpensesCategory />
-      </SSRSuspense>
-      <SSRSuspense>
-        <DailyExpenses />
-      </SSRSuspense>
-    </>
-  )
-}
+import styled from 'styled-components'
+import { SPACE } from '@/styles/common'
+import { MonthyCategoryCountRate } from './MonthyCategoryCountRate'
+import FloatingImage from '@/components/Layouts/FloatingImage'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import Loading from '@/app/loading'
 
 // * 차트라이브러리에 사용되는 옵션을 미리 등록합니다.
 Chart.register(
   // Common
   Tooltip,
   Legend,
-  // Bar
+  Title,
   CategoryScale,
   LinearScale,
+  // Bar
   BarElement,
-  Title,
   // Doughnut
   ArcElement,
   // Line
   PointElement,
   LineElement
 )
+
+type AnalyzeContainerProps = AnalyzePageProps['params'] & {
+  user: User
+}
+export function AnalyzeContainer({ year, month, user }: AnalyzeContainerProps) {
+  const setDay = useSetRecoilState(dayState)
+  const { isMobile } = useMediaQuery()
+
+  useEffect(() => {
+    setDay((prev) => ({ ...prev, year, month }))
+  }, [])
+
+  return (
+    <SSRSuspense fallback={<Loading />}>
+      <GNB user={user} />
+      <FloatingImage>
+        <ChartWrapper>
+          <DoughnutWrapper $isMobile={isMobile}>
+            <MonthlyCategortExpensesRate />
+            <MonthyCategoryCountRate />
+          </DoughnutWrapper>
+          <AnnualExpenses />
+          <DailyExpenses />
+        </ChartWrapper>
+      </FloatingImage>
+    </SSRSuspense>
+  )
+}
+
+const ChartWrapper = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  margin: ${SPACE['12']} auto;
+`
+const DoughnutWrapper = styled.div<{ $isMobile: boolean }>`
+  display: ${({ $isMobile }) => ($isMobile ? 'block' : 'flex')};
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  /* margin: ${({ $isMobile }) => ($isMobile ? SPACE['4'] : '0')}; */
+`
