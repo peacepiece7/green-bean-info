@@ -34,7 +34,7 @@ export default function ExpenseAddForm() {
 
   const onSubmit = (body: AddExpenseBody) => {
     if (!date) return
-    body.date = dayManager.dayToDefaultFormat(date)
+    body.date = dayManager.formatDate(date)
     addExpenseMutate({ ...body, category: searchQuery })
     setIsFetching(true)
     setPersist(searchQuery)

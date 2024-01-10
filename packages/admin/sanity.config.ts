@@ -1,25 +1,25 @@
-import { defineConfig } from "sanity";
+import { PluginOptions, defineConfig } from 'sanity'
 
-import { deskTool } from "sanity/desk";
-import { schemaTypes } from "./schemas";
+import { deskTool } from 'sanity/desk'
+import { schemaTypes } from './schemas'
 // import {structure} from './desk'
 
-import { visionTool } from "@sanity/vision";
+import { visionTool } from '@sanity/vision'
 // import {colorInput} from '@sanity/color-input'
 // import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 // import {media, mediaAssetSource} from 'sanity-plugin-media'
 // import {customDocumentActions} from './plugins/customDocumentActions'
 // const devOnlyPlugins = [visionTool()]
 export default defineConfig({
-  name: "default",
+  name: 'default',
   title: process.env.SANITY_STUDIO_TITLE,
   projectId: process.env.SANITY_STUDIO_PROJECT_ID as string,
   dataset: process.env.SANITY_STUDIO_DATASET as string,
 
   schema: {
-    types: schemaTypes,
+    types: schemaTypes
   },
-  plugins: [deskTool(), visionTool()],
+  plugins: [deskTool(), visionTool() as PluginOptions]
   // form: {
   //   file: {
   //     assetSources: (previousAssetSources) => {
@@ -32,4 +32,4 @@ export default defineConfig({
   //     },
   //   },
   // },
-});
+})
