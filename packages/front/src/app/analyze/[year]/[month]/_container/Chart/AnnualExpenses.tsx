@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil'
 import { ANNUAL_EXPENSES } from '../../_constants'
 import { SHADOW, SPACE, TEXT } from '@/styles/common'
 import styled from 'styled-components'
+import Link from 'next/link'
 export interface AnnualExpense {
   category: string
   cost: number
@@ -14,17 +15,29 @@ export interface AnnualExpense {
 export function AnnualExpenses() {
   const { year } = useRecoilValue(dayState)
   const data = useAnalyzeExpenses({ year })
+  const monthlyExpensesData = getMonthlyExpenses(year, data)
 
   const chartData = {
     labels: ANNUAL_EXPENSES['labels'],
     datasets: [
       {
         label: 'Monthly Expenses',
-        data: getMonthlyExpenses(year, data),
+        data: monthlyExpensesData,
         backgroundColor: ANNUAL_EXPENSES['bg']['color'][0]
       }
     ]
   }
+
+  if (monthlyExpensesData.every((item) => item === 0))
+    return (
+      <Container>
+        <NoContent>
+          <p>데이터가 없습니다.</p>
+          <p>소비 내역을 추가해주세요!</p>
+          <LinkWrapper href="/">{'📝 소비 내역 작성하러 가기 >'}</LinkWrapper>
+        </NoContent>
+      </Container>
+    )
 
   return (
     <Container>
@@ -45,6 +58,17 @@ const Container = styled.div`
 const Title = styled.h2`
   font-size: ${TEXT['size']['2xl']};
   padding: ${SPACE['4']};
+`
+
+const NoContent = styled.div`
+  text-align: center;
+  font-size: ${TEXT['size']['2xl']};
+  padding: ${SPACE['4']};
+`
+
+const LinkWrapper = styled(Link)`
+  margin-top: ${SPACE['4']};
+  text-decoration: none;
 `
 
 function getMonthlyExpenses(year: string, items: AnnualExpense[]) {

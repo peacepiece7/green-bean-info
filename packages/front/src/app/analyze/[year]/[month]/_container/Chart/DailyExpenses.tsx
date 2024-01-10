@@ -26,6 +26,9 @@ export function DailyExpenses() {
       }
     ]
   }
+
+  if (values.every((item) => item === 0)) return null
+
   return (
     <Container>
       <Title>

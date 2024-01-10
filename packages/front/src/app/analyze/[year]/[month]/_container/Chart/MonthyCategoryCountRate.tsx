@@ -30,6 +30,9 @@ export function MonthyCategoryCountRate() {
       }
     ]
   }
+
+  if (values.length === 0) return null
+
   return (
     <Container $isMobile={isMobile}>
       <Title>
