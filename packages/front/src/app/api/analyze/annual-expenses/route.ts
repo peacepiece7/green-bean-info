@@ -1,25 +1,11 @@
-// import { fetchCategoriesTransaction } from '@/service/sanity/transections/fetchCategories'
-// import { withSessionUser } from '@/util/session'
-// import { NextRequest, NextResponse } from 'next/server'
+import { fetchAnnualExpensesTransection } from '@/service/sanity/transections/fetchAnnualExpenses'
+import { withSessionUser } from '@/util/session'
+import { NextResponse } from 'next/server'
 
-// interface GetContext {
-//   params: { query: string }
-// }
-// export async function GET(_req: NextRequest, ctx: GetContext) {
-//   return withSessionUser(async (user) => {
-//     const { id: userId } = user
-//     const { year } = ctx.params
-//     const { month } = ctx.params
-//     return NextResponse.json({
-//       1: {
-//         total: 12600
-//       },
-//       2: {
-//         total: 12600
-//       },
-//       3: {
-//         total: 12600
-//       }
-//     })
-//   })
-// }
+export async function GET() {
+  return withSessionUser(async (user) => {
+    const { id: userId } = user
+    const data = await fetchAnnualExpensesTransection(userId)
+    return NextResponse.json(data)
+  })
+}
