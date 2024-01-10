@@ -69,9 +69,6 @@ export default function Calendar({ date, month, year, onOpen }: CalendarProps) {
         value={dayManager.dayToDateObject(`${year}/${month}/${date}`)}
         onClickDay={handleOnClickDay}
         onClickMonth={handleOnClickMonth}
-        onClickYear={(date, e) => {
-          console.log('onClickYear :', date, e)
-        }}
         formatDay={(_props, date) => date.getDate().toString()}
         tileContent={handleTitleContent}
       />

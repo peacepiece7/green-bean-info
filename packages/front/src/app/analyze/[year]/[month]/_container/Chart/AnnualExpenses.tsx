@@ -3,7 +3,7 @@ import { useAnalyzeExpenses } from '@/hooks/useAnalyzeExpenses'
 import { dayState } from '@/store/dayState'
 import { Bar } from 'react-chartjs-2'
 import { useRecoilValue } from 'recoil'
-import { ANNUAL_EXPENSES } from '../_constants'
+import { ANNUAL_EXPENSES } from '../../_constants'
 import { SHADOW, SPACE, TEXT } from '@/styles/common'
 import styled from 'styled-components'
 export interface AnnualExpense {

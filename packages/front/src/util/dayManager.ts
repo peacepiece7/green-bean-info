@@ -32,8 +32,14 @@ class DayManger {
     return this.date
   }
 
-  // * 요기 아래 부터는 단독으로 사용하지 않는 메서드입니다.
+  lastDateOfMonth(date?: ConfigType) {
+    this.date = dayjs(date ?? this.date)
+      .endOf('month')
+      .toDate()
+    return this.date
+  }
 
+  // * 요기 아래 부터는 단독으로 사용하지 않는 메서드입니다.
   /**
    * @description 내일 날짜를 this.date에 할당합니다.
    * @return this

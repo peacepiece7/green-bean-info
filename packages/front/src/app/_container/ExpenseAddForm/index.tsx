@@ -12,11 +12,10 @@ import { UncontrolledInput as Input } from '@/components/Inputs/UncontrolledInpu
 import { ChildrenWith } from '@/components/UI/ChildrenWith'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { AddIcon } from '@/components/UI/AddIcon'
-import DatePicker from 'react-datepicker'
 import { AutoCompleteInput } from './AutoCompleteInput'
-import 'react-datepicker/dist/react-datepicker.css'
 import { dayManager } from '@/util/dayManager'
 import { useExpensesListMutation } from '@/hooks/mutation/expense'
+import { DatePicker } from '@/components/DatePicker'
 interface AddExpenseBody {
   date: string
   cost: number
@@ -44,9 +43,7 @@ export default function ExpenseAddForm() {
 
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)} $isMobile={isMobile}>
-      <DatePickerWrapper $isMobile={isMobile}>
-        <DatePicker selected={date} onChange={(currentDate) => setDate(currentDate)} />
-      </DatePickerWrapper>
+      <DatePicker selected={date} onChange={(currentDate) => setDate(currentDate)} />
       <AutoCompleteInput />
       {/* prettier-ignore */}
       <Input type="number" placeholder="금액" required min={0} $size={isMobile ? 'full' : 'medium'} {...register('cost')} />
@@ -89,25 +86,5 @@ const FormContainer = styled.form<{ $isMobile: boolean }>`
   button {
     width: fit-content;
     white-space: nowrap;
-  }
-`
-
-const DatePickerWrapper = styled.div<{ $isMobile: boolean }>`
-  * {
-    font-size: 1.6rem;
-  }
-  .react-datepicker-wrapper,
-  .react-datepicker__input-container,
-  input {
-    height: 100%;
-    width: ${({ $isMobile }) => ($isMobile ? '100%' : '15rem')};
-  }
-  input {
-    padding: 1rem;
-  }
-
-  .react-datepicker__day,
-  .react-datepicker__day-name {
-    margin: 0.5rem 1rem;
   }
 `

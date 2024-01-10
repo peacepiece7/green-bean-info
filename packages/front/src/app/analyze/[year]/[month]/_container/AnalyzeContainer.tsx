@@ -5,18 +5,19 @@ import { SSRSuspense } from '@/components/SSRSuspense'
 import { AnalyzePageProps } from '../page'
 import { User } from '@/model'
 import GNB from '@/components/GNB/GNB'
-import { AnnualExpenses } from './AnnualExpenses'
-import { MonthlyCategortExpensesRate } from './MonthyCategoryExpenseRate'
-import { DailyExpenses } from './DailyExpenses'
+import { AnnualExpenses } from './Chart/AnnualExpenses'
+import { MonthlyCategortExpensesRate } from './Chart/MonthyCategoryExpenseRate'
+import { DailyExpenses } from './Chart/DailyExpenses'
 import { useSetRecoilState } from 'recoil'
 import { dayState } from '@/store/dayState'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 import { SPACE } from '@/styles/common'
-import { MonthyCategoryCountRate } from './MonthyCategoryCountRate'
+import { MonthyCategoryCountRate } from './Chart/MonthyCategoryCountRate'
 import FloatingImage from '@/components/Layouts/FloatingImage'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import Loading from '@/app/loading'
+import { Navigation } from './Navigation'
 
 // * 차트라이브러리에 사용되는 옵션을 미리 등록합니다.
 Chart.register(
@@ -49,6 +50,7 @@ export function AnalyzeContainer({ year, month, user }: AnalyzeContainerProps) {
   return (
     <SSRSuspense fallback={<Loading />}>
       <GNB user={user} />
+      <Navigation />
       <FloatingImage>
         <ChartWrapper>
           <DoughnutWrapper $isMobile={isMobile}>
