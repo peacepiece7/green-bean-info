@@ -18,22 +18,31 @@ import GNB from '@/components/GNB/GNB'
 import { AnnualExpenses } from './AnnualExpenses'
 import { MonthyExpensesCategory } from './MonthyExpenseCategory'
 import { DailyExpenses } from './DailyExpenses'
+import { useSetRecoilState } from 'recoil'
+import { dayState } from '@/store/dayState'
+import { useEffect } from 'react'
 
 type AnalyzeContainerProps = AnalyzePageProps['params'] & {
   user: User
 }
 export function AnalyzeContainer({ year, month, user }: AnalyzeContainerProps) {
+  const setDay = useSetRecoilState(dayState)
+
+  useEffect(() => {
+    setDay((prev) => ({ ...prev, year, month }))
+  }, [])
+
   return (
     <>
       <GNB user={user} />
-      <SSRSuspense fallback={<></>}>
+      <SSRSuspense>
         <AnnualExpenses />
       </SSRSuspense>
       <SSRSuspense>
         <MonthyExpensesCategory />
       </SSRSuspense>
       <SSRSuspense>
-        <DailyExpenses year={year} month={month} />
+        <DailyExpenses />
       </SSRSuspense>
     </>
   )

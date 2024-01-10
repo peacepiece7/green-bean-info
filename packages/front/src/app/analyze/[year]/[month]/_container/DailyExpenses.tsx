@@ -1,9 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { AnnualExpense } from './AnnualExpenses'
 import { fetcher } from '@/client/fetcher'
-import { AnalyzePageProps } from '../page'
 import dayjs from 'dayjs'
 import { Line } from 'react-chartjs-2'
+import { useRecoilValue } from 'recoil'
+import { dayState } from '@/store/dayState'
 
 const options = {
   responsive: true,
@@ -14,8 +15,8 @@ const options = {
   }
 }
 
-type DailyExpensesProps = AnalyzePageProps['params']
-export function DailyExpenses({ year, month }: DailyExpensesProps) {
+export function DailyExpenses() {
+  const { year, month } = useRecoilValue(dayState)
   const { data } = useSuspenseQuery<AnnualExpense[]>({
     queryKey: ['analyze', 'expenses'],
     queryFn: () => fetcher(`/api/analyze/annual-expenses`)
@@ -45,7 +46,7 @@ export function DailyExpenses({ year, month }: DailyExpensesProps) {
 
   return (
     <div>
-      <h2 style={{ fontSize: '2.5rem' }}>n월 일별 지출 현황</h2>
+      <h2 style={{ fontSize: '2.5rem' }}>{month}월 일별 지출 현황</h2>
       <Line data={chartData} options={options} />
     </div>
   )

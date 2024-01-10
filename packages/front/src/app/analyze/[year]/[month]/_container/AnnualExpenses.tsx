@@ -1,8 +1,10 @@
 'use client'
 import { fetcher } from '@/client/fetcher'
+import { dayState } from '@/store/dayState'
 import { useSuspenseQuery } from '@tanstack/react-query'
 // import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
+import { useRecoilValue } from 'recoil'
 export interface AnnualExpense {
   category: string
   cost: number
@@ -30,14 +32,11 @@ const options = {
     legend: {
       position: 'top' as const
     }
-    // title: {
-    //   display: true,
-    //   text: '연간 지출 비용'
-    // }
   }
 }
 
 export function AnnualExpenses() {
+  const { year } = useRecoilValue(dayState)
   const { data } = useSuspenseQuery<AnnualExpense[]>({
     queryKey: ['analyze', 'expenses'],
     queryFn: () => fetcher(`/api/analyze/annual-expenses`)
@@ -48,7 +47,7 @@ export function AnnualExpenses() {
     datasets: [
       {
         label: 'Monthly Expenses',
-        data: getMonthlyExpenses('2024', data),
+        data: getMonthlyExpenses(year, data),
         backgroundColor: 'rgba(255, 99, 132, 0.5)'
       }
     ]
@@ -61,7 +60,7 @@ export function AnnualExpenses() {
           fontSize: '2.5rem'
         }}
       >
-        연간 지출 비용
+        {year}년 지출 비용
       </h2>
       <Bar data={chartData} options={options} />
     </>

@@ -2,6 +2,8 @@ import { fetcher } from '@/client/fetcher'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { AnnualExpense } from './AnnualExpenses'
 import { Doughnut } from 'react-chartjs-2'
+import { useRecoilValue } from 'recoil'
+import { dayState } from '@/store/dayState'
 
 const backgroundColor = [
   'rgba(255, 99, 132, 0.2)',
@@ -24,6 +26,7 @@ const borderColor = [
 ]
 
 export function MonthyExpensesCategory() {
+  const { year, month } = useRecoilValue(dayState)
   const { data } = useSuspenseQuery<AnnualExpense[]>({
     queryKey: ['analyze', 'expenses'],
     queryFn: () => fetcher(`/api/analyze/annual-expenses`)
@@ -53,7 +56,7 @@ export function MonthyExpensesCategory() {
           fontSize: '2.5rem'
         }}
       >
-        n월 지출 카테고리
+        {year}년 {month}월 지출 카테고리 현황
       </h2>
       <Doughnut data={chartData} />
     </>
