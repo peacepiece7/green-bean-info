@@ -8,10 +8,10 @@ import styled from 'styled-components'
 import { useCalendarQuery } from '@/hooks/useCalendarQuery'
 import { Expenses } from '@/model'
 import './Calendar.css'
-import { useMouseWheel } from '@/hooks/useMouseWheel'
 import { useRecoilValue } from 'recoil'
 import { calendarModalState } from '@/store/calendarModalState'
 import { SHADOW, SPACE, TEXT } from '@/styles/common'
+import { useMouseWheel } from 'greenbean-pack'
 
 type CalendarProps = CalendarPageProps['params'] & {
   onOpen: (date: string) => void

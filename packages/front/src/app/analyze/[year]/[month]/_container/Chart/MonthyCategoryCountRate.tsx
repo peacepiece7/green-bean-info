@@ -3,7 +3,7 @@ import { AnnualExpense } from './AnnualExpenses'
 import { Doughnut } from 'react-chartjs-2'
 import { useRecoilValue } from 'recoil'
 import { dayState } from '@/store/dayState'
-import { useAnalyzeExpenses } from '@/hooks/useAnalyzeExpenses'
+import { useAnalyzeExpenseQuery } from '@/hooks/useAnalyzeExpenses'
 import { MONTHLY_EXPENSES } from '../../_constants'
 import styled from 'styled-components'
 import { SHADOW, SPACE, TEXT } from '@/styles/common'
@@ -11,7 +11,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export function MonthyCategoryCountRate() {
   const { year, month } = useRecoilValue(dayState)
-  const data = useAnalyzeExpenses({ year, month })
+  const data = useAnalyzeExpenseQuery({ year, month })
   const { isMobile } = useMediaQuery()
 
   const categoryData = sliceCategoryData(sortCategoryData(data), 6)

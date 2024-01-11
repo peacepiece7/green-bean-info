@@ -1,5 +1,5 @@
 'use client'
-import { useAnalyzeExpenses } from '@/hooks/useAnalyzeExpenses'
+import { useAnalyzeExpenseQuery } from '@/hooks/useAnalyzeExpenses'
 import { dayState } from '@/store/dayState'
 import { Bar } from 'react-chartjs-2'
 import { useRecoilValue } from 'recoil'
@@ -14,7 +14,7 @@ export interface AnnualExpense {
 }
 export function AnnualExpenses() {
   const { year } = useRecoilValue(dayState)
-  const data = useAnalyzeExpenses({ year })
+  const data = useAnalyzeExpenseQuery({ year })
   const monthlyExpensesData = getMonthlyExpenses(year, data)
 
   const chartData = {

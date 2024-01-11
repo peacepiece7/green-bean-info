@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { Line } from 'react-chartjs-2'
 import { useRecoilValue } from 'recoil'
 import { dayState } from '@/store/dayState'
-import { useAnalyzeExpenses } from '@/hooks/useAnalyzeExpenses'
+import { useAnalyzeExpenseQuery } from '@/hooks/useAnalyzeExpenses'
 import { DAILY_EXPENSES } from '../../_constants'
 import { AnnualExpense } from './AnnualExpenses'
 import { SHADOW, SPACE, TEXT } from '@/styles/common'
@@ -10,7 +10,7 @@ import styled from 'styled-components'
 
 export function DailyExpenses() {
   const { year, month } = useRecoilValue(dayState)
-  const data = useAnalyzeExpenses({ year, month })
+  const data = useAnalyzeExpenseQuery({ year, month })
 
   const labels = getDailyChartLabels(year, month)
   const values = getDailyChartValues(year, month, data)
