@@ -10,6 +10,7 @@ import styled from 'styled-components'
 import FloatingImage from '@/components/Layouts/FloatingImage'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import ExpenseAddFormMobile from './ExpenseAddForm/Mobile'
+import Loading from '../loading'
 
 interface HomeContainer {
   user: User
@@ -17,18 +18,16 @@ interface HomeContainer {
 export default function HomeContainer({ user }: HomeContainer) {
   const { isMobile } = useMediaQuery()
   return (
-    <>
+    <SSRSuspense fallback={<Loading />}>
       <GNB user={user} />
       <ContentWrapper>
         <FloatingImage>
           {!isMobile ? <ExpenseAddForm /> : <ExpenseAddFormMobile />}
           <ActionBox />
-          <SSRSuspense fallback={<></>}>
-            <ExpenseList />
-          </SSRSuspense>
+          <ExpenseList />
         </FloatingImage>
       </ContentWrapper>
-    </>
+    </SSRSuspense>
   )
 }
 

@@ -36,7 +36,7 @@ export default function NotFound() {
           marginTop: '1rem',
           textDecoration: 'none'
         }}
-        href={`/calendar/${dayManager.dayToRouterFormat(Date.now())}`}
+        href={`/calendar/${dayManager.formatRouterDate(Date.now())}`}
       >
         {'금일 캘린더로 되돌아가기 >'}
       </Link>

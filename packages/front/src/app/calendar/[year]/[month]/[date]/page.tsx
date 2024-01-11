@@ -30,7 +30,7 @@ export default async function CalendarPage(props: CalendarPageProps) {
  * @description YYYY-MM-DD 형식으로 주어진 값이 유효한지 검사합니다.
  * */
 function checkIsValidDate(date: string) {
-  const validDate = dayManager.dayToDefaultFormat(date)
+  const validDate = dayManager.formatDate(date)
   if (validDate !== date) return false
   return true
 }
