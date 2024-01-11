@@ -10,10 +10,11 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import Modal from '@/components/Modal'
 import { CalendarModalContent } from './Modal/CalendarModalContent'
-import { COLOR, SPACE } from '@/styles/common'
+import { COLOR, SPACE, TEXT } from '@/styles/common'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useRecoilState } from 'recoil'
 import { calendarModalState } from '@/store/calendarModalState'
+import FloatingImage from '@/components/Layouts/FloatingImage'
 
 type CalendarContainerProps = CalendarPageProps['params'] & {
   user: User
@@ -31,10 +32,12 @@ export default function CalendarContainer({ year, month, date, user }: CalendarC
   return (
     <>
       <GNB user={user} />
-      <Title>소비 내역 캘린더</Title>
-      <SSRSuspense fallback={<SSRCalendarSkeleton year={year} month={month} />}>
-        <Calendar year={year} month={month} date={date} onOpen={handleOpenDateModal} />
-      </SSRSuspense>
+      <FloatingImage>
+        <Title>소비 내역 캘린더</Title>
+        <SSRSuspense fallback={<SSRCalendarSkeleton year={year} month={month} />}>
+          <Calendar year={year} month={month} date={date} onOpen={handleOpenDateModal} />
+        </SSRSuspense>
+      </FloatingImage>
       {open && (
         <Modal.Portal>
           <Modal.Form onClose={() => setOpen(false)}>
@@ -49,7 +52,9 @@ export default function CalendarContainer({ year, month, date, user }: CalendarC
 }
 
 const Title = styled.h1`
-  margin: ${SPACE['16']};
+  margin: ${SPACE['8']};
+  margin-bottom: 0;
+  font-size: ${TEXT.size['2xl']};
 `
 
 const CalendarFormContentWrapper = styled.div<{ $isMobile: boolean }>`
