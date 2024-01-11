@@ -6,6 +6,7 @@ import List from './List'
 import styled from 'styled-components'
 import { TEXT } from '@/styles/common'
 import { useExpensesListMutation } from '@/hooks/mutation/expense'
+import { AddExampleDataForm } from '../AddExampleDataForm'
 
 export default function ExpenseList() {
   const { expenseList, triggerRef, isFetching, isFetchingNextPage } = useExpensesListInfiniteQuery()
@@ -18,6 +19,8 @@ export default function ExpenseList() {
   const handleOnDelete = (expense: Expenses) => {
     deleteExpenseMutate(expense.id)
   }
+
+  if (expenseList.length === 0) return <AddExampleDataForm />
 
   return (
     <>
