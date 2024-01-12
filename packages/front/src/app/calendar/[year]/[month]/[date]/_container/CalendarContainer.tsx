@@ -54,7 +54,7 @@ export default function CalendarContainer({ year, month, date, user }: CalendarC
 const Title = styled.h1`
   margin: ${SPACE['8']};
   margin-bottom: 0;
-  font-size: ${TEXT.size['2xl']};
+  font-size: ${TEXT.size['3xl']};
 `
 
 const CalendarFormContentWrapper = styled.div<{ $isMobile: boolean }>`

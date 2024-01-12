@@ -17,6 +17,7 @@ interface HomeContainer {
 }
 export default function HomeContainer({ user }: HomeContainer) {
   const { isMobile } = useMediaQuery()
+
   return (
     <SSRSuspense fallback={<Loading />}>
       <GNB user={user} />
