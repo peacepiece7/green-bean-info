@@ -45,6 +45,32 @@ function useBeforeLeaveMouse(cb) {
         return () => window.removeEventListener("mouseout", handler);
     }, []);
 }
+/**
+ * @description 마우스가 특정 요소를 벗어나거나 들어오는 것을 감지합니다.
+ */
+function useBeforeLeaveOrEnterMouse() {
+    const [isEnter, setIsEnter] = react.useState(false);
+    const ref = react.useRef(null);
+    const handleMouseLeave = react.useCallback(() => {
+        setIsEnter(false);
+    }, []);
+    const handleMouseEnter = react.useCallback(() => {
+        setIsEnter(true);
+    }, []);
+    react.useEffect(() => {
+        if (!ref.current)
+            return;
+        ref.current.addEventListener("mouseenter", handleMouseEnter);
+        ref.current.addEventListener("mouseleave", handleMouseLeave);
+        return () => {
+            if (!ref.current)
+                return;
+            ref.current.removeEventListener("mouseenter", handleMouseEnter);
+            ref.current.removeEventListener("mouseleave", handleMouseLeave);
+        };
+    }, [handleMouseEnter, handleMouseLeave]);
+    return { ref, isEnter };
+}
 
 /**
  * @description 클릭 이벤트를 감지 후 콜백을 실행합니다.
@@ -178,6 +204,20 @@ function useThrottle(value, delay) {
         };
     }, [value, delay]);
     return throttledValue;
+}
+
+/**
+ * @description 휠이 움직이지 않으면 0을 반환합니다.
+ * @returns {number} wheel
+ */
+function useMouseWheel() {
+    const [wheel, setWheel] = react.useState(0);
+    react.useEffect(() => {
+        const handleWheel = (e) => setWheel(e.deltaY);
+        window.addEventListener('wheel', handleWheel);
+        return () => window.removeEventListener('wheel', handleWheel);
+    }, []);
+    return wheel;
 }
 
 function useIntersectionObserver(elementRef, { threshold = 0, root = null, rootMargin = '0%', freezeOnceVisible = false }) {
@@ -333,11 +373,13 @@ function AutoComplete({ items, onEnter, onSelect: onSelectList, isLoading, recom
 
 exports.AutoComplete = AutoComplete;
 exports.useBeforeLeaveMouse = useBeforeLeaveMouse;
+exports.useBeforeLeaveOrEnterMouse = useBeforeLeaveOrEnterMouse;
 exports.useClick = useClick;
 exports.useFadeIn = useFadeIn;
 exports.useFullscreen = useFullscreen;
 exports.useIntersectionObserver = useIntersectionObserver;
 exports.useLeaveBeforeSave = useLeaveBeforeSave;
+exports.useMouseWheel = useMouseWheel;
 exports.useNetwork = useNetwork;
 exports.useScroll = useScroll;
 exports.useThrottle = useThrottle;
