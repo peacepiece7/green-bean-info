@@ -1,178 +1,209 @@
+import { SHADOW, SPACE, TEXT } from '@/styles/common'
+
 export function SSRCalendarSkeleton({ year, month }: { year: string; month: string }) {
   return (
-    <div className="react-calendar">
-      <div className="react-calendar__navigation">
-        <button
-          aria-label=""
-          className="react-calendar__navigation__arrow react-calendar__navigation__prev2-button"
-          type="button"
-        >
-          «
-        </button>
-        <button
-          aria-label=""
-          className="react-calendar__navigation__arrow react-calendar__navigation__prev-button"
-          type="button"
-        >
-          ‹
-        </button>
-        <button
-          aria-label=""
-          className="react-calendar__navigation__label"
-          type="button"
+    <>
+      <div
+        style={{
+          width: '90%',
+          margin: 'auto'
+        }}
+      >
+        <div
           style={{
-            flexGrow: '1'
+            minHeight: '2rem',
+            fontSize: TEXT.size.base,
+            textAlign: 'end',
+            paddingRight: SPACE[12]
           }}
         >
-          <span className="react-calendar__navigation__label__labelText react-calendar__navigation__label__labelText--from">
-            {year}년 {month}월
-          </span>
-        </button>
-        <button
-          aria-label=""
-          className="react-calendar__navigation__arrow react-calendar__navigation__next-button"
-          type="button"
+          데이터 불러오는 중...
+        </div>
+        <div
+          style={{
+            position: 'relative',
+            height: '100%',
+            fontSize: TEXT.size.xs,
+            padding: SPACE[8],
+            margin: SPACE[8],
+            boxShadow: SHADOW.lg,
+            borderRadius: '2rem',
+            backdropFilter: 'blur(2rem)'
+          }}
         >
-          ›
-        </button>
-        <button
-          aria-label=""
-          className="react-calendar__navigation__arrow react-calendar__navigation__next2-button"
-          type="button"
-        >
-          »
-        </button>
-      </div>
-      <div className="react-calendar__viewContainer">
-        <div className="react-calendar__month-view">
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'flex-end'
-            }}
-          >
-            <div
-              style={{
-                flexGrow: '1',
-                width: '100%'
-              }}
-            >
-              <div
-                className="react-calendar__month-view__weekdays"
+          <div className="react-calendar">
+            <div className="react-calendar__navigation">
+              <button
+                aria-label=""
+                className="react-calendar__navigation__arrow react-calendar__navigation__prev2-button"
+                type="button"
+              >
+                «
+              </button>
+              <button
+                aria-label=""
+                className="react-calendar__navigation__arrow react-calendar__navigation__prev-button"
+                type="button"
+              >
+                ‹
+              </button>
+              <button
+                aria-label=""
+                className="react-calendar__navigation__label"
+                type="button"
                 style={{
-                  display: 'flex',
-                  flexWrap: 'nowrap'
+                  flexGrow: '1'
                 }}
               >
-                <div
-                  className="react-calendar__month-view__weekdays__weekday"
-                  style={{
-                    flex: '0 0 14.2857%',
-                    overflow: 'hidden',
-                    marginInlineEnd: '0px'
-                  }}
-                >
-                  <abbr aria-label="월요일" title="월요일">
-                    월
-                  </abbr>
-                </div>
-                <div
-                  className="react-calendar__month-view__weekdays__weekday"
-                  style={{
-                    flex: '0 0 14.2857%',
-                    overflow: 'hidden',
-                    marginInlineEnd: '0px'
-                  }}
-                >
-                  <abbr aria-label="화요일" title="화요일">
-                    화
-                  </abbr>
-                </div>
-                <div
-                  className="react-calendar__month-view__weekdays__weekday"
-                  style={{
-                    flex: '0 0 14.2857%',
-                    overflow: 'hidden',
-                    marginInlineEnd: '0px'
-                  }}
-                >
-                  <abbr aria-label="수요일" title="수요일">
-                    수
-                  </abbr>
-                </div>
-                <div
-                  className="react-calendar__month-view__weekdays__weekday"
-                  style={{
-                    flex: '0 0 14.2857%',
-                    overflow: 'hidden',
-                    marginInlineEnd: '0px'
-                  }}
-                >
-                  <abbr aria-label="목요일" title="목요일">
-                    목
-                  </abbr>
-                </div>
-                <div
-                  className="react-calendar__month-view__weekdays__weekday"
-                  style={{
-                    flex: '0 0 14.2857%',
-                    overflow: 'hidden',
-                    marginInlineEnd: '0px'
-                  }}
-                >
-                  <abbr aria-label="금요일" title="금요일">
-                    금
-                  </abbr>
-                </div>
-                <div
-                  className="react-calendar__month-view__weekdays__weekday react-calendar__month-view__weekdays__weekday--weekend"
-                  style={{
-                    flex: '0 0 14.2857%',
-                    overflow: 'hidden',
-                    marginInlineEnd: '0px'
-                  }}
-                >
-                  <abbr aria-label="토요일" title="토요일">
-                    토
-                  </abbr>
-                </div>
-                <div
-                  className="react-calendar__month-view__weekdays__weekday react-calendar__month-view__weekdays__weekday--current react-calendar__month-view__weekdays__weekday--weekend"
-                  style={{
-                    flex: '0 0 14.2857%',
-                    overflow: 'hidden',
-                    marginInlineEnd: '0px'
-                  }}
-                >
-                  <abbr aria-label="일요일" title="일요일">
-                    일
-                  </abbr>
-                </div>
-              </div>
-              <div
-                className="react-calendar__month-view__days"
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap'
-                }}
+                <span className="react-calendar__navigation__label__labelText react-calendar__navigation__label__labelText--from">
+                  {year}년 {month}월
+                </span>
+              </button>
+              <button
+                aria-label=""
+                className="react-calendar__navigation__arrow react-calendar__navigation__next-button"
+                type="button"
               >
-                {Array.from(Array(31).keys()).map((day) => {
-                  return (
-                    <button
-                      key={day}
-                      className="react-calendar__tile react-calendar__month-view__days__day react-calendar__month-view__days__day--neighboringMonth"
-                      type="button"
+                ›
+              </button>
+              <button
+                aria-label=""
+                className="react-calendar__navigation__arrow react-calendar__navigation__next2-button"
+                type="button"
+              >
+                »
+              </button>
+            </div>
+            <div className="react-calendar__viewContainer">
+              <div className="react-calendar__month-view">
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-end'
+                  }}
+                >
+                  <div
+                    style={{
+                      flexGrow: '1',
+                      width: '100%'
+                    }}
+                  >
+                    <div
+                      className="react-calendar__month-view__weekdays"
                       style={{
-                        flex: '0 0 14.2857%',
-                        overflow: 'hidden',
-                        marginInlineEnd: '0px'
+                        display: 'flex',
+                        flexWrap: 'nowrap'
                       }}
                     >
-                      <abbr aria-label="2022년 7월 1일">{'.'}</abbr>
-                    </button>
-                  )
-                })}
-                {/* <button
+                      <div
+                        className="react-calendar__month-view__weekdays__weekday"
+                        style={{
+                          flex: '0 0 14.2857%',
+                          overflow: 'hidden',
+                          marginInlineEnd: '0px'
+                        }}
+                      >
+                        <abbr aria-label="월요일" title="월요일">
+                          월
+                        </abbr>
+                      </div>
+                      <div
+                        className="react-calendar__month-view__weekdays__weekday"
+                        style={{
+                          flex: '0 0 14.2857%',
+                          overflow: 'hidden',
+                          marginInlineEnd: '0px'
+                        }}
+                      >
+                        <abbr aria-label="화요일" title="화요일">
+                          화
+                        </abbr>
+                      </div>
+                      <div
+                        className="react-calendar__month-view__weekdays__weekday"
+                        style={{
+                          flex: '0 0 14.2857%',
+                          overflow: 'hidden',
+                          marginInlineEnd: '0px'
+                        }}
+                      >
+                        <abbr aria-label="수요일" title="수요일">
+                          수
+                        </abbr>
+                      </div>
+                      <div
+                        className="react-calendar__month-view__weekdays__weekday"
+                        style={{
+                          flex: '0 0 14.2857%',
+                          overflow: 'hidden',
+                          marginInlineEnd: '0px'
+                        }}
+                      >
+                        <abbr aria-label="목요일" title="목요일">
+                          목
+                        </abbr>
+                      </div>
+                      <div
+                        className="react-calendar__month-view__weekdays__weekday"
+                        style={{
+                          flex: '0 0 14.2857%',
+                          overflow: 'hidden',
+                          marginInlineEnd: '0px'
+                        }}
+                      >
+                        <abbr aria-label="금요일" title="금요일">
+                          금
+                        </abbr>
+                      </div>
+                      <div
+                        className="react-calendar__month-view__weekdays__weekday react-calendar__month-view__weekdays__weekday--weekend"
+                        style={{
+                          flex: '0 0 14.2857%',
+                          overflow: 'hidden',
+                          marginInlineEnd: '0px'
+                        }}
+                      >
+                        <abbr aria-label="토요일" title="토요일">
+                          토
+                        </abbr>
+                      </div>
+                      <div
+                        className="react-calendar__month-view__weekdays__weekday react-calendar__month-view__weekdays__weekday--current react-calendar__month-view__weekdays__weekday--weekend"
+                        style={{
+                          flex: '0 0 14.2857%',
+                          overflow: 'hidden',
+                          marginInlineEnd: '0px'
+                        }}
+                      >
+                        <abbr aria-label="일요일" title="일요일">
+                          일
+                        </abbr>
+                      </div>
+                    </div>
+                    <div
+                      className="react-calendar__month-view__days"
+                      style={{
+                        display: 'flex',
+                        flexWrap: 'wrap'
+                      }}
+                    >
+                      {Array.from(Array(31).keys()).map((day) => {
+                        return (
+                          <button
+                            key={day}
+                            className="react-calendar__tile react-calendar__month-view__days__day react-calendar__month-view__days__day--neighboringMonth"
+                            type="button"
+                            style={{
+                              flex: '0 0 14.2857%',
+                              overflow: 'hidden',
+                              marginInlineEnd: '0px'
+                            }}
+                          >
+                            <abbr aria-label="2022년 7월 1일">{'.'}</abbr>
+                          </button>
+                        )
+                      })}
+                      {/* <button
                   className="react-calendar__tile react-calendar__month-view__days__day react-calendar__month-view__days__day--weekend"
                   type="button"
                   style={{
@@ -183,11 +214,14 @@ export function SSRCalendarSkeleton({ year, month }: { year: string; month: stri
                 >
                   <abbr aria-label="2022년 6월 30일">30</abbr>
                 </button> */}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

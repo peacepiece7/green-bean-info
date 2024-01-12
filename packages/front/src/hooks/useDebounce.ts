@@ -1,25 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-
-export const useDebounceFirst = <T extends object | string>(
-  value: T,
-  delay: number = 2000,
-  onChaged: (value: T) => void = () => {}
-) => {
-  const [debouncedValue, setDebouncedValue] = useState(value)
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value)
-      onChaged(value)
-    }, delay)
-
-    return () => {
-      clearTimeout(handler)
-    }
-  }, [typeof value === 'object' ? JSON.stringify(value) : value, delay])
-
-  return debouncedValue
-}
+import { useCallback, useRef } from 'react'
 
 function useDebounce<A>(cb: (arg: A) => void, delay?: number): (arg: A) => void
 function useDebounce<A extends unknown[]>(cb: (...args: A) => void, delay: number = 2000) {

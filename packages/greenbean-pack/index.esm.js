@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { jsx, jsxs } from 'react/jsx-runtime';
 import styled from 'styled-components';
 
@@ -42,6 +42,32 @@ function useBeforeLeaveMouse(cb) {
         window.addEventListener("mouseout", handler);
         return () => window.removeEventListener("mouseout", handler);
     }, []);
+}
+/**
+ * @description 마우스가 특정 요소를 벗어나거나 들어오는 것을 감지합니다.
+ */
+function useBeforeLeaveOrEnterMouse() {
+    const [isEnter, setIsEnter] = useState(false);
+    const ref = useRef(null);
+    const handleMouseLeave = useCallback(() => {
+        setIsEnter(false);
+    }, []);
+    const handleMouseEnter = useCallback(() => {
+        setIsEnter(true);
+    }, []);
+    useEffect(() => {
+        if (!ref.current)
+            return;
+        ref.current.addEventListener("mouseenter", handleMouseEnter);
+        ref.current.addEventListener("mouseleave", handleMouseLeave);
+        return () => {
+            if (!ref.current)
+                return;
+            ref.current.removeEventListener("mouseenter", handleMouseEnter);
+            ref.current.removeEventListener("mouseleave", handleMouseLeave);
+        };
+    }, [handleMouseEnter, handleMouseLeave]);
+    return { ref, isEnter };
 }
 
 /**
@@ -176,6 +202,20 @@ function useThrottle(value, delay) {
         };
     }, [value, delay]);
     return throttledValue;
+}
+
+/**
+ * @description 휠이 움직이지 않으면 0을 반환합니다.
+ * @returns {number} wheel
+ */
+function useMouseWheel() {
+    const [wheel, setWheel] = useState(0);
+    useEffect(() => {
+        const handleWheel = (e) => setWheel(e.deltaY);
+        window.addEventListener('wheel', handleWheel);
+        return () => window.removeEventListener('wheel', handleWheel);
+    }, []);
+    return wheel;
 }
 
 function useIntersectionObserver(elementRef, { threshold = 0, root = null, rootMargin = '0%', freezeOnceVisible = false }) {
@@ -329,4 +369,4 @@ function AutoComplete({ items, onEnter, onSelect: onSelectList, isLoading, recom
                 }, value: inputValue, required: true, style: Object.assign({ margin: 0, padding: 0 }, inputStyle) }), jsx(AutoCompleteList, { items: list, open: open, onMounseDown: (item) => handleMounseDown(item), isLoading: isLoading, renderListOptions: renderListOptions, renderListIsLoading: renderListIsLoading })] }));
 }
 
-export { AutoComplete, useBeforeLeaveMouse, useClick, useFadeIn, useFullscreen, useIntersectionObserver, useLeaveBeforeSave, useNetwork, useScroll, useThrottle, useWillUnmount };
+export { AutoComplete, useBeforeLeaveMouse, useBeforeLeaveOrEnterMouse, useClick, useFadeIn, useFullscreen, useIntersectionObserver, useLeaveBeforeSave, useMouseWheel, useNetwork, useScroll, useThrottle, useWillUnmount };

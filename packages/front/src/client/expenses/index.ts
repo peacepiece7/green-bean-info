@@ -18,3 +18,9 @@ export const updateExpenseApi = (expense: Expenses) => {
 export const deleteExpenseApi = (id: string) => {
   return fetcher(`/api/expenses?id=${id}`, { method: 'DELETE' })
 }
+
+export const addMockExpenseApi = () => {
+  return fetcher<{ message: string }>(`/api/expenses/mock`, {
+    method: 'POST'
+  })
+}
