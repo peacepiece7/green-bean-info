@@ -1,7 +1,7 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
-import { useThrottle } from './useThrottle'
 import { fetcher } from '@/client/fetcher'
+import { useThrottle } from 'greenbean-pack'
 
 interface ResponseItem {
   id: string

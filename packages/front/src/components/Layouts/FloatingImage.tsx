@@ -18,9 +18,8 @@ export default function FloatingImage({ children }: SingInLayoutProps) {
   )
 }
 
-const FloatingImageWrapper = styled.main`
+const FloatingImageWrapper = styled.div`
   position: relative;
-  overflow-x: hidden;
   margin: auto;
 `
 

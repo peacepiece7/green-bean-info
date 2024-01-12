@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { addExpenseApi, deleteExpenseApi, updateExpenseApi } from '@/client/expenses'
+import { addExpenseApi, addMockExpenseApi, deleteExpenseApi, updateExpenseApi } from '@/client/expenses'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { expenseAddIsFetchingState, expenseDeleteQueue, expenseEditQueue } from '@/store/expenseFetchingState'
 import { EXPENSES } from '@/constants/query'
@@ -56,7 +56,6 @@ export const useExpensesListMutation = () => {
       queryClient.setQueryData(
         [EXPENSES, searchQuery, sortQuery],
         (prev: { pages: ExpensesListData[]; pageParams: number[] }) => {
-          console.log('PREV DATA :', prev)
           const pages = prev.pages.map((page) => ({
             ...page,
             content: page.content.filter((expense) => expense.id !== expenseId)
@@ -78,9 +77,25 @@ export const useExpensesListMutation = () => {
     onError: errorHandler
   })
 
+  const addMockExpense = useMutation({
+    mutationFn: addMockExpenseApi,
+    onError: errorHandler,
+    onSuccess: (res) => {
+      res.message && alert(res.message)
+      queryClient.invalidateQueries({
+        queryKey: [EXPENSES],
+        exact: false
+      })
+    },
+    onSettled: () => {
+      setIsFetching(false)
+    }
+  })
+
   return {
     updateExpenseMutate: updateExpense.mutate,
     deleteExpenseMutate: deleteExpense.mutate,
-    addExpenseMutate: addExpense.mutate
+    addExpenseMutate: addExpense.mutate,
+    addMockExpenseMutate: addMockExpense.mutate
   }
 }
