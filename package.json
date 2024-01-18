@@ -8,7 +8,6 @@
     "admin": "pnpm -F @monorepo/admin",
     "fe": "pnpm -F @monorepo/front",
     "gp": "pnpm -F greenbean-pack",
-    "shared": "pnpm -F @monorepo/shared",
     "typecheck:all": "pnpm -r typecheck",
     "lint:all": "pnpm -r lint",
     "test:all": "pnpm -r test",
